@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LangSwitcher from "./LangSwitcher";
@@ -165,6 +165,10 @@ export default function Navbar() {
             menuOpen ? "max-h-[700px] border-t border-black/5" : "max-h-0"
           }`}
         >
+          <div className="flex items-center justify-between px-6 py-3 border-b border-black/5 bg-white">
+            <span className="text-[#111111]/40 text-[11px] font-medium tracking-[0.04em]">LANGUAGE</span>
+            <LangSwitcher />
+          </div>
           <div className="bg-white px-6 py-3 border-b border-black/5">
             {navLinks.map((link) => (
               <div key={link.href}>
