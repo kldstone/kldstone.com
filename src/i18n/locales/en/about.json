@@ -1,0 +1,40 @@
+{
+  "hero": {
+    "title": "OUR STORY",
+    "heading": "BUILT IN SHUITOU, THE HEART OF CHINA'S STONE INDUSTRY",
+    "paragraphs": [
+      "Shuitou, Nan'an Is One Of China's Most Established Stone Production Centers. Since The 1990s, The Region Has Gathered Quarry Resources, Slab Markets, Fabrication Workshops, And Export Logistics Into One Dense Industrial Cluster. KLD Stone Grew From This Environment.",
+      "Our Founder Started Working With Stone As A Teenager, First In Block Trading And Later In Fabrication. Over Time We Built Marble Cutting, Waterjet, CNC Profiling, Inspection, And Packing Capabilities, Turning Hands-On Material Knowledge Into Reliable Project Delivery.",
+      "Today We Support Global Clients, From Hotel Lobbies And Private Villas To Designer-Led Commercial Interiors. Materials Travel Across Borders; Our Standards Stay Consistent From Selection To Shipment."
+    ]
+  },
+  "discover": {
+    "title": "DISCOVER MORE",
+    "heading": "THREE WAYS WE SUPPORT YOUR PROJECT",
+    "factoryTour": {
+      "title": "FACTORY TOUR",
+      "desc": "From Blocks To Finished Pieces, Our Workshop Covers Slab Cutting, Waterjet Inlay, CNC Profiling, Polishing, Inspection, And Packing."
+    },
+    "qualityAssurance": {
+      "title": "QUALITY ASSURANCE",
+      "desc": "Color Range Control, Thickness Checks, Six-Side Inspection, Dry Laying, Surface Protection, And Export Packing Are Built Into Our Workflow."
+    },
+    "customService": {
+      "title": "CUSTOM SERVICE",
+      "desc": "From Drawings And Samples To Fabrication And Export Packing, Every Custom Order Receives A Project-Specific Plan."
+    }
+  },
+  "exhibition": {
+    "title": "Exhibition",
+    "heading": "INTERNATIONAL STONE EXHIBITIONS",
+    "paragraphs": [
+      "We Attend Major Industry Exhibitions Such As The Xiamen International Stone Fair And Marmomac In Verona. These Events Help Us Present New Materials, Understand Global Design Trends, And Meet Clients Face To Face.",
+      "At Every Exhibition, We Show More Than Samples. We Show How Raw Stone Can Become A Complete Interior Language Through Selection, Fabrication, And Detailing."
+    ],
+    "cta": "Schedule A Meeting →"
+  },
+  "cta": {
+    "heading": "WANT TO KNOW MORE ABOUT KLD STONE?",
+    "description": "Whether You Are A Designer, Architect, Contractor, Distributor, Or Homeowner, We Are Ready To Discuss Your Project."
+  }
+}

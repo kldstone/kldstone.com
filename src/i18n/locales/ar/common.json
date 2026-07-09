@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "topbar": "رخام طبيعي · ميداليات المياه · أحجار مخصصة · شويتو، الصين",
+    "home": "الرئيسية",
+    "collections": "المجموعات",
+    "naturalMarble": "رخام طبيعي",
+    "waterjetMedallions": "ميداليات المياه",
+    "projectSpaces": "مشاريعنا",
+    "factoryTour": "جولة المصنع",
+    "faq": "الأسئلة",
+    "aboutUs": "من نحن",
+    "contactUs": "اتصل بنا",
+    "getQuote": "طلب سعر",
+    "menu": "القائمة",
+    "close": "إغلاق",
+    "whatsapp": "واتساب",
+    "brandName": "KLD STONE",
+    "brandSub": "حجر طبيعي · شويتو، الصين"
+  },
+  "footer": {
+    "tagline": "حجر طبيعي، يتم اختياره وتصنيعه بدقة لمساحات تدوم.",
+    "explore": "تصفح",
+    "productCategories": "فئات المنتجات",
+    "contact": "اتصل بنا",
+    "collections": "المجموعات",
+    "projectSpaces": "مشاريعنا",
+    "aboutUs": "من نحن",
+    "contactUs": "اتصل بنا",
+    "naturalMarble": "رخام طبيعي",
+    "waterjetMedallions": "ميداليات المياه",
+    "address": "هوديان، المنطقة الصناعية، شيجينغ، نانآن، فوجيان، الصين",
+    "copyright": "KLD Stone."
+  },
+  "seo": {
+    "titleSuffix": "KLD Stone | رخام طبيعي، ميداليات المياه وتصنيع الحجر المخصص",
+    "defaultDescription": "KLD Stone تورد ألواح الرخام الطبيعي، ميداليات المياه، فسيفساء الحجر، الأسطح، وتصنيع الحجر المخصص من شويتو، الصين."
+  },
+  "common": {
+    "scroll": "تمرير",
+    "learnMore": "اقرأ المزيد ←",
+    "viewAll": "عرض الكل",
+    "contactUs": "اتصل بنا",
+    "sendInquiry": "أرسل استفساراً",
+    "callUs": "اتصل +86 156 5906 9988",
+    "startAProject": "ابدأ مشروعاً",
+    "previous": "السابق",
+    "next": "التالي"
+  }
+}

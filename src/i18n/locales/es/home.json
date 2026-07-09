@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "slides": [
+      { "titEn": "Naturaleza al Alcance", "tit": "LUJO SILENCIOSO MOLDEADO EN PIEDRA NATURAL", "des": "Nuevas superficies de piedra y soluciones para interiores globales." },
+      { "titEn": "La Arquitectura Empieza con Piedra de Precisión", "tit": "LA ARQUITECTURA EMPIEZA CON LA EXPRESIÓN PRECISA DE LA PIEDRA", "des": "Transformamos la visión arquitectónica en realidad pétrea." },
+      { "titEn": "Donde el Diseño se Encuentra con la Artesanía Estructural", "tit": "DONDE EL DISEÑO SE ENCUENTRA CON LA ARTESANÍA ESTRUCTURAL", "des": "No decoración, sino rendimiento espacial diseñado." },
+      { "titEn": "Sistemas de Piedra para Arquitectura Emblemática", "tit": "SISTEMAS DE PIEDRA PARA ARQUITECTURA EMBLEMÁTICA", "des": "Creamos sistemas de piedra para hoteles, espacios comerciales y arquitectura emblemática." },
+      { "titEn": "Sistemas de Incrustación Waterjet de Precisión", "tit": "CADA SUELO SE CONVIERTE EN PARTE DE LA EXPERIENCIA DE DISEÑO", "des": "Sistemas de incrustación waterjet de precisión para interiores de lujo en todo el mundo." }
+    ]
+  },
+  "trustStats": { "years": "AÑOS", "marbleVarieties": "VARIEDADES MÁRMOL", "waterjetPrecision": "PRECISIÓN WATERJET", "exportCountries": "PAÍSES EXPORTACIÓN" },
+  "collections": { "title": "COLECCIONES", "heading": "SELECCIÓN DE MÁRMOL NATURAL", "description": "Abastecimiento directo de canteras globales. Nueve familias de color — blanco, gris, negro, beige, marrón, azul, verde, rojo, dorado. Stock todo el año.", "viewAll": "VER TODAS LAS COLECCIONES" },
+  "waterjet": { "title": "WATERJET", "heading": "MEDALLONES WATERJET PERSONALIZADOS", "description": "Corte waterjet de alta presión con precisión ±0.1mm. Maestros artesanos con 10+ años. Inspección en seco 1:1 antes del envío.", "viewAll": "VER TODOS LOS MEDALLONES" },
+  "process": {
+    "title": "CÓMO LO HACEMOS", "heading": "DEL BLOQUE EN BRUTO AL PRODUCTO TERMINADO — TODO EN NUESTRAS MANOS", "description": "Fábrica propia, control de calidad total. Nunca subcontratamos — la calidad nunca sale de nuestro control.",
+    "steps": [
+      { "title": "SELECCIÓN DE LOSAS", "desc": "Abastecimiento directo de canteras globales. Cada losa se numera y archiva con origen, lote y código de tono." },
+      { "title": "CORTE DE PRECISIÓN", "desc": "Sistema dual de sierra diamantada y arena. Precisión waterjet ±0.1mm. Centro CNC para formas complejas." },
+      { "title": "INSPECCIÓN EN SECO", "desc": "Premontaje 1:1 antes del envío. Maestros artesanos con 10+ años inspeccionan cada pieza individualmente." },
+      { "title": "EMBALAJE DE EXPORTACIÓN", "desc": "Cajas de madera personalizadas, protección de seis lados, embalaje resistente a la humedad, seguimiento de contenedor." }
+    ],
+    "cta": "VISITAR LA FÁBRICA"
+  },
+  "video": { "title": "Video", "heading": "Feria Internacional de la Piedra de Guangzhou 2026", "description": "KLD Stone en la Feria Internacional de la Piedra de Guangzhou — mostrando colecciones de piedra natural, medallones waterjet y artesanía de precisión." },
+  "spaces": { "title": "PROYECTOS", "heading": "LA PIEDRA PERTENECE A LOS ESPACIOS, NO A LOS ALMACENES", "description": "Proyectos reales — vestíbulos de hotel, villas, interiores comerciales y residencias de lujo en todo el mundo.", "viewAll": "VER TODOS LOS PROYECTOS" },
+  "quality": {
+    "title": "CALIDAD Y EXPORTACIÓN", "heading": "CALIDAD QUE CRUZA OCÉANOS",
+    "items": [
+      { "title": "INSPECCIÓN SEIS CARAS", "desc": "Consistencia de color, tolerancia de grosor, revisión visual de seis caras, tratamiento protector — cada losa pasa antes de salir." },
+      { "title": "CAJAS DE MADERA", "desc": "Dimensionadas para el pedido, con revestimiento EPE, separadores de cartón y refuerzos de acero para contenedores." },
+      { "title": "LOGÍSTICA INTEGRAL", "desc": "Del puerto de Shuitou a los principales puertos del mundo. Listas de empaque, marcas, documentos de seguro — fotos el día del envío." }
+    ],
+    "cta": "DETALLES DE CALIDAD"
+  },
+  "cta": { "heading": "RECIBA SU PRESUPUESTO EN 24 HORAS", "description": "Ya sea diseñador, contratista o distribuidor — respondemos a cada consulta en un día hábil." }
+}

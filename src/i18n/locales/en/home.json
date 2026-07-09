@@ -1,4 +1,66 @@
 {
-  "hero.title": "Stone that tells a story",
-  "hero.subtitle": "Natural marble, waterjet medallions, and custom stone fabrication"
+  "hero": {
+    "slides": [
+      { "titEn": "Nature Within Reach", "tit": "QUIET LUXURY SHAPED IN NATURAL STONE", "des": "New Stone Surfaces And Project Solutions For Global Interiors." },
+      { "titEn": "Architecture Begins With Precision Stone", "tit": "ARCHITECTURE BEGINS WITH PRECISE STONE EXPRESSION", "des": "We Transform Architectural Vision Into Engineered Stone Reality." },
+      { "titEn": "Where Design Meets Structural Craft", "tit": "WHERE DESIGN MEETS STRUCTURAL CRAFT", "des": "Not Decoration, But Engineered Spatial Performance." },
+      { "titEn": "Stone Systems For Landmark Architecture", "tit": "STONE SYSTEMS FOR LANDMARK ARCHITECTURE", "des": "We Build Stone Systems For Hotels, Commercial Spaces, And Landmark Architecture." },
+      { "titEn": "Precision Waterjet Inlay Systems", "tit": "EVERY FLOOR BECOMES PART OF THE DESIGN EXPERIENCE", "des": "Precision Waterjet Inlay Systems For Luxury Interiors Worldwide." }
+    ]
+  },
+  "trustStats": {
+    "years": "YEARS",
+    "marbleVarieties": "MARBLE VARIETIES",
+    "waterjetPrecision": "WATERJET PRECISION",
+    "exportCountries": "EXPORT COUNTRIES"
+  },
+  "collections": {
+    "title": "COLLECTIONS",
+    "heading": "NATURAL MARBLE SELECTION",
+    "description": "Direct Sourcing From Global Quarries. Nine Color Families — White, Grey, Black, Beige, Brown, Blue, Green, Red, Gold. In Stock Year-Round.",
+    "viewAll": "VIEW ALL COLLECTIONS"
+  },
+  "waterjet": {
+    "title": "WATERJET",
+    "heading": "CUSTOM WATERJET MEDALLIONS",
+    "description": "High-Pressure Waterjet Cutting At ±0.1mm Accuracy. Master Craftsmen With 10+ Years. 1:1 Dry Lay Inspection Before Shipment.",
+    "viewAll": "VIEW ALL WATERJET MEDALLIONS"
+  },
+  "process": {
+    "title": "HOW WE MAKE IT",
+    "heading": "FROM RAW BLOCK TO FINISHED PRODUCT — ALL IN OUR OWN HANDS",
+    "description": "Own Factory, Full Quality Control. We Never Outsource — Quality Never Leaves Our Sight.",
+    "steps": [
+      { "title": "SLAB SELECTION", "desc": "Direct sourcing from global quarries. Every slab is numbered and archived with origin, batch, and shade code." },
+      { "title": "PRECISION CUTTING", "desc": "Diamond gang saw + sand saw dual system. Waterjet accuracy ±0.1mm. CNC profiling center for complex shapes." },
+      { "title": "DRY LAY INSPECTION", "desc": "1:1 pre-assembly before shipment. Master craftsmen with 10+ years inspect every piece individually." },
+      { "title": "EXPORT PACKING", "desc": "Custom wooden crates, six-side protective treatment, moisture-proof packaging, container tracking to destination port." }
+    ],
+    "cta": "TOUR THE FACTORY"
+  },
+  "video": {
+    "title": "Video",
+    "heading": "Guangzhou International Stone Fair 2026",
+    "description": "KLD Stone at the Guangzhou International Stone Fair — showcasing natural stone collections, waterjet medallions, and precision craftsmanship to global buyers."
+  },
+  "spaces": {
+    "title": "PROJECT CASES",
+    "heading": "STONE BELONGS IN SPACES, NOT WAREHOUSES",
+    "description": "Real Projects — Hotel Lobbies, Villas, Commercial Interiors, And High-End Residences Worldwide.",
+    "viewAll": "VIEW ALL PROJECT SPACES"
+  },
+  "quality": {
+    "title": "QUALITY & EXPORT",
+    "heading": "QUALITY THAT CROSSES OCEANS",
+    "items": [
+      { "title": "SIX-POINT INSPECTION", "desc": "Color consistency, thickness tolerance, six-side visual check, protective treatment — every slab passes before leaving the factory." },
+      { "title": "CUSTOM WOODEN CRATES", "desc": "Tailored to product dimensions with EPE foam lining, corrugated separators, and steel strap reinforcement — built to container shipping standards." },
+      { "title": "END-TO-END LOGISTICS", "desc": "From Shuitou port to major ports worldwide. Individual packing lists, shipping marks, insurance documents — shipment photos sent on dispatch day." }
+    ],
+    "cta": "QUALITY ASSURANCE DETAILS"
+  },
+  "cta": {
+    "heading": "GET YOUR PROJECT QUOTE WITHIN 24 HOURS",
+    "description": "Whether You Are A Designer, Contractor, Or Distributor — We Reply To Every Inquiry Within One Business Day."
+  }
 }

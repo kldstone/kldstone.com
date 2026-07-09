@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "PRODUCT CENTER",
+    "heading": "OUR COLLECTIONS",
+    "description": "Explore our full range of natural marble, stone products, and waterjet medallions."
+  },
+  "colors": {
+    "white": "白色系",
+    "beige": "米色系",
+    "grey": "灰色系",
+    "gold": "金色系",
+    "black": "黑色系",
+    "brown": "棕色系",
+    "blue": "蓝色系",
+    "green": "绿色系",
+    "red": "红色系",
+    "multicolor": "多色系",
+    "mosaic": "水刀拼花"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "hero": { "title": "SERVICIO PERSONALIZADO", "heading": "SERVICIO DE PIEDRA PERSONALIZADO", "description": "De la selección de material al embalaje final — nuestro flujo se construye alrededor de tu proyecto." },
+  "intro": { "title": "CÓMO TRABAJAMOS", "heading": "CADA PIEDRA TIENE UNA HISTORIA; CADA PROYECTO NECESITA UN PLAN", "text": "La piedra natural nunca es realmente estándar. Incluso losas adyacentes varían en veta, tono y movimiento. Nuestro servicio personalizado te ayuda a seleccionar, detallar, fabricar, inspeccionar, embalar y enviar el material adecuado." },
+  "steps": [ { "title": "RESUMEN", "desc": "Comparte planos, referencias, dimensiones, material deseado o presupuesto. Empezamos entendiendo el espacio." }, { "title": "SELECCIÓN", "desc": "Te ayudamos a comparar losas y muestras de diferentes orígenes, verificando color, veta, dureza y idoneidad." }, { "title": "PLANOS", "desc": "Nuestro equipo convierte conceptos en planos de fabricación, incluyendo trayectorias waterjet y detalles de borde." }, { "title": "FABRICACIÓN", "desc": "Corte por infrarrojos, incrustación waterjet, conformado CNC, pulido y acabado manual coordinados." }, { "title": "MONTAJE EN SECO", "desc": "Antes del embalaje, montamos piezas clave, verificamos transiciones y fotografiamos para confirmación." }, { "title": "EMBALAJE Y ENVÍO", "desc": "Cada envío se embala en cajas de madera reforzadas con protección contra humedad y documentación." } ],
+  "types": { "title": "A QUIÉN SERVIMOS", "heading": "TIPOS DE PROYECTO",
+    "privateHomes": { "title": "HOGARES", "desc": "Villas, apartamentos, patios, baños, paredes, escaleras y encimeras personalizables." },
+    "commercialSpaces": { "title": "COMERCIAL", "desc": "Vestíbulos, tiendas, restaurantes y clubs que necesitan belleza, durabilidad y control." },
+    "designerCollaboration": { "title": "DISEÑADORES", "desc": "Apoyamos a diseñadores desde la fase conceptual con sugerencias de material y revisión." },
+    "projectSupply": { "title": "SUMINISTRO", "desc": "Para grandes proyectos, coordinamos lotes, plazos, gestión de color, embalaje y apoyo en obra." }
+  },
+  "workshop": { "title": "TALLER", "heading": "TRABAJO DIARIO EN EL TALLER", "description": "Detalles de producción real de pedidos activos, no fotos de escaparate." },
+  "cta": { "heading": "INICIA TU PROYECTO DE PIEDRA PERSONALIZADO", "description": "Envía tus planos, medidas y preferencias. Te responderemos con los siguientes pasos.", "button": "ENVIAR SOLICITUD" }
+}

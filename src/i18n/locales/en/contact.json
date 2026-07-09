@@ -1,0 +1,33 @@
+{
+  "hero": {
+    "title": "Contact",
+    "heading": "CONTACT US",
+    "description": "Send Us Your Drawings, Material Ideas, Sizes, Or Project Brief. We Will Help You Move From Concept To Quotation."
+  },
+  "form": {
+    "heading": "SEND INQUIRY",
+    "name": "NAME *",
+    "namePlaceholder": "Your Name",
+    "email": "EMAIL *",
+    "emailPlaceholder": "your@email.com",
+    "company": "COMPANY",
+    "companyPlaceholder": "Your Company Name",
+    "message": "PROJECT DETAILS *",
+    "messagePlaceholder": "Tell Us The Product Type, Dimensions, Quantity, Finish, Drawings, Timeline, And Destination Port.",
+    "submit": "SEND INQUIRY",
+    "thankYou": "THANK YOU FOR YOUR INQUIRY",
+    "thankYouDesc": "We Will Contact You By Email Or WhatsApp Within 24 Hours. For Urgent Projects, Please Call +86 156 5906 9988.",
+    "checkEmail": "If This Is Your First Submission, Please Check The Confirmation Email From",
+    "sendAnother": "Send Another Message"
+  },
+  "info": {
+    "heading": "GET IN TOUCH",
+    "address": "ADDRESS",
+    "addressValue": "Houdian Industrial Zone, Shijing, Nan'an, Fujian, China",
+    "phone": "PHONE",
+    "email": "EMAIL",
+    "whatsapp": "WHATSAPP",
+    "whatsappTitle": "WhatsApp Contact",
+    "whatsappDesc": "Message Us For Fast Material Consultation And Quotation Follow-Up."
+  }
+}

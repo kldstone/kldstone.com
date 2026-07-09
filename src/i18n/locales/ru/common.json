@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "topbar": "НАТУРАЛЬНЫЙ МРАМОР · ВОДЯНЫЕ МЕДАЛЬОНЫ · ИЗДЕЛИЯ ИЗ КАМНЯ · ШУЙТОУ, КИТАЙ",
+    "home": "ГЛАВНАЯ",
+    "collections": "КОЛЛЕКЦИИ",
+    "naturalMarble": "НАТУРАЛЬНЫЙ МРАМОР",
+    "waterjetMedallions": "ВОДЯНЫЕ МЕДАЛЬОНЫ",
+    "projectSpaces": "НАШИ ПРОЕКТЫ",
+    "factoryTour": "ЭКСКУРСИЯ",
+    "faq": "FAQ",
+    "aboutUs": "О НАС",
+    "contactUs": "КОНТАКТЫ",
+    "getQuote": "ЗАПРОСИТЬ ЦЕНУ",
+    "menu": "МЕНЮ",
+    "close": "ЗАКРЫТЬ",
+    "whatsapp": "WHATSAPP",
+    "brandName": "KLD STONE",
+    "brandSub": "НАТУРАЛЬНЫЙ КАМЕНЬ · ШУЙТОУ, КИТАЙ"
+  },
+  "footer": {
+    "tagline": "Натуральный камень, тщательно отобранный и обработанный для долговечных пространств.",
+    "explore": "РАЗДЕЛЫ",
+    "productCategories": "КАТЕГОРИИ",
+    "contact": "КОНТАКТЫ",
+    "collections": "Коллекции",
+    "projectSpaces": "Наши проекты",
+    "aboutUs": "О нас",
+    "contactUs": "Контакты",
+    "naturalMarble": "Натуральный мрамор",
+    "waterjetMedallions": "Водяные медальоны",
+    "address": "Хоудянь, промзона, Шицзин, Наньань, Фуцзянь, Китай",
+    "copyright": "KLD Stone."
+  },
+  "seo": {
+    "titleSuffix": "KLD Stone | Натуральный мрамор, водяные медальоны и изделия из камня",
+    "defaultDescription": "KLD Stone поставляет натуральный мрамор, водяные медальоны, мозаику, столешницы и изделия из камня из Шуйтоу, Китай."
+  },
+  "common": {
+    "scroll": "Листайте",
+    "learnMore": "Подробнее →",
+    "viewAll": "Смотреть все",
+    "contactUs": "СВЯЗАТЬСЯ",
+    "sendInquiry": "ОТПРАВИТЬ ЗАПРОС",
+    "callUs": "ПОЗВОНИТЬ +86 156 5906 9988",
+    "startAProject": "НАЧАТЬ ПРОЕКТ",
+    "previous": "Предыдущий",
+    "next": "Следующий"
+  }
+}

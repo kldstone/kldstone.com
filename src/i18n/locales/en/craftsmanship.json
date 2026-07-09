@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "title": "FACTORY TOUR & CRAFTSMANSHIP",
+    "heading": "FROM RAW BLOCK TO FINISHED PRODUCT",
+    "description": "Walk Through Our Workshop — Marble Cutting, Waterjet Inlay, CNC Profiling, Polishing, Dry Lay, Inspection, And Export Packing."
+  },
+  "stats": [
+    { "num": "20+", "label": "YEARS IN STONE", "sub": "From Block Trading To Fabrication" },
+    { "num": "149", "label": "MARBLE SELECTIONS", "sub": "Slabs And Samples Available" },
+    { "num": "±0.1mm", "label": "WATERJET PRECISION", "sub": "CNC Controlled Cutting" },
+    { "num": "6", "label": "EXPORT CHECKS", "sub": "Color, Thickness, Protection" }
+  ],
+  "facilities": [
+    { "title": "MARBLE SLAB LINE", "desc": "Diamond Saws, Slab Calibration, Polishing, And Numbered Batch Records Help Us Track Quarry Source, Color Range, And Slab Identity." },
+    { "title": "WATERJET MEDALLION CENTER", "desc": "High-Pressure Waterjet Cutting Enables Precise Inlay Patterns. Each Medallion Is Dry-Laid And Checked Against The Drawing Before Packing." },
+    { "title": "CNC PROFILING & SHAPING", "desc": "CNC Carving, Profiled Edges, Columns, Moldings, And Shaped Pieces Can Be Produced From Drawings With Repeatable Accuracy." },
+    { "title": "QUALITY CONTROL CENTER", "desc": "Color Range Control, Thickness Checks, Six-Side Inspection, Dry Laying, Surface Protection, And Export Packing Are Built Into Our Workflow." }
+  ]
+}

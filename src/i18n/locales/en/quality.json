@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "QUALITY ASSURANCE",
+    "heading": "QUALITY ASSURANCE",
+    "description": "Quality Is Not A Slogan. It Is Built Into Selection, Fabrication, Inspection, Packing, And Shipment."
+  },
+  "standard": {
+    "title": "OUR STANDARD",
+    "heading": "QUALITY MEANS DOING THE RIGHT WORK BEFORE ANYONE SEES IT",
+    "text": "When A Stone Piece Is Finally Installed, Most People Never See The Measurement, Sorting, Dry-Lay, Repair, Protection, And Packing Work Behind It. We Do. That Is Why Our Inspection Process Happens Before The Shipment Leaves The Workshop."
+  },
+  "control": {
+    "title": "QUALITY CONTROL",
+    "heading": "EVERY PIECE DESERVES CAREFUL HANDLING",
+    "checks": [
+      { "title": "COLOR RANGE CONTROL", "desc": "Natural Stone Always Has Variation. We Sort Slabs By Batch, Tone, Vein Movement, And Application Area So Large-Area Installation Can Stay Visually Consistent." },
+      { "title": "THICKNESS & FLATNESS", "desc": "We Check Thickness, Flatness, Edge Quality, And Surface Finish Before Packing. Countertops, Stairs, And Wall Pieces Receive Additional Dimensional Review." },
+      { "title": "SIX-SIDE INSPECTION", "desc": "Each Piece Is Checked On The Face, Back, And Edges For Chips, Cracks, Finish Issues, Cutting Accuracy, And Edge Detail Before It Leaves The Workshop." },
+      { "title": "SURFACE PROTECTION", "desc": "Marble And Custom Pieces Can Receive Penetrating Protection Treatments Based On Application, Finish, And Destination Requirements." }
+    ]
+  },
+  "packaging": {
+    "title": "PACKING & DELIVERY",
+    "heading": "THE JOURNEY CONTINUES AFTER FABRICATION",
+    "description": "We Treat Export Packing As Seriously As Fabrication, Because Good Stone Still Needs To Arrive Safely.",
+    "steps": [
+      { "title": "REINFORCED WOODEN CRATES", "desc": "Crates Are Sized For The Order, Lined With EPE Foam, Separated With Cardboard, And Strapped For Container Loading." },
+      { "title": "MOISTURE PROTECTION", "desc": "Desiccants, Waterproof Wrapping, And Added Protection For High-Value Pieces Help Reduce Moisture Risks During Sea Freight." },
+      { "title": "SHIPMENT TRACKING", "desc": "We Provide Packing Photos, Marks, Packing Lists, And Shipment Coordination From Loading Through Destination Port Updates." }
+    ]
+  },
+  "packingSite": {
+    "title": "PACKING SITE",
+    "heading": "EVERY CRATE IS PACKED WITH CARE"
+  },
+  "cta": {
+    "heading": "RELIABLE QUALITY COMES FROM A RELIABLE PROCESS",
+    "description": "If Your Project Has Specific Inspection, Packing, Or Documentation Requirements, We Can Follow Your Standards.",
+    "button": "DISCUSS QUALITY REQUIREMENTS"
+  }
+}

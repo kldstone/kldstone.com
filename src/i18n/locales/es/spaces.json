@@ -1,0 +1,6 @@
+{
+  "hero": { "title": "NUESTROS ESPACIOS", "heading": "ESPACIOS DE PROYECTOS", "description": "La piedra pertenece a espacios terminados. Explora escenas reales de vestíbulos, villas, interiores comerciales y residencias." },
+  "categories": { "all": "TODOS", "lobbies": "VESTÍBULOS HOTEL", "villas": "VILLAS Y CLUBS", "commercial": "COMERCIAL", "residential": "RESIDENCIAL", "lobbiesDesc": "Vestíbulos de lujo donde la piedra causa la primera impresión.", "villasDesc": "Villas privadas y clubs con carácter de piedra natural.", "commercialDesc": "Interiores comerciales donde la piedra apoya la marca.", "residentialDesc": "Aplicaciones residenciales con superficies naturales duraderas." },
+  "cases": { "hotelLobby": "Vestíbulo de hotel", "privateVilla": "Villa privada", "flagshipStore": "Tienda insignia", "luxuryResidence": "Residencia de lujo", "viewDetails": "Ver detalles →" },
+  "cta": { "heading": "LLEVA PIEDRA NATURAL A TU PROYECTO", "description": "Trabajamos con diseñadores, contratistas y propietarios para llevar textura natural a vestíbulos, villas, tiendas y hogares." }
+}

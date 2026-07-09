@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "topbar": "MÁRMOL NATURAL · MEDALLONES WATERJET · PIEDRA PERSONALIZADA · SHUITOU, CHINA",
+    "home": "INICIO",
+    "collections": "COLECCIONES",
+    "naturalMarble": "MÁRMOL NATURAL",
+    "waterjetMedallions": "MEDALLONES WATERJET",
+    "projectSpaces": "PROYECTOS",
+    "factoryTour": "FÁBRICA",
+    "faq": "FAQ",
+    "aboutUs": "NOSOTROS",
+    "contactUs": "CONTACTO",
+    "getQuote": "SOLICITAR PRESUPUESTO",
+    "menu": "MENÚ",
+    "close": "CERRAR",
+    "whatsapp": "WHATSAPP",
+    "brandName": "KLD STONE",
+    "brandSub": "PIEDRA NATURAL · SHUITOU, CHINA"
+  },
+  "footer": {
+    "tagline": "Piedra natural, seleccionada y fabricada con precisión para espacios duraderos.",
+    "explore": "EXPLORAR",
+    "productCategories": "CATEGORÍAS",
+    "contact": "CONTACTO",
+    "collections": "Colecciones",
+    "projectSpaces": "Proyectos",
+    "aboutUs": "Nosotros",
+    "contactUs": "Contacto",
+    "naturalMarble": "Mármol natural",
+    "waterjetMedallions": "Medallones waterjet",
+    "address": "Zona Industrial Houdian, Shijing, Nan'an, Fujian, China",
+    "copyright": "KLD Stone."
+  },
+  "seo": {
+    "titleSuffix": "KLD Stone | Mármol natural, medallones waterjet y fabricación de piedra personalizada",
+    "defaultDescription": "KLD Stone suministra losas de mármol natural, medallones waterjet, mosaicos de piedra, encimeras y fabricación de piedra personalizada desde Shuitou, China."
+  },
+  "common": {
+    "scroll": "Desplazar",
+    "learnMore": "Más información →",
+    "viewAll": "Ver todo",
+    "contactUs": "CONTACTO",
+    "sendInquiry": "ENVIAR CONSULTA",
+    "callUs": "LLAMAR +86 156 5906 9988",
+    "startAProject": "INICIAR PROYECTO",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  }
+}

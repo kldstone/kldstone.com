@@ -1,11 +1,49 @@
 {
-  "site.name": "KLD Stone",
-  "nav.home": "Home",
-  "nav.collections": "Collections",
-  "nav.spaces": "Spaces",
-  "nav.custom": "Custom Service",
-  "nav.craftsmanship": "Craftsmanship",
-  "nav.quality": "Quality",
-  "nav.about": "About",
-  "nav.contact": "Contact"
+  "nav": {
+    "topbar": "NATURAL MARBLE · WATERJET MEDALLIONS · CUSTOM STONE · SHUITOU, CHINA",
+    "home": "HOME",
+    "collections": "COLLECTIONS",
+    "naturalMarble": "NATURAL MARBLE",
+    "waterjetMedallions": "WATERJET MEDALLIONS",
+    "projectSpaces": "PROJECT SPACES",
+    "factoryTour": "FACTORY TOUR",
+    "faq": "FAQ",
+    "aboutUs": "ABOUT US",
+    "contactUs": "CONTACT US",
+    "getQuote": "GET QUOTE",
+    "menu": "MENU",
+    "close": "CLOSE",
+    "whatsapp": "WHATSAPP",
+    "brandName": "KLD STONE",
+    "brandSub": "NATURAL STONE · SHUITOU, CHINA"
+  },
+  "footer": {
+    "tagline": "Natural Stone, Precisely Selected And Fabricated For Lasting Spaces.",
+    "explore": "EXPLORE",
+    "productCategories": "PRODUCT CATEGORIES",
+    "contact": "CONTACT",
+    "collections": "COLLECTIONS",
+    "projectSpaces": "PROJECT SPACES",
+    "aboutUs": "ABOUT US",
+    "contactUs": "CONTACT US",
+    "naturalMarble": "Natural Marble",
+    "waterjetMedallions": "Waterjet Medallions",
+    "address": "Houdian Industrial Zone, Shijing, Nan'an, Fujian, China",
+    "copyright": "KLD Stone."
+  },
+  "seo": {
+    "titleSuffix": "KLD Stone | Natural Marble, Waterjet Medallions & Custom Stone Fabrication",
+    "defaultDescription": "KLD Stone supplies natural marble slabs, waterjet medallions, stone mosaics, countertops, and custom stone fabrication from Shuitou, China to global projects."
+  },
+  "common": {
+    "scroll": "Scroll",
+    "learnMore": "Learn More →",
+    "viewAll": "View All",
+    "contactUs": "CONTACT US",
+    "sendInquiry": "SEND INQUIRY",
+    "callUs": "CALL +86 156 5906 9988",
+    "startAProject": "START A PROJECT",
+    "previous": "Previous slide",
+    "next": "Next slide"
+  }
 }

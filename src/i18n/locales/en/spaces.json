@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "OUR SPACES",
+    "heading": "PROJECT SPACES",
+    "description": "Stone Belongs In Completed Spaces. Explore Real Project Scenes From Lobbies, Villas, Commercial Interiors, And Residences."
+  },
+  "categories": {
+    "all": "ALL",
+    "lobbies": "HOTEL LOBBIES",
+    "villas": "VILLAS & CLUBS",
+    "commercial": "COMMERCIAL SPACES",
+    "residential": "RESIDENTIAL PROJECTS",
+    "lobbiesDesc": "Luxury Hotel Lobbies Where Stone Sets The First Impression.",
+    "villasDesc": "Private Villas And Clubs Shaped With Natural Stone Character.",
+    "commercialDesc": "Commercial Interiors Where Stone Supports The Brand Atmosphere.",
+    "residentialDesc": "Residential Applications With Durable, Tactile Natural Surfaces."
+  },
+  "cases": {
+    "hotelLobby": "Hotel Lobby Project",
+    "privateVilla": "Private Villa",
+    "flagshipStore": "Flagship Store",
+    "luxuryResidence": "Luxury Residence",
+    "viewDetails": "View Details →"
+  },
+  "cta": {
+    "heading": "BRING NATURAL STONE INTO YOUR PROJECT",
+    "description": "We Work With Designers, Contractors, Builders, And Owners To Bring Natural Texture Into Lobbies, Villas, Retail Spaces, And Homes."
+  }
+}

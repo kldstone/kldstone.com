@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface SEOProps {
   title: string;
@@ -25,13 +26,15 @@ function setMeta(name: string, content: string, property = false) {
 
 export function useSEO({ title, description, ogImage }: SEOProps) {
   const { pathname } = useLocation();
+  const { t } = useTranslation("common");
   const fullUrl = `${BASE_URL}${pathname}`;
   const image = ogImage || `${BASE_URL}/gani-home/banner_01.jpg`;
 
   useEffect(() => {
-    document.title = `${title} | 康利德石材 KLD Stone`;
-
-    setMeta("description", description);
+    const suffix = t("seo.titleSuffix");
+    document.title = `${title} | ${suffix}`;
+    const desc = description || t("seo.defaultDescription");
+    setMeta("description", desc);
 
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) {
@@ -41,15 +44,15 @@ export function useSEO({ title, description, ogImage }: SEOProps) {
     }
     link.href = fullUrl;
 
-    setMeta("og:title", `${title} | 康利德石材 KLD Stone`, true);
-    setMeta("og:description", description, true);
+    setMeta("og:title", `${title} | ${suffix}`, true);
+    setMeta("og:description", desc, true);
     setMeta("og:image", image, true);
     setMeta("og:url", fullUrl, true);
     setMeta("og:type", "website", true);
 
     setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", `${title} | 康利德石材 KLD Stone`);
-    setMeta("twitter:description", description);
+    setMeta("twitter:title", `${title} | ${suffix}`);
+    setMeta("twitter:description", desc);
     setMeta("twitter:image", image);
-  }, [title, description, image, fullUrl, pathname]);
+  }, [title, description, image, fullUrl, pathname, t]);
 }

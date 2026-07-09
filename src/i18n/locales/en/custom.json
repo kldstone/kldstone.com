@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "title": "BESPOKE SERVICE",
+    "heading": "CUSTOM STONE SERVICE",
+    "description": "From Material Selection To Final Packing, Our Custom Workflow Is Built Around Your Project Rather Than A Standard Catalog."
+  },
+  "intro": {
+    "title": "HOW WE WORK",
+    "heading": "EVERY STONE HAS A STORY; EVERY PROJECT NEEDS A PLAN",
+    "text": "Natural Stone Is Never Truly Standard. Even Adjacent Slabs Can Vary In Vein, Tone, And Movement. Our Custom Service Helps You Select, Detail, Fabricate, Inspect, Pack, And Ship The Right Material For The Right Application."
+  },
+  "steps": [
+    { "title": "PROJECT BRIEF", "desc": "Share Drawings, Mood Boards, Dimensions, Target Material, Budget, Or Even A Rough Idea. We Begin By Understanding The Space, Use Case, And Delivery Needs." },
+    { "title": "STONE SELECTION", "desc": "We Help You Compare Slabs And Samples From Different Origins, Checking Color Range, Veining, Hardness, Translucency, And Project Suitability." },
+    { "title": "SHOP DRAWINGS", "desc": "Our Team Turns Concepts Into Workable Fabrication Drawings, Including Waterjet Paths, Shaped Cutting, Edge Details, And Vein-Matching Plans." },
+    { "title": "FABRICATION", "desc": "Infrared Bridge Cutting, Waterjet Inlay, CNC Shaping, Polishing, And Manual Finishing Are Coordinated Through Each Production Stage." },
+    { "title": "DRY LAY & INSPECTION", "desc": "Before Packing, We Dry-Lay Key Pieces, Check Color Transitions, Review Joint Alignment, And Record Photos For Client Confirmation." },
+    { "title": "PACKING & DELIVERY", "desc": "Each Shipment Is Packed In Reinforced Wooden Crates With Moisture Protection, Labels, Packing Lists, And Export Documentation Support." }
+  ],
+  "types": {
+    "title": "WHO WE SERVE",
+    "heading": "PROJECT TYPES",
+    "privateHomes": {
+      "title": "PRIVATE HOMES",
+      "desc": "Villas, Apartments, Courtyards, Bathrooms, Feature Walls, Stairs, And Countertops Can Be Customized By Slab, Vein Direction, Edge, And Finish."
+    },
+    "commercialSpaces": {
+      "title": "COMMERCIAL SPACES",
+      "desc": "Hotel Lobbies, Retail Stores, Restaurants, And Clubs Need Materials That Balance Beauty, Durability, Slip Resistance, And Installation Control."
+    },
+    "designerCollaboration": {
+      "title": "DESIGNER COLLABORATION",
+      "desc": "We Support Interior Designers And Architects From Concept Stage With Material Suggestions, Slab Selection, Feasibility Review, And Fabrication Detailing."
+    },
+    "projectSupply": {
+      "title": "PROJECT SUPPLY",
+      "desc": "For Larger Projects, We Coordinate Batch Supply, Schedule Control, Color Range Management, Shop Drawings, Packing, And Site Support."
+    }
+  },
+  "workshop": {
+    "title": "THE WORKSHOP",
+    "heading": "DAILY WORK IN THE WORKSHOP",
+    "description": "These Are Real Production Details From Active Orders, Not Staged Showroom Photos."
+  },
+  "cta": {
+    "heading": "START YOUR CUSTOM STONE PROJECT",
+    "description": "Send Your Drawings, Sizes, Material Preference, And Destination. We Will Reply With Next Steps And A Quotation Plan.",
+    "button": "SUBMIT YOUR REQUEST"
+  }
+}

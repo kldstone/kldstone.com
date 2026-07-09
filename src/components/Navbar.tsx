@@ -1,28 +1,31 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-
-const navLinks = [
-  { label: "HOME", href: "/" },
-  {
-    label: "COLLECTIONS",
-    href: "/collections",
-    children: [
-      { label: "NATURAL MARBLE", href: "/collections/marble" },
-      { label: "WATERJET MEDALLIONS", href: "/collections/mosaic" },
-    ],
-  },
-  { label: "PROJECT SPACES", href: "/spaces" },
-  { label: "FACTORY TOUR", href: "/craftsmanship" },
-  { label: "FAQ", href: "/faq" },
-  { label: "ABOUT US", href: "/about" },
-  { label: "CONTACT US", href: "/contact" },
-];
+import { useTranslation } from "react-i18next";
+import LangSwitcher from "./LangSwitcher";
 
 export default function Navbar() {
+  const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
+
+  const navLinks = [
+    { label: t("nav.home"), href: "/" },
+    {
+      label: t("nav.collections"),
+      href: "/collections",
+      children: [
+        { label: t("nav.naturalMarble"), href: "/collections/marble" },
+        { label: t("nav.waterjetMedallions"), href: "/collections/mosaic" },
+      ],
+    },
+    { label: t("nav.projectSpaces"), href: "/spaces" },
+    { label: t("nav.factoryTour"), href: "/craftsmanship" },
+    { label: t("nav.faq"), href: "/faq" },
+    { label: t("nav.aboutUs"), href: "/about" },
+    { label: t("nav.contactUs"), href: "/contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,12 +48,14 @@ export default function Navbar() {
       {/* Top info bar */}
       <div className="w-full bg-white border-b border-black/5 text-[#111111]/50 text-[12px] tracking-[0.04em]">
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between min-h-[34px]">
-          <span className="truncate">NATURAL MARBLE · WATERJET MEDALLIONS · CUSTOM STONE · SHUITOU, CHINA</span>
+          <span className="truncate">{t("nav.topbar")}</span>
           <span className="hidden sm:flex items-center gap-4 ml-4 shrink-0">
+            <LangSwitcher />
+            <span className="text-black/20">|</span>
             <a href="tel:+8615659069988" className="hover:text-[#34c759] transition-colors">+86 156 5906 9988</a>
             <span className="text-black/20">|</span>
             <span className="flex items-center gap-1.5 text-[#111111]/50">
-              WHATSAPP
+              {t("nav.whatsapp")}
             </span>
           </span>
         </div>
@@ -73,8 +78,8 @@ export default function Navbar() {
               className="w-[96px] h-[40px] object-contain"
             />
             <span className="hidden lg:block">
-              <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">KLD STONE</strong>
-              <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">NATURAL STONE · SHUITOU, CHINA</small>
+              <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">{t("nav.brandName")}</strong>
+              <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">{t("nav.brandSub")}</small>
             </span>
           </Link>
 
@@ -98,7 +103,6 @@ export default function Navbar() {
                   )}
                 </Link>
 
-                {/* Dropdown submenu for Collections */}
                 {link.children && dropdownOpen && (
                   <div
                     className="absolute top-full left-0 min-w-[190px] bg-white shadow-lg border border-black/5 py-2 animate-fadeInDown"
@@ -122,7 +126,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile visible links (partial, for mid-size screens) */}
+          {/* Mobile visible links */}
           <div className="hidden md:flex lg:hidden items-center gap-0">
             {navLinks.slice(0, 5).map((link) => (
               <Link
@@ -143,7 +147,7 @@ export default function Navbar() {
             to="/contact"
             className="hidden md:inline-flex items-center justify-center min-h-[40px] px-5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors whitespace-nowrap shrink-0"
           >
-            GET QUOTE
+            {t("nav.getQuote")}
           </Link>
 
           {/* Mobile toggle */}
@@ -151,7 +155,7 @@ export default function Navbar() {
             className="md:hidden border border-black/15 bg-transparent text-[#111111]/80 px-3 py-2 text-[12px] font-bold tracking-[0.08em]"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            {menuOpen ? "关闭" : "菜单"}
+            {menuOpen ? t("nav.close") : t("nav.menu")}
           </button>
         </div>
 
@@ -172,7 +176,6 @@ export default function Navbar() {
                 >
                   {link.label}
                 </Link>
-                {/* Mobile sub-menu for collections */}
                 {link.children && menuOpen && (
                   <div className="pl-5 pb-2">
                     {link.children.map((child) => (
@@ -192,7 +195,7 @@ export default function Navbar() {
               to="/contact"
               className="mt-3 block text-center bg-[#34c759] text-white py-3 text-[12px] font-bold tracking-[0.06em]"
             >
-              GET QUOTE
+              {t("nav.getQuote")}
             </Link>
           </div>
         </div>
