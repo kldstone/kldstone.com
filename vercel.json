@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
@@ -20,7 +20,13 @@
       ]
     },
     {
-      "source": "/brand-gallery/(.*)",
+          {
+      "source": "/videos/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    "source": "/brand-gallery/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
@@ -50,6 +56,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets|gani-home|gani-products|brand-gallery|favicon\\.svg|robots\\.txt|sitemap\\.xml).*)", "destination": "/index.html" }
+    { "source": "/((?!assets|gani-home|gani-products|brand-gallery|favicon\\.svg|robots\\.txt|sitemap\\.xml|videos).*)", "destination": "/index.html" }
   ]
 }
