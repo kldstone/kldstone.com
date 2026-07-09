@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
 
-const inspectionImgs = Array.from({ length: 6 }, (_, i) => `/brand-gallery/0${71 + i}-inspection-img-192${1 + i}.jpg`);
-const deliveryImgs = Array.from({ length: 13 }, (_, i) => `/brand-gallery/0${57 + i}-delivery-img-${1890 + i}.jpg`);
+const inspectionImgs = ["/brand-gallery/071-inspection-img-1921.jpg","/brand-gallery/072-inspection-img-1922.jpg","/brand-gallery/073-inspection-img-2091.jpg","/brand-gallery/074-inspection-img-2156.jpg","/brand-gallery/075-inspection-img-2502.jpg","/brand-gallery/076-inspection-img-2504.jpg"];
+const deliveryImgs = ["/brand-gallery/057-delivery-img-1901.jpg","/brand-gallery/058-delivery-img-1890.jpg","/brand-gallery/059-delivery-img-2119.jpg","/brand-gallery/060-delivery-img-1889.jpg","/brand-gallery/061-delivery-img-1898.jpg","/brand-gallery/062-delivery-img-2122.jpg","/brand-gallery/063-delivery-img-1878.jpg","/brand-gallery/064-delivery-img-2124.jpg","/brand-gallery/065-delivery-img-2125.jpg","/brand-gallery/066-delivery-img-2120.jpg","/brand-gallery/067-delivery-img-2126.jpg","/brand-gallery/068-delivery-img-2123.jpg","/brand-gallery/069-delivery-img-1877.jpg"];
 
 export default function Quality() {
   const { t } = useTranslation("quality");
