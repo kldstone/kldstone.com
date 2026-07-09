@@ -1,18 +1,18 @@
-﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 
-import Home from "./pages/Home";
-import Collections from "./pages/Collections";
-import CollectionDetail from "./pages/CollectionDetail";
-import Spaces from "./pages/Spaces";
-import CustomService from "./pages/CustomService";
-import Craftsmanship from "./pages/Craftsmanship";
-import Quality from "./pages/Quality";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import FAQ from "./pages/FAQ";
+const Home = lazy(() => import("./pages/Home"));
+const Collections = lazy(() => import("./pages/Collections"));
+const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
+const Spaces = lazy(() => import("./pages/Spaces"));
+const CustomService = lazy(() => import("./pages/CustomService"));
+const Craftsmanship = lazy(() => import("./pages/Craftsmanship"));
+const Quality = lazy(() => import("./pages/Quality"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const FAQ = lazy(() => import("./pages/FAQ"));
 
 export default function App() {
   return (
