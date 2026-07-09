@@ -1,61 +1,99 @@
-﻿{
+{
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/gani-home/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/gani-products/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
-          {
-      "source": "/videos/(.*)",
+      "source": "/brand-gallery/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
-    },
-    "source": "/brand-gallery/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/favicon.svg",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/videos/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     }
   ],
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "kldstone.cn" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "kldstone.cn"
+        }
+      ],
       "destination": "https://www.kldstone.cn/$1",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets|gani-home|gani-products|brand-gallery|favicon\\.svg|robots\\.txt|sitemap\\.xml|videos).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!assets|gani-home|gani-products|brand-gallery|favicon\\.svg|robots\\.txt|sitemap\\.xml|videos).*)",
+      "destination": "/index.html"
+    }
   ]
 }
