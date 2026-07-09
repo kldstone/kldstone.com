@@ -1,4 +1,6 @@
-export function optimizedImage(path: string): string {
-  if (path.startsWith("/optimized/")) return path;
-  return path;
+﻿export function optimizedImage(src: string) {
+  if (/^\/(brand-gallery|gani-home|gani-products)\/.+\.(jpe?g|png)$/i.test(src)) {
+    return `/optimized${src.replace(/\.(jpe?g|png)$/i, ".webp")}`;
+  }
+  return src;
 }
