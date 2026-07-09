@@ -2,20 +2,20 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "首页", href: "/" },
+  { label: "HOME", href: "/" },
   {
-    label: "石材系列",
+    label: "COLLECTIONS",
     href: "/collections",
     children: [
-      { label: "天然大理石", href: "/collections/marble" },
-      { label: "水刀拼花", href: "/collections/mosaic" },
+      { label: "NATURAL MARBLE", href: "/collections/marble" },
+      { label: "WATERJET MEDALLIONS", href: "/collections/mosaic" },
     ],
   },
-  { label: "空间作品", href: "/spaces" },
-  { label: "工厂品鉴", href: "/craftsmanship" },
-  { label: "常见问题", href: "/faq" },
-  { label: "关于我们", href: "/about" },
-  { label: "联系我们", href: "/contact" },
+  { label: "PROJECT SPACES", href: "/spaces" },
+  { label: "FACTORY TOUR", href: "/craftsmanship" },
+  { label: "FAQ", href: "/faq" },
+  { label: "ABOUT US", href: "/about" },
+  { label: "CONTACT US", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -45,12 +45,12 @@ export default function Navbar() {
       {/* Top info bar */}
       <div className="w-full bg-white border-b border-black/5 text-[#111111]/50 text-[12px] tracking-[0.04em]">
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between min-h-[34px]">
-          <span className="truncate">天然大理石 · 水刀拼花 · 石材工艺品 · 中国◆水头</span>
+          <span className="truncate">NATURAL MARBLE · WATERJET MEDALLIONS · CUSTOM STONE · SHUITOU, CHINA</span>
           <span className="hidden sm:flex items-center gap-4 ml-4 shrink-0">
             <a href="tel:+8615659069988" className="hover:text-[#34c759] transition-colors">+86 156 5906 9988</a>
             <span className="text-black/20">|</span>
             <span className="flex items-center gap-1.5 text-[#111111]/50">
-              微信
+              WHATSAPP
             </span>
           </span>
         </div>
@@ -69,12 +69,12 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3 shrink-0">
             <img
               src="/kld-logo-web.png"
-              alt="康利德石材"
+              alt="KLD Stone"
               className="w-[96px] h-[40px] object-contain"
             />
             <span className="hidden lg:block">
-              <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">康利德 KLD</strong>
-              <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">天然石材 · 中国水头</small>
+              <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">KLD STONE</strong>
+              <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">NATURAL STONE · SHUITOU, CHINA</small>
             </span>
           </Link>
 
@@ -143,7 +143,7 @@ export default function Navbar() {
             to="/contact"
             className="hidden md:inline-flex items-center justify-center min-h-[40px] px-5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors whitespace-nowrap shrink-0"
           >
-            获取报价
+            GET QUOTE
           </Link>
 
           {/* Mobile toggle */}
@@ -192,7 +192,7 @@ export default function Navbar() {
               to="/contact"
               className="mt-3 block text-center bg-[#34c759] text-white py-3 text-[12px] font-bold tracking-[0.06em]"
             >
-              获取报价
+              GET QUOTE
             </Link>
           </div>
         </div>

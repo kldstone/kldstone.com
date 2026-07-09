@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
 
@@ -55,8 +54,13 @@ const slides: Slide[] = [
   },
 ];
 
-
 // Trust stats
+const trustStats = [
+  { num: "20+", label: "YEARS" },
+  { num: "149", label: "MARBLE VARIETIES" },
+  { num: "±0.1mm", label: "WATERJET PRECISION" },
+  { num: "30+", label: "EXPORT COUNTRIES" },
+];
 
 // Featured marble products
 const featuredProducts = [
@@ -95,9 +99,6 @@ const featuredSpaces = [
 ];
 
 export default function Home() {
-  const { t, i18n } = useTranslation("home");
-  const isRtl = i18n.language === "ar";
-
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -421,11 +422,6 @@ export default function Home() {
                 <source src="/videos/waterjet-cutting.mp4" type="video/mp4" />
               </video>
             </div>
-            <div className="aspect-video bg-[#f5f5f5] overflow-hidden relative">
-              <video className="w-full h-full object-cover" controls preload="none" poster="">
-                <source src="/videos/waterjet-cutting.mp4" type="video/mp4" />
-              </video>
-            </div>
           </div>
         </div>
       </section>
@@ -535,7 +531,7 @@ export default function Home() {
 
             <div className="overflow-hidden img-hover">
               <img
-                src={optimizedImage("/brand-gallery/about-exhibition-02-2026-07-08.jpg")}
+                src={optimizedImage("/assets/home-exhibition-2026-07-08.jpg")}
                 alt="KLD Stone exhibition"
                 className="w-full aspect-[4/3] object-cover"
                 loading="lazy" decoding="async"
