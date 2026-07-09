@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b8873d"/>
+      <stop offset="100%" style="stop-color:#8a6530"/>
+    </linearGradient>
+  </defs>
+  <!-- K letter mark with stone facets -->
+  <polygon points="25,15 25,85 5,85 25,55 20,55 40,85 60,85 45,55 55,45 75,85 95,85 65,35 75,25 55,45 40,45 40,15" fill="url(#g)"/>
+  <polygon points="25,15 40,45 25,55 25,15" fill="#d4a64a" opacity="0.3"/>
+</svg>

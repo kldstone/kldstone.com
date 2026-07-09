@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>康利德石材 KLD Stone | 天然大理石与水刀拼花定制工厂</title>
+    <meta name="description" content="福建省南安康利德石材有限公司——天然大理石、水刀拼花马赛克、石材家具摆件、台面定制，一站式石材解决方案。扎根中国石都南安水头，服务全球高端客户。" />
+    <meta name="keywords" content="康利德石材,天然大理石,水刀拼花,石材马赛克,石材家具,台面定制,南安石材,福建石材" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical & Hreflang -->
+    <link rel="canonical" href="https://www.kldstone.cn/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://www.kldstone.cn/" />
+    <link rel="alternate" hreflang="en" href="https://www.kldstone.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.kldstone.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="康利德石材 KLD Stone | 天然大理石与水刀拼花定制工厂" />
+    <meta property="og:description" content="福建省南安康利德石材有限公司——天然大理石、水刀拼花马赛克、石材家具摆件、台面定制，一站式石材解决方案。" />
+    <meta property="og:image" content="https://www.kldstone.cn/gani-home/banner_01.jpg" />
+    <meta property="og:url" content="https://www.kldstone.cn/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="康利德石材 KLD Stone" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="康利德石材 KLD Stone | 天然大理石与水刀拼花定制工厂" />
+    <meta name="twitter:description" content="福建省南安康利德石材有限公司——天然大理石、水刀拼花马赛克、石材家具摆件、台面定制，一站式石材解决方案。" />
+    <meta name="twitter:image" content="https://www.kldstone.cn/gani-home/banner_01.jpg" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Resource Hints -->
+    <link rel="dns-prefetch" href="//www.kldstone.cn" />
+
+    <!-- Preload LCP image -->
+    <link rel="preload" as="image" href="/gani-home/banner_01.jpg" fetchpriority="high" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "康利德石材",
+      "alternateName": "KLD Stone",
+      "description": "天然大理石、水刀拼花马赛克、石材家具摆件、台面定制，一站式石材解决方案。",
+      "url": "https://www.kldstone.cn",
+      "image": "https://www.kldstone.cn/gani-home/banner_01.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "南安",
+        "addressRegion": "福建",
+        "addressCountry": "CN"
+      },
+      "areaServed": "Worldwide",
+      "priceRange": "$$",
+      "currenciesAccepted": "CNY,USD"
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
