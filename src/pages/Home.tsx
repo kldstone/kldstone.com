@@ -214,6 +214,54 @@ export default function Home() {
       </section>
 
       {/* NATURAL MARBLE SELECTION */}
+      <section className="bg-[#f8f8f8] py-20 px-6">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+              {t("waterjet.title")}
+            </span>
+            <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
+              {t("waterjet.heading")}
+            </h2>
+            <p className="text-[#111111]/45 text-[14px] max-w-[520px] mx-auto leading-relaxed">
+              {t("waterjet.description")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+            {featuredMosaics.map((p, i) => (
+              <Link
+                key={i}
+                to={"/collections/product/" + (p.img.match(/gani_(\d+)/) ? String(parseInt(p.img.match(/gani_(\d+)/)[1], 10) - 1) : "0")}                className="group relative block overflow-hidden bg-[#f5f5f5] aspect-square"
+              >
+                <img
+                  src={optimizedImage(p.img)}
+                  alt={p.name}
+                  loading="lazy" decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute left-0 right-0 bottom-0 px-4 py-3">
+                  <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">{p.name}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              to="/collections/mosaic"
+              onClick={() => trackConversion("cta_click", { source: "home_mosaic_all" })}
+              className="inline-flex items-center gap-2 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
+            >
+              {t("waterjet.viewAll")}
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L12 8L6 14" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* WATERJET MEDALLIONS */}
       <section className="max-w-[1400px] mx-auto px-6 pt-20 pb-10">
         <div className="text-center mb-12">
           <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
@@ -261,105 +309,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WATERJET MEDALLIONS */}
-      <section className="bg-[#f8f8f8] py-20 px-6">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
-              {t("waterjet.title")}
-            </span>
-            <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
-              {t("waterjet.heading")}
-            </h2>
-            <p className="text-[#111111]/45 text-[14px] max-w-[520px] mx-auto leading-relaxed">
-              {t("waterjet.description")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-            {featuredMosaics.map((p, i) => (
-              <Link
-                key={i}
-                to="/collections/mosaic"
-                className="group relative block overflow-hidden bg-[#f5f5f5] aspect-square"
-              >
-                <img
-                  src={optimizedImage(p.img)}
-                  alt={p.name}
-                  loading="lazy" decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute left-0 right-0 bottom-0 px-4 py-3">
-                  <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">{p.name}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              to="/collections/mosaic"
-              onClick={() => trackConversion("cta_click", { source: "home_mosaic_all" })}
-              className="inline-flex items-center gap-2 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
-            >
-              {t("waterjet.viewAll")}
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L12 8L6 14" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* FACTORY CAPABILITIES */}
-      <section className="bg-white py-20 px-6">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
-              {t("process.title")}
-            </span>
-            <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
-              {t("process.heading")}
-            </h2>
-            <p className="text-[#111111]/45 text-[14px] max-w-[520px] mx-auto leading-relaxed">
-              {t("process.description")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((step, i) => (
-              <div key={i} className="relative">
-                <div className="bg-[#f8f8f8] p-8 h-full">
-                  <span className="text-[#34c759] text-[2.5rem] font-black tracking-[0.02em] leading-none block mb-4">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-[#111111] text-[16px] font-bold tracking-[0.04em] mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-[#111111]/45 text-[13px] leading-[1.8]">
-                    {step.desc}
-                  </p>
-                </div>
-                {i < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 text-[#34c759]/30 text-xl">
-                    &rarr;
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              to="/craftsmanship"
-              onClick={() => trackConversion("cta_click", { source: "home_factory_tour" })}
-              className="inline-flex items-center gap-2 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
-            >
-              {t("process.cta")}
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L12 8L6 14" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
+      
 
       {/* VIDEO */}
       <section className="bg-white py-20 px-6">
