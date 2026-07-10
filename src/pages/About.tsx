@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
@@ -69,9 +69,6 @@ export default function About() {
       <section className="py-20 px-6 max-w-[1280px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-4">
-            <div className="overflow-hidden img-hover">
-              <img src={optimizedImage("/brand-gallery/about-exhibition-2026-07-06.jpg")} alt="Stone Exhibition" className="w-full aspect-[4/3] object-cover" loading="lazy" decoding="async" />
-            </div>
             <div className="overflow-hidden img-hover">
               <img src={optimizedImage("/brand-gallery/about-exhibition-02-2026-07-08.jpg")} alt="Exhibition On Site" className="w-full aspect-[4/3] object-cover" loading="lazy" decoding="async" />
             </div>
