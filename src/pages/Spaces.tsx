@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
+import { useSEO } from "@/components/SEO";
 
 const spacesData: Record<string, string[]> = {
   all: [],
@@ -13,6 +14,7 @@ const spacesData: Record<string, string[]> = {
 
 export default function Spaces() {
   const { t } = useTranslation("spaces");
+  useSEO({ title: "Project Spaces", description: t("hero.description") });
   const [activeCat, setActiveCat] = useState("all");
   const [lightbox, setLightbox] = useState<string | null>(null);
 

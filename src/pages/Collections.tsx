@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { optimizedImage } from "@/lib/images";
+import { useSEO } from "@/components/SEO";
 
 // ============================================================
 // Product collection grid
@@ -201,6 +202,7 @@ const ALL_TABS = [...MARBLE_TABS, { key: "水刀拼花", label: "WATERJET MEDALL
 
 export default function Collections({ filter }: CollectionsProps) {
   const [active, setActive] = useState("全部");
+  useSEO({ title: "Natural Marble & Waterjet Medallions", description: "Premium natural marble slabs and custom waterjet medallions from KLD Stone, Shuitou, China. Browse by color family." });
 
   const isMosaic = filter === "mosaic";
 

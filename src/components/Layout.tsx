@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FloatingBar from "./FloatingBar";
 
 export default function Layout() {
   const location = useLocation();
@@ -13,10 +14,11 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 pb-[56px] md:pb-0">
         <Outlet />
       </main>
       <Footer />
+      <FloatingBar />
     </div>
   );
 }

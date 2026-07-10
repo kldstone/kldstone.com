@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
+import { Link } from "react-router-dom";
 
 // Trust stats (numbers stay static, labels come from i18n)
 const trustNums = ["20+", "149", "±0.1mm", "30+"];
@@ -126,7 +126,24 @@ export default function Home() {
               </h1>
               <p className="text-white/80 text-[clamp(0.85rem,1.4vw,1.1rem)] font-light tracking-[0.06em] leading-relaxed">
                 {slides[active].des}
-              </p>
+             </p>
+              <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+                <Link
+                  to="/contact"
+                  onClick={() => trackConversion("quote_cta", { source: "home_hero" })}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  GET QUOTE
+                </Link>
+                <Link
+                  to="/collections"
+                  onClick={() => trackConversion("cta_click", { source: "home_hero_products" })}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-white/30 text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-white/10 transition-colors"
+                >
+                  VIEW PRODUCTS
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -139,6 +156,7 @@ export default function Home() {
                   <button
                     key={i}
                     onClick={() => setActive(i)}
+                    aria-label={`Go to slide ${i + 1}`}
                     className="group relative h-[3px] transition-all duration-500"
                     style={{
                       width: i === active ? "48px" : "24px",

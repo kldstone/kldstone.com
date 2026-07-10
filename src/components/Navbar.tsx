@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LangSwitcher from "./LangSwitcher";
@@ -86,9 +86,10 @@ export default function Navbar() {
           {/* Desktop links */}
           <div className="hidden lg:flex items-center gap-0">
             {navLinks.map((link) => (
-              <div key={link.href} className="relative group/dropdown">
+              <div key={link.href} className="relative group/dropdown" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDropdownOpen(false); }}>
                 <Link
                   to={link.href}
+                  onFocus={() => link.children && setDropdownOpen(true)}
                   className={`inline-flex items-center justify-center min-h-[44px] px-[12px] text-[12.5px] font-semibold tracking-[0.05em] transition-colors whitespace-nowrap ${
                     isActive(link.href)
                       ? "text-[#34c759] font-bold"
@@ -132,6 +133,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 to={link.href}
+                  onFocus={() => link.children && setDropdownOpen(true)}
                 className={`inline-flex items-center justify-center min-h-[44px] px-[9px] text-[11px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
                   isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                 }`}
@@ -174,6 +176,7 @@ export default function Navbar() {
               <div key={link.href}>
                 <Link
                   to={link.href}
+                  onFocus={() => link.children && setDropdownOpen(true)}
                   className={`block py-3.5 text-[13px] font-semibold tracking-[0.06em] border-b border-black/5 transition-colors ${
                     isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                   }`}

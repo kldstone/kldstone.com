@@ -35,7 +35,7 @@ const faqData = [
     items: [
       { q: "How much does a waterjet medallion cost per square meter?", a: "Pricing varies greatly depending on pattern complexity, dimensions, stone selection, and density of the inlay. Simple designs range from USD 50–80/m², medium complexity USD 80–140/m², and complex custom designs require a project-based quote." },
       { q: "What factors affect the price?", a: "Key factors: pattern complexity, size, stone type, special techniques (e.g., brass inlay), and order quantity." },
-      { q: "How do I get a quote?", a: "Contact us via WhatsApp/WeChat at +86 156 5906 9988 or email sales@kldstone.com. Provide your design drawing, dimensions, preferred stone types, and quantity." },
+      { q: "How do I get a quote?", a: "Contact us via WhatsApp at +86 156 5906 9988 or email kldstone.china@gmail.com. Provide your design drawing, dimensions, preferred stone types, and quantity." },
       { q: "What is the typical delivery time?", a: "Standard medallions: 7–15 working days. Complex or oversized custom medallions: 15–30 working days." },
       { q: "What payment methods do you accept?", a: "We accept bank transfer (T/T). Flexible terms can be arranged for regular clients." },
     ],
@@ -64,7 +64,7 @@ const faqData = [
       { q: "Where is KLD Stone located? Can I visit the factory?", a: "We are located in Shuitou, Nan'an City, Fujian Province, China. Factory visits are welcome; please schedule in advance." },
       { q: "Do you accept international orders?", a: "Yes. We export to Russia, Saudi Arabia, Qatar, Dubai, the United States, and many other countries." },
       { q: "What notable projects has KLD Stone completed?", a: "Our products have been used in hotel lobbies, luxury villa developments, commercial mall corridors, and overseas church and high-end architectural projects worldwide." },
-      { q: "How can I contact KLD Stone?", a: "WhatsApp/WeChat: +86 156 5906 9988\nEmail: sales@kldstone.com\nWebsite: kldstone.com" },
+      { q: "How can I contact KLD Stone?", a: "WhatsApp: +86 156 5906 9988\nEmail: kldstone.china@gmail.com\nWebsite: kldstone.com" },
     ],
   },
 ];

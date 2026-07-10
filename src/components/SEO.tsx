@@ -8,7 +8,10 @@ interface SEOProps {
   ogImage?: string;
 }
 
-const BASE_URL = "https://www.kldstone.cn";
+const BASE_URL =
+  typeof window !== "undefined"
+    ? window.location.origin
+    : "https://www.kldstone.com";
 
 function setMeta(name: string, content: string, property = false) {
   const attr = property ? "property" : "name";
