@@ -378,7 +378,7 @@ export default function Home() {
           <div className="flex justify-center">
             <div className="w-full max-w-[900px] aspect-video bg-[#f5f5f5] overflow-hidden relative">
               <video className="w-full h-full object-cover" controls preload="none" poster="/视频封面.jpg">
-                <source src="/videos/waterjet-cutting.mp4" type="video/mp4" />
+                <source src="/videos/guangzhou-expo.mp4" type="video/mp4" />
               </video>
             </div>
           </div>
