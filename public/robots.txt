@@ -1,3 +1,3 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
-Sitemap: https://kldstone.cn/sitemap.xml
+Sitemap: https://www.kldstone.com/sitemap.xml
