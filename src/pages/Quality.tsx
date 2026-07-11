@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
 
-const inspectionImgs = ["/brand-gallery/071-inspection-img-1921.jpg","/brand-gallery/072-inspection-img-1922.jpg","/brand-gallery/073-inspection-img-2091.jpg","/brand-gallery/074-inspection-img-2156.jpg","/brand-gallery/075-inspection-img-2502.jpg","/brand-gallery/076-inspection-img-2504.jpg"];
 const deliveryImgs = ["/brand-gallery/057-delivery-img-1901.jpg","/brand-gallery/058-delivery-img-1890.jpg","/brand-gallery/059-delivery-img-2119.jpg","/brand-gallery/060-delivery-img-1889.jpg","/brand-gallery/061-delivery-img-1898.jpg","/brand-gallery/062-delivery-img-2122.jpg","/brand-gallery/063-delivery-img-1878.jpg","/brand-gallery/064-delivery-img-2124.jpg","/brand-gallery/065-delivery-img-2125.jpg","/brand-gallery/066-delivery-img-2120.jpg","/brand-gallery/067-delivery-img-2126.jpg","/brand-gallery/068-delivery-img-2123.jpg","/brand-gallery/069-delivery-img-1877.jpg"];
 
 export default function Quality() {
@@ -39,13 +38,6 @@ export default function Quality() {
             <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("control.title")}</span>
             <h2 className="text-[var(--ink)] text-[1.5rem] font-black tracking-[0.03em] mt-2">{t("control.heading")}</h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-16">
-            {inspectionImgs.map((src, i) => (
-              <div key={src} className="overflow-hidden img-hover">
-                <img src={optimizedImage(src)} alt={`Inspection ${i + 1}`} className="w-full aspect-[4/3] object-cover" loading="lazy" decoding="async" />
-              </div>
-            ))}
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {checks.map((item) => (
               <div key={item.title} className="bg-[var(--bg)] border border-[var(--line)] p-8 hover:border-[#34c759]/20/30 transition-colors">
@@ -64,7 +56,7 @@ export default function Quality() {
           <p className="text-[var(--muted)] text-[14px] mt-3 max-w-[500px] mx-auto leading-relaxed">{t("packaging.description")}</p>
         </div>
         {packagingSteps.map((step, i) => (
-          <div key={step.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center ${i !== packagingSteps.length - 1 ? "mb-16 pb-16 border-b border-[var(--line)]" : ""} ${i % 2 === 1 ? "lg:[direction:rtl]" : ""}`}>
+          <div key={step.title} className={`${i !== packagingSteps.length - 1 ? "mb-16 pb-16 border-b border-[var(--line)]" : ""}`}>
             <div className={`overflow-hidden ${i % 2 === 1 ? "lg:[direction:ltr]" : ""}`}>
               <img src={optimizedImage(deliveryImgs[i * 5] || deliveryImgs[0])} alt={step.title} className="w-full aspect-[4/3] object-cover img-hover" loading="lazy" decoding="async" />
             </div>

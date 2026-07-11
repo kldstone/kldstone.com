@@ -64,7 +64,53 @@ const faqData = [
       { q: "Where is KLD Stone located? Can I visit the factory?", a: "We are located in Shuitou, Nan'an City, Fujian Province, China. Factory visits are welcome; please schedule in advance." },
       { q: "Do you accept international orders?", a: "Yes. We export to Russia, Saudi Arabia, Qatar, Dubai, the United States, and many other countries." },
       { q: "What notable projects has KLD Stone completed?", a: "Our products have been used in hotel lobbies, luxury villa developments, commercial mall corridors, and overseas church and high-end architectural projects worldwide." },
-      { q: "How can I contact KLD Stone?", a: "WhatsApp: +86 156 5906 9988\nEmail: kldstone.china@gmail.com\nWebsite: kldstone.com" },
+     { q: "How can I contact KLD Stone?", a: "WhatsApp: +86 156 5906 9988\nEmail: kldstone.china@gmail.com\nWebsite: kldstone.com" },
+   ],
+ },
+  {
+    category: "STONE MATERIAL COMPARISON",
+    items: [
+      { q: "What is the difference between marble and granite? Which is better?", a: "Marble is a metamorphic rock with rich veining and warm tones, ideal for interior walls and decorative flooring. Granite is an igneous rock, harder and more resistant to acid and abrasion, better for kitchen countertops and outdoor flooring. KLD Stone supplies both materials." },
+      { q: "Which is better for kitchen countertops: marble or quartz?", a: "Quartz (engineered stone) is hard, non-porous, and requires no sealing, making it low-maintenance. Marble offers unique veining and heat resistance but needs periodic sealing and is susceptible to etching from acidic substances. Choose quartz for practicality, marble for design." },
+      { q: "What is the difference between natural stone, engineered stone, and sintered stone?", a: "Natural stone (marble, granite, limestone) offers unique veining formed over millions of years. Engineered stone (quartz) is crushed stone mixed with resin for uniform performance. Sintered stone is fired at high temperature, extremely hard and available in thin formats." },
+      { q: "What stone is best for bathroom countertops and flooring?", a: "Marble (with sealing), granite (wear-resistant), and quartz (non-porous) for countertops. Granite with flamed finish and slate for flooring. Six-side sealant treatment is key for natural stone in bathrooms." },
+      { q: "Black stone vs white stone: how to choose?", a: "White stone (Calacatta, Carrara) brightens spaces but shows stains more. Black stone (Absolute Black, Nero Marquina) hides stains but scratches may be more visible. White for small spaces, black for large spaces." },
+    ],
+  },
+  {
+    category: "PRICE & COST GUIDE",
+    items: [
+      { q: "How much does natural marble cost per square meter?", a: "Common Chinese marble: USD 40-110/m2. Mid-range imported marble (Beige, Calacatta): USD 110-420/m2. Premium luxury varieties: USD 700-2800/m2 or more. Prices are for block slabs; finished products add extra costs." },
+      { q: "What costs are involved when importing stone from China?", a: "Stone material price + processing fees + packing costs + inland transport + ocean freight + port handling + destination customs duties + inland transport in destination country. KLD Stone provides FOB or CIF quotations." },
+      { q: "Why do stone prices vary so much?", a: "Factors: rarity of variety, origin (imported vs local), slab size, grade (A vs B), thickness, surface finish, and processing complexity. Provide specific requirements for an accurate quotation." },
+    ],
+  },
+  {
+    category: "STONE SELECTION GUIDE",
+    items: [
+      { q: "What stone is best for hotel lobby flooring?", a: "Light marble (Beige, Cream Marfil) for classic elegance; gray marble (Grey Statuario) for modern luxury; medallion combinations as the lobby centerpiece. Use dense marble with crystallized hardening treatment for enhanced wear resistance." },
+      { q: "For a villa, should I use marble or granite?", a: "Living/dining floors: marble for elegance. Kitchen countertops: granite/quartz. Bathrooms: marble (sealed) or granite. Outdoor patios: granite. KLD Stone provides end-to-end service for villa projects." },
+      { q: "What stone is best for outdoor flooring and walls?", a: "Granite with flamed or bush-hammered finish for slip resistance. Limestone for garden paving. Slate for pathways and pool surrounds. Avoid high-polish marble outdoors as it gets slippery when wet." },
+      { q: "Where can waterjet medallions be used in a home?", a: "Entrance hall as focal point, living room center, dining room under the table, feature walls, hallways. Start with medium sizes (1-2m diameter) for residential use." },
+    ],
+  },
+  {
+    category: "CHOOSING A CHINA STONE SUPPLIER & EXPORT",
+    items: [
+      { q: "How to import stone from China? What is the process?", a: "Requirement confirmation, supplier evaluation, sample confirmation, quotation/contract, production/inspection, packing/shipping, ocean freight/customs, destination port pickup. KLD Stone provides full support for overseas clients." },
+      { q: "What should I consider when choosing a stone supplier from China?", a: "Factory scale and equipment, export experience, quality control system, project portfolio, communication, and payment terms. Factory site visits are the most reliable verification." },
+      { q: "What quality inspection processes exist for stone before shipping?", a: "Raw block inspection, slab quality check, cutting precision verification, surface finish check, dry lay inspection, six-side inspection, sealant treatment check, and pre-shipment final inspection. KLD Stone provides inspection reports." },
+      { q: "What are the packing standards for stone export?", a: "Custom crates with EPE foam lining, steel strapping reinforcement, moisture protection with desiccant and waterproof film, clear labeling, and proper container loading with air bags for stabilization." },
+      { q: "What is the difference between FOB and CIF for stone export?", a: "FOB: seller delivers to departure port. CIF: seller arranges transport and insurance to destination port. Choose FOB for flexibility, CIF for simplicity. KLD Stone offers both." },
+    ],
+  },
+  {
+    category: "STONE PROCESSING & FINISHING",
+    items: [
+      { q: "What can CNC stone processing do?", a: "Custom moldings, carving, 3D shaping, and precision edging. CNC achieves ±0.5mm precision with consistent batch quality. KLD Stone operates CNC machining centers." },
+      { q: "What stone surface finishes are available?", a: "Polished (high-gloss), honed (matte), flamed (rough for outdoors), bush-hammered (textured), acid-washed (etched), and chiseled (rustic). Choose based on application: floors need slip resistance, countertops need smooth cleaning." },
+      { q: "Does marble need crystallization treatment after installation?", a: "Yes. Crystallization enhances gloss, wear resistance, and stain protection. Residential: every 6-12 months. Commercial: every 3-6 months. Use neutral pH cleaner for daily cleaning." },
+      { q: "Are natural cracks in marble a quality defect?", a: "Natural veining and micro-fissures are inherent characteristics of natural stone, not quality defects. Processing cracks that may expand during transport are quality issues. KLD Stone distinguishes between natural features and defects." },
     ],
   },
 ];
