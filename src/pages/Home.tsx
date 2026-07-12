@@ -61,11 +61,13 @@ export default function Home() {
   const next = useCallback(() => setActive((s) => (s + 1) % slides.length), [slides]);
   const prev = useCallback(() => setActive((s) => (s - 1 + slides.length) % slides.length), [slides]);
 
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || prefersReducedMotion) return;
     const t = setInterval(next, 6000);
     return () => clearInterval(t);
-  }, [isPaused, next]);
+  }, [isPaused, next, prefersReducedMotion]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

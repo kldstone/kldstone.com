@@ -15,7 +15,12 @@
     "close": "ЗАКРЫТЬ",
     "whatsapp": "WHATSAPP",
     "brandName": "KLD STONE",
-    "brandSub": "НАТУРАЛЬНЫЙ КАМЕНЬ · ШУЙТОУ, КИТАЙ"
+    "brandSub": "НАТУРАЛЬНЫЙ КАМЕНЬ · ШУЙТОУ, КИТАЙ",
+    "catalog": "CATALOG",
+    "carvedComponents": "Carved Components",
+    "wallPanels": "Wall Panels",
+    "stoneFurniture": "Stone Furniture",
+    "mosaicAtlas": "Mosaic Atlas"
   },
   "footer": {
     "tagline": "Натуральный камень, тщательно отобранный и обработанный для долговечных пространств.",

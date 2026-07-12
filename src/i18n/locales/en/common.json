@@ -15,7 +15,12 @@
     "close": "CLOSE",
     "whatsapp": "WHATSAPP",
     "brandName": "KLD STONE",
-    "brandSub": "NATURAL STONE · SHUITOU, CHINA"
+    "brandSub": "NATURAL STONE · SHUITOU, CHINA",
+    "catalog": "CATALOG",
+    "carvedComponents": "Carved Components",
+    "wallPanels": "Wall Panels",
+    "stoneFurniture": "Stone Furniture",
+    "mosaicAtlas": "Mosaic Atlas"
   },
   "footer": {
     "tagline": "Natural Stone, Precisely Selected And Fabricated For Lasting Spaces.",

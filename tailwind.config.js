@@ -61,7 +61,7 @@ module.exports = {
       },
       fontFamily: {
         serif: ['Cormorant Garamond', 'Noto Serif SC', 'serif'],
-        sans: ['Inter', 'Noto Serif SC', 'sans-serif'],
+        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

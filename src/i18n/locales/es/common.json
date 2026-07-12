@@ -15,7 +15,12 @@
     "close": "CERRAR",
     "whatsapp": "WHATSAPP",
     "brandName": "KLD STONE",
-    "brandSub": "PIEDRA NATURAL · SHUITOU, CHINA"
+    "brandSub": "PIEDRA NATURAL · SHUITOU, CHINA",
+    "catalog": "CATALOG",
+    "carvedComponents": "Carved Components",
+    "wallPanels": "Wall Panels",
+    "stoneFurniture": "Stone Furniture",
+    "mosaicAtlas": "Mosaic Atlas"
   },
   "footer": {
     "tagline": "Piedra natural, seleccionada y fabricada con precisión para espacios duraderos.",

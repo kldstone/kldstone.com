@@ -21,13 +21,13 @@ export default function Navbar() {
       ],
     },
     {
-      label: "CATALOG",
+      label: t("nav.catalog"),
       href: "/catalog",
       children: [
-        { label: "Carved Components", href: "/catalog/carved-parts" },
-        { label: "Wall Panels", href: "/catalog/wall-panels" },
-        { label: "Stone Furniture", href: "/catalog/furniture" },
-        { label: "Mosaic Atlas", href: "/catalog/arttech" },
+        { label: t("nav.carvedComponents"), href: "/catalog/carved-parts" },
+        { label: t("nav.wallPanels"), href: "/catalog/wall-panels" },
+        { label: t("nav.stoneFurniture"), href: "/catalog/furniture" },
+        { label: t("nav.mosaicAtlas"), href: "/catalog/arttech" },
       ],
     },
     { label: t("nav.projectSpaces"), href: "/spaces" },
@@ -39,7 +39,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -73,7 +73,7 @@ export default function Navbar() {
 
       {/* Main nav */}
       <nav
-        className={`sticky top-0 z-50 transition-all duration-400 border-b ${
+        className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-400 border-b ${
           scrolled
             ? "bg-white/97 border-black/8 backdrop-blur-[20px] shadow-sm"
             : "bg-white/95 border-black/5 backdrop-blur-[20px]"
@@ -172,7 +172,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
+          className={`md:hidden overflow-hidden transition-[max-height,border-color] duration-300 ${
             menuOpen ? "max-h-[700px] border-t border-black/5" : "max-h-0"
           }`}
         >
