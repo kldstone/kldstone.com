@@ -27,7 +27,6 @@ export default function Navbar() {
         { label: "Carved Components", href: "/catalog/carved-parts" },
         { label: "Wall Panels", href: "/catalog/wall-panels" },
         { label: "Stone Furniture", href: "/catalog/furniture" },
-        { label: "OIKOS Series", href: "/catalog/oikos" },
         { label: "Mosaic Atlas", href: "/catalog/arttech" },
       ],
     },
