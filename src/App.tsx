@@ -13,6 +13,9 @@ const Quality = lazy(() => import("./pages/Quality"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
+const Catalog = lazy(() => import("./pages/Catalog"));
+const CatalogCategory = lazy(() => import("./pages/CatalogCategory"));
+const CatalogDetail = lazy(() => import("./pages/CatalogDetail"));
 
 export default function App() {
   return (
@@ -32,6 +35,9 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/catalog/:category" element={<CatalogCategory />} />
+            <Route path="/catalog/:category/:id" element={<CatalogDetail />} />
           </Route>
         </Routes>
       </Suspense>

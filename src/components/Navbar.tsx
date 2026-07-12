@@ -7,7 +7,7 @@ export default function Navbar() {
   const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
 
   const navLinks = [
@@ -18,6 +18,17 @@ export default function Navbar() {
       children: [
         { label: t("nav.naturalMarble"), href: "/collections/marble" },
         { label: t("nav.waterjetMedallions"), href: "/collections/mosaic" },
+      ],
+    },
+    {
+      label: "CATALOG",
+      href: "/catalog",
+      children: [
+        { label: "Carved Components", href: "/catalog/carved-parts" },
+        { label: "Wall Panels", href: "/catalog/wall-panels" },
+        { label: "Stone Furniture", href: "/catalog/furniture" },
+        { label: "OIKOS Series", href: "/catalog/oikos" },
+        { label: "Mosaic Atlas", href: "/catalog/arttech" },
       ],
     },
     { label: t("nav.projectSpaces"), href: "/spaces" },
@@ -35,7 +46,7 @@ export default function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false);
-    setDropdownOpen(false);
+    setDropdownOpen(null);
   }, [location]);
 
   const isActive = (href: string) => {
@@ -86,17 +97,16 @@ export default function Navbar() {
           {/* Desktop links */}
           <div className="hidden lg:flex items-center gap-0">
             {navLinks.map((link) => (
-              <div key={link.href} className="relative group/dropdown" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDropdownOpen(false); }}>
+              <div key={link.href} className="relative">
                 <Link
                   to={link.href}
-                  onFocus={() => link.children && setDropdownOpen(true)}
                   className={`inline-flex items-center justify-center min-h-[44px] px-[12px] text-[12.5px] font-semibold tracking-[0.05em] transition-colors whitespace-nowrap ${
                     isActive(link.href)
                       ? "text-[#34c759] font-bold"
                       : "text-[#111111]/60 hover:text-[#111111]"
                   }`}
-                  onMouseEnter={() => link.children && setDropdownOpen(true)}
-                  onMouseLeave={() => link.children && setDropdownOpen(false)}
+                  onMouseEnter={() => link.children && setDropdownOpen(link.href)}
+                  onClick={() => link.children && setDropdownOpen(link.href === dropdownOpen ? null : link.href)}
                 >
                   {link.label}
                   {link.children && (
@@ -104,11 +114,11 @@ export default function Navbar() {
                   )}
                 </Link>
 
-                {link.children && dropdownOpen && (
+                {link.children && dropdownOpen === link.href && (
                   <div
                     className="absolute top-full left-0 min-w-[190px] bg-white shadow-lg border border-black/5 py-2 animate-fadeInDown"
-                    onMouseEnter={() => setDropdownOpen(true)}
-                    onMouseLeave={() => setDropdownOpen(false)}
+                    onMouseEnter={() => setDropdownOpen(link.href)}
+                    onMouseLeave={() => setDropdownOpen(null)}
                   >
                     {link.children.map((child) => (
                       <Link
