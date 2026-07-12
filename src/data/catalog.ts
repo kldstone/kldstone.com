@@ -2,7 +2,6 @@ import furnitureProducts from "./furniture-products";
 import carvedProducts from "./carved-products";
 import wallProducts from "./wall-products";
 import arttechProducts from "./arttech-products";
-import oikosProducts from "./oikos-products";
 
 // ============================================================
 // Product Catalog — data layer types and category configuration
@@ -63,15 +62,6 @@ const categories: CatalogCategory[] = [
       "The 2024–2026 stone furniture collection. Dining tables, coffee tables, side tables, sinks and bathtubs crafted from natural marble, bringing the timeless质感 of stone into everyday living.",
     heroImg: `${BASE}/furniture-hero.jpg`,
     products: furnitureProducts,
-  },
-  {
-    key: "oikos",
-    name: "OIKOS Series",
-    subtitle: "Oikos Collection",
-    description:
-      "The OIKOS brand collection — modern stone product series combining minimalist design with natural materials, suitable for contemporary architecture and interior spaces.",
-    heroImg: `${BASE}/oikos-hero.jpg`,
-    products: oikosProducts,
   },
   {
     key: "arttech",
