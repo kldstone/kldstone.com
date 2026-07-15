@@ -1,10 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
+import { useSEO } from "@/components/SEO";
 
 export default function CatalogCategory() {
   const { category } = useParams<{ category: string }>();
   const cat = categories.find((c) => c.key === category);
+  useSEO({ title: cat ? `${cat.name} Stone Products` : "Catalog Category Not Found", description: cat ? `Explore KLD Stone's ${cat.name} collection for hospitality, residential and commercial projects.` : "The requested catalog category could not be found.", noIndex: !cat });
 
   if (!cat) {
     return (

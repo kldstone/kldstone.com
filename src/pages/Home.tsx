@@ -4,6 +4,7 @@ import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import LazyCatalogSection from "./CatalogSection";
+import { useSEO } from "@/components/SEO";
 
 // Trust stats (numbers stay static, labels come from i18n)
 const trustNums = ["20+", "149", "±0.1mm", "30+"];
@@ -36,6 +37,10 @@ const featuredSpaces = [
 
 export default function Home() {
   const { t } = useTranslation("home");
+  useSEO({
+    title: "Natural Marble & Custom Stone Fabrication",
+    description: "Source natural marble slabs, waterjet medallions, mosaics, countertops and made-to-order stonework from KLD Stone's factory in Shuitou, China. Global project supply and export packing.",
+  });
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 

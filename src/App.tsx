@@ -16,6 +16,7 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const Catalog = lazy(() => import("./pages/Catalog"));
 const CatalogCategory = lazy(() => import("./pages/CatalogCategory"));
 const CatalogDetail = lazy(() => import("./pages/CatalogDetail"));
+const LandingQuote = lazy(() => import("./pages/LandingQuote"));
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/catalog/:category" element={<CatalogCategory />} />
             <Route path="/catalog/:category/:id" element={<CatalogDetail />} />
           </Route>
+          <Route path="/landing/quote" element={<LandingQuote />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

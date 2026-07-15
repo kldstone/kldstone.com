@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
+import { useSEO } from "@/components/SEO";
 
 export default function Catalog() {
+  useSEO({ title: "Architectural Stone Product Catalog", description: "Browse KLD Stone's architectural stone catalog, including carved stone, wall panels, furniture, mosaics and custom marble products for global projects." });
   return (
     <div className="bg-white">
       {/* Hero */}

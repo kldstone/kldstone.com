@@ -59,7 +59,7 @@ const categories: CatalogCategory[] = [
     name: "Stone Furniture",
     subtitle: "Stone Furniture Collection",
     description:
-      "The 2024–2026 stone furniture collection. Dining tables, coffee tables, side tables, sinks and bathtubs crafted from natural marble, bringing the timeless质感 of stone into everyday living.",
+      "The 2024–2026 stone furniture collection. Dining tables, coffee tables, side tables, sinks and bathtubs crafted from natural marble, bringing the timeless character of stone into everyday living.",
     heroImg: `${BASE}/furniture-hero.jpg`,
     products: furnitureProducts,
   },

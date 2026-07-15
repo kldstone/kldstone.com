@@ -1,11 +1,13 @@
 import { useParams, Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
+import { useSEO } from "@/components/SEO";
 
 export default function CatalogDetail() {
   const { category, id } = useParams<{ category: string; id: string }>();
   const cat = categories.find((c) => c.key === category);
   const product = cat?.products.find((p) => p.id === id);
+  useSEO({ title: product ? `${product.name} | Custom Stone Product` : "Product Not Found", description: product ? `View ${product.name} by KLD Stone. Request dimensions, material options, samples, export packing and a factory quotation.` : "The requested stone product could not be found.", noIndex: !product });
 
   if (!cat || !product) {
     return (
