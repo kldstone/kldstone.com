@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="py-16 border-b border-black/6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="md:col-span-1">
-              <img src="/kld-logo-web.png" alt="KLD Stone" className="w-[120px] mb-6 opacity-90" />
+              <img src="/kld-logo-web.png" alt="KLD Stone" className="w-[120px] h-auto mb-6" />
               <p className="text-[#111111]/45 text-[13px] leading-relaxed max-w-[240px]">
                 {t("footer.tagline")}
               </p>

@@ -85,7 +85,7 @@ export default function Navbar() {
             <img
               src="/kld-logo-web.png"
               alt="KLD Stone"
-              className="w-[96px] h-[40px] object-contain"
+              className="w-[100px] h-[56px] object-contain"
             />
             <span className="hidden lg:block">
               <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">{t("nav.brandName")}</strong>
