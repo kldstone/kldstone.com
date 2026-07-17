@@ -73,6 +73,11 @@ export default function Navbar() {
 
       {/* Main nav */}
       <nav
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a[href]")) {
+            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+          }
+        }}
         className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-400 border-b ${
           scrolled
             ? "bg-white/97 border-black/8 backdrop-blur-[20px] shadow-sm"
