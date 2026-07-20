@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
