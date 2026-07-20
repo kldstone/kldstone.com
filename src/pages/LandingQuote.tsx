@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion, trackEvent, trackPageview } from "@/lib/analytics";
+import { trackConversion, trackEvent } from "@/lib/analytics";
 
 export default function LandingQuote() {
   const params = new URLSearchParams(window.location.search);
   const [submitted, setSubmitted] = useState(() => params.get("submitted") === "1");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   useSEO({
     title: "Request a Factory Stone Quote",
@@ -15,14 +17,48 @@ export default function LandingQuote() {
   });
 
   useEffect(() => {
-    trackPageview("/landing/quote");
     if (submitted) trackConversion("generate_lead", { source: "landing_quote" });
   }, [submitted]);
 
   const resetForm = () => {
     window.history.replaceState({}, "", "/landing/quote");
     setSubmitted(false);
+    setError("");
   };
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (sending) return;
+    setSending(true);
+    setError("");
+
+    const fd = new FormData(e.currentTarget);
+    const data: Record<string, string> = {};
+    for (const [key, val] of fd.entries()) {
+      if (typeof val === "string") data[key] = val;
+    }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+
+      if (res.ok && json.ok) {
+        trackConversion("generate_lead", { source: "landing_quote" });
+        window.history.replaceState({}, "", "/landing/quote?submitted=1");
+        setSubmitted(true);
+      } else {
+        setError(json.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Network error. Please check your connection.");
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white text-[#111]">
@@ -70,19 +106,23 @@ export default function LandingQuote() {
             <>
               <h2 id="quote-form-title" className="text-2xl font-black">Request your quote</h2>
               <p className="mt-2 text-sm text-black/50">Required fields are marked with *.</p>
-              <form action="https://formsubmit.co/kldstone.china@gmail.com" method="POST" onSubmit={() => trackEvent("lead_form_submit_attempt", { source: "landing_quote" })} className="mt-7 space-y-5">
-                <input type="hidden" name="_subject" value="KLD Stone — Google Ads quote inquiry" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_next" value={`${window.location.origin}/landing/quote?submitted=1`} />
+              <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+                {/* Honeypot */}
+                <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
+                  <label htmlFor="website-lq">Website</label>
+                  <input type="text" name="website" id="website-lq" tabIndex={-1} autoComplete="off" />
+                </div>
+                <input type="hidden" name="source" value="landing_quote" />
                 <input type="hidden" name="utm_source" value={params.get("utm_source") || "direct"} />
                 <input type="hidden" name="utm_campaign" value={params.get("utm_campaign") || ""} />
                 <input type="hidden" name="utm_term" value={params.get("utm_term") || ""} />
+                <input type="hidden" name="gclid" value={params.get("gclid") || ""} />
                 <label className="block text-xs font-bold">Name *<input name="name" required autoComplete="name" className="mt-2 w-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[#34c759]" /></label>
                 <label className="block text-xs font-bold">Business email *<input name="email" type="email" required autoComplete="email" className="mt-2 w-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[#34c759]" /></label>
                 <label className="block text-xs font-bold">WhatsApp / phone<input name="phone" type="tel" autoComplete="tel" className="mt-2 w-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[#34c759]" /></label>
                 <label className="block text-xs font-bold">Project requirements *<textarea name="message" required rows={5} placeholder="Material, size, quantity, drawings and destination port..." className="mt-2 w-full resize-none border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[#34c759]" /></label>
-                <button type="submit" className="w-full bg-[#34c759] px-5 py-4 text-sm font-black uppercase tracking-[0.08em] text-white hover:bg-[#2db84d]">Get factory quote</button>
+                {error && <div role="alert" className="bg-red-50 border border-red-200 text-red-700 text-[13px] px-4 py-3">{error}</div>}
+                <button type="submit" disabled={sending} className="w-full bg-[#34c759] px-5 py-4 text-sm font-black uppercase tracking-[0.08em] text-white hover:bg-[#2db84d] disabled:opacity-50">{sending ? "Sending..." : "Get factory quote"}</button>
                 <p className="text-center text-[11px] leading-5 text-black/40">Your project information is used only to prepare this quotation.</p>
               </form>
             </>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
@@ -8,25 +8,48 @@ import { useSEO } from "@/components/SEO";
 export default function Contact() {
   const { t } = useTranslation("contact");
   useSEO({ title: "Contact KLD Stone", description: t("hero.description") });
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (sending) return;
     setSending(true);
+    setError("");
+
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const data: Record<string, string> = {};
+    const fd = new FormData(form);
+    for (const [key, val] of fd.entries()) {
+      if (typeof val === "string") data[key] = val;
+    }
+
+    // Collect UTM/gclid params from URL
+    const sp = new URLSearchParams(window.location.search);
+    for (const p of ["utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"]) {
+      const v = sp.get(p);
+      if (v) data[p] = v;
+    }
+
     try {
-      await fetch("https://formsubmit.co/kldstone.china@gmail.com", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: data,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
-      trackConversion("form_submit", { source: "contact_page" });
-      setSubmitted(true);
+      const json = await res.json();
+
+      if (res.ok && json.ok) {
+        // Only fire conversion on confirmed server success
+        trackConversion("form_submit", { source: "contact_page" });
+        // Navigate to thank-you page
+        navigate("/thank-you" + window.location.search);
+      } else {
+        setError(json.error || t("form.errorGeneric"));
+      }
     } catch {
-      trackConversion("form_submit", { source: "contact_page" });
-      setSubmitted(true);
+      setError(t("form.errorNetwork"));
     } finally {
       setSending(false);
     }
@@ -92,41 +115,46 @@ export default function Contact() {
 
           <div>
             <h2 className="text-[#111111] text-[1.6rem] font-black tracking-[0.02em] mb-8">{t("form.heading")}</h2>
-            {submitted ? (
-              <div className="bg-white border border-[#34c759]/20 p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-6 bg-[#34c759]/5 rounded-full flex items-center justify-center">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <h3 className="text-[#111111] text-[1.2rem] font-black tracking-[0.03em] mb-2">{t("form.thankYou")}</h3>
-                <p className="text-[#111111] text-[14px] leading-relaxed max-w-[320px] mx-auto">{t("form.thankYouDesc")}</p>
-                <p className="text-[#111111] text-[13px] mt-4">{t("form.checkEmail")} <span className="text-[#111111]">kldstone.china@gmail.com</span>.</p>
-                <button onClick={() => setSubmitted(false)} className="mt-8 text-[#111111] text-[13px] font-bold tracking-[0.06em] hover:opacity-60 transition-colors">{t("form.sendAnother")}</button>
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              {/* Honeypot — hidden from users, visible to bots */}
+              <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input type="text" name="website" id="website" tabIndex={-1} autoComplete="off" />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <input type="hidden" name="_subject" value="KLD Stone Website Inquiry" />
-                <input type="hidden" name="_template" value="table" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.name")}</label>
-                    <input type="text" name="name" required className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.namePlaceholder")} />
-                  </div>
-                  <div>
-                    <label className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.email")}</label>
-                    <input type="email" name="email" required className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.emailPlaceholder")} />
-                  </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="name" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.name")}</label>
+                  <input id="name" type="text" name="name" required maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.namePlaceholder")} />
                 </div>
                 <div>
-                  <label className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.company")}</label>
-                  <input type="text" name="company" className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.companyPlaceholder")} />
+                  <label htmlFor="email" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.email")}</label>
+                  <input id="email" type="email" name="email" required maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.emailPlaceholder")} />
                 </div>
-                <div>
-                  <label className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.message")}</label>
-                  <textarea name="message" required rows={6} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors resize-none" placeholder={t("form.messagePlaceholder")} />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.phone")}</label>
+                <input id="phone" type="tel" name="phone" maxLength={50} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.phonePlaceholder")} />
+              </div>
+              <div>
+                <label htmlFor="company" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.company")}</label>
+                <input id="company" type="text" name="company" maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.companyPlaceholder")} />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.message")}</label>
+                <textarea id="message" name="message" required rows={6} maxLength={5000} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors resize-none" placeholder={t("form.messagePlaceholder")} />
+              </div>
+
+              {error && (
+                <div role="alert" className="bg-red-50 border border-red-200 text-red-700 text-[13px] px-4 py-3">
+                  {error}
                 </div>
-                <button type="submit" disabled={sending} className="w-full py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.10em] uppercase hover:bg-[#34c759]/80 transition-colors disabled:opacity-50">{sending ? t("form.sending") : t("form.submit")}</button>
-              </form>
-            )}
+              )}
+
+              <button type="submit" disabled={sending} className="w-full py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.10em] uppercase hover:bg-[#34c759]/80 transition-colors disabled:opacity-50">
+                {sending ? t("form.sending") : t("form.submit")}
+              </button>
+            </form>
           </div>
         </div>
       </section>
