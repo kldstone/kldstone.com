@@ -28,6 +28,21 @@ function isRateLimited(ip) {
   return entry.count > RATE_LIMIT_MAX;
 }
 
+function mimeEncode(str) {
+  // Properly encode non-ASCII characters for email headers
+  if (/^[\x00-\x7F]*$/.test(str)) return str;
+  let encoded = "";
+  const bytes = new TextEncoder().encode(str);
+  for (const b of bytes) {
+    if ((b >= 0x20 && b <= 0x3d) || (b >= 0x3f && b <= 0x7e)) {
+      encoded += String.fromCharCode(b);
+    } else {
+      encoded += "=" + b.toString(16).toUpperCase().padStart(2, "0");
+    }
+  }
+  return "=?UTF-8?Q?" + encoded + "?=";
+}
+
 function sanitize(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -80,7 +95,7 @@ async function sendViaResend(data) {
     body: JSON.stringify({
       from: "KLD Stone Website <onboarding@resend.dev>",
       to: RECIPIENT,
-      subject: `KLD Stone Inquiry from ${sanitize(data.name || "Website")}`,
+      subject: "KLD Stone Website - New Inquiry",
       html,
       reply_to: data.email || RECIPIENT,
     }),
