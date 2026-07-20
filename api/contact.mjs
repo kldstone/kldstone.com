@@ -1,23 +1,23 @@
-// Vercel Serverless API — POST /api/contact
-// Sends inquiry emails to kldstone.china@gmail.com
-// Environment variables (set in Vercel):
-//   MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS — SMTP credentials
-//   or MAILGUN_API_KEY, MAILGUN_DOMAIN — Mailgun API
-//   or RESEND_API_KEY — Resend API
+/**
+ * Vercel Serverless API — POST /api/contact
+ * Sends inquiry emails to kldstone.china@gmail.com
+ * Environment variables (set in Vercel):
+ *   MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS — SMTP credentials
+ *   or MAILGUN_API_KEY, MAILGUN_DOMAIN — Mailgun API
+ *   or RESEND_API_KEY — Resend API
+ */
 
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+// @ts-nocheck - Vercel Serverless Runtime uses its own types
 
 const RECIPIENT = "kldstone.china@gmail.com";
+const ipHits = new Map();
 const ALLOWED_FIELDS = ["name", "email", "phone", "company", "country", "message", "product", "source", "utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"];
 const MAX_MESSAGE_LENGTH = 5000;
 const MAX_FIELD_LENGTH = 500;
-const RATE_LIMIT_WINDOW = 10_000; // 10 seconds
+const RATE_LIMIT_WINDOW = 10000;
 const RATE_LIMIT_MAX = 3;
 
-// Simple in-memory rate limiter
-const ipHits = new Map<string, { count: number; resetAt: number }>();
-
-function isRateLimited(ip: string): boolean {
+function isRateLimited(ip) {
   const now = Date.now();
   const entry = ipHits.get(ip);
   if (!entry || now > entry.resetAt) {
@@ -28,7 +28,7 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT_MAX;
 }
 
-function sanitize(str: string): string {
+function sanitize(str) {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -36,11 +36,11 @@ function sanitize(str: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function validateEmail(email: string): boolean {
+function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function buildEmailHtml(data: Record<string, string>): string {
+function buildEmailHtml(data) {
   const lines = [
     "<h2>New Inquiry from KLD Stone Website</h2>",
     "<table style='border-collapse:collapse;width:100%;max-width:600px'>",
@@ -54,7 +54,7 @@ function buildEmailHtml(data: Record<string, string>): string {
   lines.push("</table>");
 
   // Append tracking info
-  const tracking: string[] = [];
+  const tracking = [];
   for (const t of ["utm_source", "utm_medium", "utm_campaign"]) {
     if (data[t]) tracking.push(`${t}=${data[t]}`);
   }
@@ -65,7 +65,7 @@ function buildEmailHtml(data: Record<string, string>): string {
   return lines.join("\n");
 }
 
-async function sendViaResend(data: Record<string, string>): Promise<boolean> {
+async function sendViaResend(data) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
 
@@ -89,7 +89,7 @@ async function sendViaResend(data: Record<string, string>): Promise<boolean> {
   return res.ok;
 }
 
-async function sendViaMailgun(data: Record<string, string>): Promise<boolean> {
+async function sendViaMailgun(data) {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
   if (!apiKey || !domain) return false;
@@ -114,20 +114,20 @@ async function sendViaMailgun(data: Record<string, string>): Promise<boolean> {
   return res.ok;
 }
 
-async function sendViaSMTP(_data: Record<string, string>): Promise<boolean> {
+async function sendViaSMTP(_data) {
   // SMTP implementation requires nodemailer or similar
   // For now return false to fall through
   return false;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   // Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
   // Rate limit by IP
-  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
+  const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
   if (isRateLimited(ip)) {
     console.warn(`Rate limit hit for ${ip}`);
     return res.status(429).json({ ok: false, error: "Too many requests. Please wait before trying again." });
@@ -146,7 +146,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Validate fields
-  const data: Record<string, string> = {};
+  const data = {};
   for (const field of ALLOWED_FIELDS) {
     const val = req.body[field];
     if (val !== undefined && val !== null) {

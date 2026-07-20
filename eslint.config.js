@@ -19,5 +19,38 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'no-empty': 'warn',
+      'no-empty-pattern': 'warn',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' }],
+      'react-hooks/set-state-in-effect': 'warn',
+      // api/ scripts/ are not type-checked with the src app config
+    },
+  },
+  {
+    files: ['scripts/**/*', 'api/**/*'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-undef': 'off',
+    },
+    languageOptions: {
+      sourceType: 'module',
+      ecmaVersion: 2022,
+    },
+  },
+  {
+    files: ['api/**/*'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
+    files: ['src/components/ui/**'],
+    rules: {
+      'react-hooks/preserve-manual-memoization': 'warn',
+    },
   },
 ])

@@ -6,7 +6,7 @@ import App from "./App.tsx"
 import { initGA } from "./lib/analytics";
 initGA();
 
-var rootEl = document.getElementById("root")
+const rootEl = document.getElementById("root")
 if (rootEl) {
   try {
     createRoot(rootEl).render(

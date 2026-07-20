@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { trackConversion } from "@/lib/analytics";
+import { useLangPrefix } from "@/hooks/useLangPrefix";
 
 export default function Footer() {
   const { t } = useTranslation("common");
+  const prefix = useLangPrefix();
+
+  const p = (path: string) => `${prefix}${path}`;
 
   return (
     <footer className="relative bg-[#f8f8f8] text-[#111111]/65 border-t border-black/8">
@@ -21,10 +25,10 @@ export default function Footer() {
               <h4 className="text-[#111111]/90 text-[12px] font-bold tracking-[0.10em] uppercase mb-5">{t("footer.explore")}</h4>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: t("footer.collections"), to: "/collections" },
-                  { label: t("footer.projectSpaces"), to: "/spaces" },
-                  { label: t("footer.aboutUs"), to: "/about" },
-                  { label: t("footer.contactUs"), to: "/contact" },
+                  { label: t("footer.collections"), to: p("/collections") },
+                  { label: t("footer.projectSpaces"), to: p("/spaces") },
+                  { label: t("footer.aboutUs"), to: p("/about") },
+                  { label: t("footer.contactUs"), to: p("/contact") },
                 ].map((l) => (
                   <Link key={l.to} to={l.to} className="text-[#111111]/45 text-[13px] hover:text-[#34c759] transition-colors">
                     {l.label}
@@ -36,8 +40,8 @@ export default function Footer() {
             <div>
               <h4 className="text-[#111111]/90 text-[12px] font-bold tracking-[0.10em] uppercase mb-5">{t("footer.productCategories")}</h4>
               <div className="flex flex-col gap-3">
-                <Link to="/collections/marble" className="text-[#111111]/45 text-[13px] hover:text-[#34c759] transition-colors">{t("footer.naturalMarble")}</Link>
-                <Link to="/collections/mosaic" className="text-[#111111]/45 text-[13px] hover:text-[#34c759] transition-colors">{t("footer.waterjetMedallions")}</Link>
+                <Link to={p("/collections/marble")} className="text-[#111111]/45 text-[13px] hover:text-[#34c759] transition-colors">{t("footer.naturalMarble")}</Link>
+                <Link to={p("/collections/mosaic")} className="text-[#111111]/45 text-[13px] hover:text-[#34c759] transition-colors">{t("footer.waterjetMedallions")}</Link>
               </div>
             </div>
 

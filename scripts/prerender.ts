@@ -13,7 +13,14 @@ interface RouteMeta {
   noindex?: boolean;
 }
 
-const routeMeta: Record<string, RouteMeta> = {
+const LANG_PREFIXES: Record<string, { titleSuffix: string; langAttr: string; dir: string }> = {
+  "": { titleSuffix: "KLD Stone", langAttr: "en", dir: "ltr" },
+  "/ru": { titleSuffix: "KLD Stone | Натуральный мрамор", langAttr: "ru", dir: "ltr" },
+  "/es": { titleSuffix: "KLD Stone | Mármol natural", langAttr: "es", dir: "ltr" },
+  "/ar": { titleSuffix: "KLD Stone | رخام طبيعي", langAttr: "ar", dir: "rtl" },
+};
+
+const ENGLISH_ROUTES: Record<string, RouteMeta> = {
   "/": {
     title: "Natural Marble & Custom Stone Fabrication | KLD Stone",
     description: "KLD Stone supplies natural marble slabs, waterjet medallions, stone mosaics, countertops, and custom stone fabrication from Shuitou, China to global projects.",
@@ -91,16 +98,19 @@ const routeMeta: Record<string, RouteMeta> = {
 
 const BASE_HTML = readFileSync(join(DIST_DIR, "index.html"), "utf-8");
 
-function renderHtml(meta: RouteMeta, path: string): string {
+function renderHtml(meta: RouteMeta, path: string, prefix: string, langCfg: { titleSuffix: string; langAttr: string; dir: string }): string {
   const canonical = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
   const robots = meta.noindex
     ? '<meta name="robots" content="noindex, nofollow" />'
     : '<meta name="robots" content="index, follow, max-image-preview:large" />';
   const ogImage = `${SITE_URL}/optimized/gani-home/banner_01.webp`;
+  const fullTitle = `${meta.title}`;
 
   let html = BASE_HTML
+    // Lang and dir
+    .replace(/<html lang="en"/, `<html lang="${langCfg.langAttr}" dir="${langCfg.dir}"`)
     // Title
-    .replace(/<title>.*?<\/title>/, `<title>${escHtml(meta.title)}</title>`)
+    .replace(/<title>.*?<\/title>/, `<title>${escHtml(fullTitle)}</title>`)
     // Canonical
     .replace(
       /<link rel="canonical"[^>]*\/>/,
@@ -147,24 +157,33 @@ function ensureDir(p: string) {
   try { mkdirSync(p, { recursive: true }); } catch { /* ok */ }
 }
 
-// 1. Generate static HTML for each route
-for (const [route, meta] of Object.entries(routeMeta)) {
-  const html = renderHtml(meta, route);
-  if (route === "/") {
-    writeFileSync(join(DIST_DIR, "index.html"), html);
-  } else {
-    const dir = join(DIST_DIR, route.replace(/^\//, ""));
-    ensureDir(dir);
-    writeFileSync(join(dir, "index.html"), html);
+// Generate static HTML for each route in each language
+for (const [prefix, langCfg] of Object.entries(LANG_PREFIXES)) {
+  for (const [route, meta] of Object.entries(ENGLISH_ROUTES)) {
+    const langRoute = prefix ? `${prefix}${route}` : route;
+    const html = renderHtml(meta, langRoute, prefix, langCfg);
+    if (langRoute === "/") {
+      writeFileSync(join(DIST_DIR, "index.html"), html);
+    } else {
+      const dir = join(DIST_DIR, langRoute.replace(/^\//, ""));
+      ensureDir(dir);
+      writeFileSync(join(dir, "index.html"), html);
+    }
+    console.log(`  ✓ ${langRoute}`);
   }
-  console.log(`  ✓ ${route}`);
 }
 
-// 2. Generate sitemap.xml
+// Sitemap — include English routes only (x-default)
 const sitemapUrls: string[] = [];
-for (const route of Object.keys(routeMeta)) {
-  if (routeMeta[route].noindex) continue;
+for (const route of Object.keys(ENGLISH_ROUTES)) {
+  if (ENGLISH_ROUTES[route].noindex) continue;
   sitemapUrls.push(`  <url><loc>${SITE_URL}${route}</loc><changefreq>weekly</changefreq><priority>${route === "/" ? "1.0" : "0.7"}</priority></url>`);
+  // Add language variants with hreflang alternates
+  for (const [prefix, langCfg] of Object.entries(LANG_PREFIXES)) {
+    if (!prefix) continue; // English is the x-default
+    const langRoute = `${prefix}${route}`;
+    sitemapUrls.push(`  <url><loc>${SITE_URL}${langRoute}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
+  }
 }
 
 writeFileSync(

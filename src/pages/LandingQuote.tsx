@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion, trackEvent } from "@/lib/analytics";
+import { trackConversion } from "@/lib/analytics";
 
 export default function LandingQuote() {
   const params = new URLSearchParams(window.location.search);

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion } from "@/lib/analytics";
@@ -55,9 +55,8 @@ export default function Home() {
     t("trustStats.exportCountries"),
   ];
 
-  const processSteps = t("process.steps", { returnObjects: true }) as Array<{
-    title: string; desc: string;
-  }>;
+  // processSteps exists for reference, loaded from i18n
+  void t("process.steps", { returnObjects: true });
 
   const qualityItems = t("quality.items", { returnObjects: true }) as Array<{
     title: string; desc: string;

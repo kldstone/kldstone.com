@@ -3,38 +3,44 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LangSwitcher from "./LangSwitcher";
 
-export default function Navbar() {
+interface NavbarProps {
+  langPrefix?: string;
+}
+
+export default function Navbar({ langPrefix = "" }: NavbarProps) {
   const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
 
+  const p = (path: string) => `${langPrefix}${path}`;
+
   const navLinks = [
-    { label: t("nav.home"), href: "/" },
+    { label: t("nav.home"), href: p("/") },
     {
       label: t("nav.collections"),
-      href: "/collections",
+      href: p("/collections"),
       children: [
-        { label: t("nav.naturalMarble"), href: "/collections/marble" },
-        { label: t("nav.waterjetMedallions"), href: "/collections/mosaic" },
+        { label: t("nav.naturalMarble"), href: p("/collections/marble") },
+        { label: t("nav.waterjetMedallions"), href: p("/collections/mosaic") },
       ],
     },
     {
       label: t("nav.catalog"),
-      href: "/catalog",
+      href: p("/catalog"),
       children: [
-        { label: t("nav.carvedComponents"), href: "/catalog/carved-parts" },
-        { label: t("nav.wallPanels"), href: "/catalog/wall-panels" },
-        { label: t("nav.stoneFurniture"), href: "/catalog/furniture" },
-        { label: t("nav.mosaicAtlas"), href: "/catalog/arttech" },
+        { label: t("nav.carvedComponents"), href: p("/catalog/carved-parts") },
+        { label: t("nav.wallPanels"), href: p("/catalog/wall-panels") },
+        { label: t("nav.stoneFurniture"), href: p("/catalog/furniture") },
+        { label: t("nav.mosaicAtlas"), href: p("/catalog/arttech") },
       ],
     },
-    { label: t("nav.projectSpaces"), href: "/spaces" },
-    { label: t("nav.factoryTour"), href: "/craftsmanship" },
-    { label: t("nav.faq"), href: "/faq" },
-    { label: t("nav.aboutUs"), href: "/about" },
-    { label: t("nav.contactUs"), href: "/contact" },
+    { label: t("nav.projectSpaces"), href: p("/spaces") },
+    { label: t("nav.factoryTour"), href: p("/craftsmanship") },
+    { label: t("nav.faq"), href: p("/faq") },
+    { label: t("nav.aboutUs"), href: p("/about") },
+    { label: t("nav.contactUs"), href: p("/contact") },
   ];
 
   useEffect(() => {
@@ -46,10 +52,10 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
     setDropdownOpen(null);
-  }, [location]);
+  }, [location.pathname]);
 
   const isActive = (href: string) => {
-    if (href === "/") return location.pathname === "/";
+    if (href === p("/")) return location.pathname === p("/");
     return location.pathname.startsWith(href);
   };
 
@@ -60,7 +66,7 @@ export default function Navbar() {
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between min-h-[34px]">
           <span className="truncate">{t("nav.topbar")}</span>
           <span className="hidden sm:flex items-center gap-4 ml-4 shrink-0">
-            <LangSwitcher />
+            <LangSwitcher langPrefix={langPrefix} />
             <span className="text-black/20">|</span>
             <a href="tel:+8615659069988" className="hover:text-[#34c759] transition-colors">+86 156 5906 9988</a>
             <span className="text-black/20">|</span>
@@ -87,7 +93,7 @@ export default function Navbar() {
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between min-h-[78px] gap-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0">
+          <Link to={p("/")} className="flex items-center gap-3 shrink-0">
             <img
               src="/kld-logo-web.png"
               alt="KLD Stone"
@@ -148,7 +154,6 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 to={link.href}
-                  onFocus={() => link.children && setDropdownOpen(true)}
                 className={`inline-flex items-center justify-center min-h-[44px] px-[9px] text-[11px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
                   isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                 }`}
@@ -161,7 +166,7 @@ export default function Navbar() {
 
           {/* CTA */}
           <Link
-            to="/contact"
+            to={p("/contact")}
             className="hidden md:inline-flex items-center justify-center min-h-[40px] px-5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors whitespace-nowrap shrink-0"
           >
             {t("nav.getQuote")}
@@ -171,6 +176,8 @@ export default function Navbar() {
           <button
             className="md:hidden border border-black/15 bg-transparent text-[#111111]/80 px-3 py-2 text-[12px] font-bold tracking-[0.08em]"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? t("nav.close") : t("nav.menu")}
           >
             {menuOpen ? t("nav.close") : t("nav.menu")}
           </button>
@@ -184,14 +191,13 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between px-6 py-3 border-b border-black/5 bg-white">
             <span className="text-[#111111]/40 text-[11px] font-medium tracking-[0.04em]">LANGUAGE</span>
-            <LangSwitcher />
+            <LangSwitcher langPrefix={langPrefix} />
           </div>
           <div className="bg-white px-6 py-3 border-b border-black/5">
             {navLinks.map((link) => (
               <div key={link.href}>
                 <Link
                   to={link.href}
-                  onFocus={() => link.children && setDropdownOpen(true)}
                   className={`block py-3.5 text-[13px] font-semibold tracking-[0.06em] border-b border-black/5 transition-colors ${
                     isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                   }`}
@@ -214,7 +220,7 @@ export default function Navbar() {
               </div>
             ))}
             <Link
-              to="/contact"
+              to={p("/contact")}
               className="mt-3 block text-center bg-[#34c759] text-white py-3 text-[12px] font-bold tracking-[0.06em]"
             >
               {t("nav.getQuote")}

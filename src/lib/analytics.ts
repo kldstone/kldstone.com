@@ -20,7 +20,7 @@ declare global {
 /** One-time GA4 initialisation -- call once from main.tsx or Layout */
 export function initGA(): void {
   if (typeof window === "undefined") return;
-  if ((window as any).__gaInitialized) return;
+  if ((window as unknown as Record<string, unknown>).__gaInitialized) return;
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = function (...args: unknown[]) {
@@ -44,7 +44,7 @@ export function initGA(): void {
     window.gtag("config", GOOGLE_ADS_ID);
   }
 
-  (window as any).__gaInitialized = true;
+  (window as unknown as Record<string, unknown>).__gaInitialized = true;
 }
 
 export function trackPageview(path: string): void {
@@ -63,7 +63,9 @@ export function trackEvent(
   if (typeof window === "undefined" || !window.gtag) return;
   try {
     window.gtag("event", name, data || {});
-  } catch {}
+  } catch {
+    // best-effort analytics
+  }
 }
 
 export function trackConversion(
@@ -76,5 +78,7 @@ export function trackConversion(
       send_to: GOOGLE_ADS_CONTACT_CONVERSION,
       ...(data || {}),
     });
-  } catch {}
+  } catch {
+    // best-effort conversion tracking
+  }
 }

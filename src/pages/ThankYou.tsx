@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { trackConversion } from "@/lib/analytics";
 
 export default function ThankYou() {
-  const [fired, setFired] = useState(false);
+  const firedRef = useRef(false);
 
   useSEO({ title: "Thank You", description: "Your inquiry has been submitted successfully.", noIndex: true });
 
   // Fire Google Ads conversion only on actual thank-you page load (not on failed submits)
   useEffect(() => {
-    if (!fired) {
-      setFired(true);
-      // Small delay to ensure page is fully rendered
+    if (!firedRef.current) {
+      firedRef.current = true;
       const t = setTimeout(() => {
         trackConversion("form_submit", { source: "thank_you_page" });
       }, 500);
       return () => clearTimeout(t);
     }
-  }, [fired]);
+  }, []);
 
   return (
     <div className="bg-white min-h-[70vh] flex items-center justify-center px-6">

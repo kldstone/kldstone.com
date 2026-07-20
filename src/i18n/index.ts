@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-// Only import English statically (user's most likely first visit)
+// English static imports
 import enCommon from "./locales/en/common.json";
 import enHome from "./locales/en/home.json";
 import enAbout from "./locales/en/about.json";
@@ -37,7 +37,6 @@ i18n
     },
   });
 
-// Lazy-load non-English translations on demand
 const LANG_MODULES: Record<string, () => Promise<Record<string, { default: Record<string, unknown> }>>> = {
   ru: () => Promise.all([
     import("./locales/ru/common.json"),
@@ -83,9 +82,19 @@ const LANG_MODULES: Record<string, () => Promise<Record<string, { default: Recor
   })),
 };
 
+// Supported languages
+export const SUPPORTED_LANGS = ["en", "ru", "ar", "es"] as const;
+export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+
+export function isSupportedLang(s: string): s is SupportedLang {
+  return SUPPORTED_LANGS.includes(s as SupportedLang);
+}
+
+const rtlLangs = new Set(["ar"]);
+
 i18n.on("languageChanged", async (lng) => {
-  document.documentElement.lang = lng;
-  document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
+  document.documentElement.lang = lng || "en";
+  document.documentElement.dir = rtlLangs.has(lng || "") ? "rtl" : "ltr";
 
   if (lng !== "en" && !i18n.hasResourceBundle(lng, "common")) {
     const loader = LANG_MODULES[lng];
