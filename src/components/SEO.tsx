@@ -169,5 +169,5 @@ export function useSEO({
       removeLink("alternate", "zh-CN");
       removeLink("alternate", "x-default");
     };
-  }, [title, description, image, fullUrl, canonicalPath, noIndex, t, jsonLd]);
+  }, [forcedTitle, forcedDesc, image, fullUrl, canonicalPath, noIndex, t, jsonLd]);
 }
