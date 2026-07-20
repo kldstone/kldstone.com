@@ -67,20 +67,14 @@ export function trackEvent(
 }
 
 export function trackConversion(
-  name: string,
+  _name: string,
   data?: Record<string, string>,
 ): void {
   if (typeof window === "undefined" || !window.gtag) return;
   try {
-    window.gtag("event", name, {
+    window.gtag("event", "conversion", {
+      send_to: GOOGLE_ADS_CONTACT_CONVERSION,
       ...(data || {}),
     });
-
-    if (name === "form_submit") {
-      window.gtag("event", "conversion", {
-        ...(data || {}),
-        send_to: GOOGLE_ADS_CONTACT_CONVERSION,
-      });
-    }
   } catch {}
 }
