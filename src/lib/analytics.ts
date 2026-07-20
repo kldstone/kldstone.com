@@ -1,7 +1,14 @@
 /** GA4 Measurement ID -- set VITE_GA_MEASUREMENT_ID in .env or Vercel env */
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
-/** Google Ads Conversion ID -- set VITE_GOOGLE_ADS_ID in .env or Vercel env */
-const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID as string | undefined;
+/** Google Ads Conversion ID -- may be overridden with VITE_GOOGLE_ADS_ID. */
+const GOOGLE_ADS_ID =
+  (import.meta.env.VITE_GOOGLE_ADS_ID as string | undefined) ||
+  "AW-18289600684";
+
+/** Contact-form conversion action -- may be overridden with VITE_GOOGLE_ADS_CONTACT_CONVERSION. */
+const GOOGLE_ADS_CONTACT_CONVERSION =
+  (import.meta.env.VITE_GOOGLE_ADS_CONTACT_CONVERSION as string | undefined) ||
+  "AW-18289600684/NI59CKLhoNAcEKzRlJFE";
 
 declare global {
   interface Window {
@@ -65,10 +72,15 @@ export function trackConversion(
 ): void {
   if (typeof window === "undefined" || !window.gtag) return;
   try {
-    const sendTo = GOOGLE_ADS_ID || GA_MEASUREMENT_ID;
     window.gtag("event", name, {
       ...(data || {}),
-      ...(sendTo ? { send_to: sendTo } : {}),
     });
+
+    if (name === "form_submit") {
+      window.gtag("event", "conversion", {
+        ...(data || {}),
+        send_to: GOOGLE_ADS_CONTACT_CONVERSION,
+      });
+    }
   } catch {}
 }
