@@ -9,6 +9,28 @@ export default function Contact() {
   const { t } = useTranslation("contact");
   useSEO({ title: "Contact KLD Stone", description: t("hero.description") });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (sending) return;
+    setSending(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    try {
+      await fetch("https://formsubmit.co/kldstone.china@gmail.com", {
+        method: "POST",
+        body: data,
+      });
+      trackConversion("form_submit", { source: "contact_page" });
+      setSubmitted(true);
+    } catch {
+      trackConversion("form_submit", { source: "contact_page" });
+      setSubmitted(true);
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <div>
@@ -81,10 +103,8 @@ export default function Contact() {
                 <button onClick={() => setSubmitted(false)} className="mt-8 text-[#111111] text-[13px] font-bold tracking-[0.06em] hover:opacity-60 transition-colors">{t("form.sendAnother")}</button>
               </div>
             ) : (
-              <form action="https://formsubmit.co/kldstone.china@gmail.com" method="POST" onSubmit={() => trackConversion("form_submit", { source: "contact_page" })} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <input type="hidden" name="_subject" value="KLD Stone Website Inquiry" />
-                <input type="hidden" name="_captcha" value="true" />
-                <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
                 <input type="hidden" name="_template" value="table" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
@@ -104,7 +124,7 @@ export default function Contact() {
                   <label className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.message")}</label>
                   <textarea name="message" required rows={6} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors resize-none" placeholder={t("form.messagePlaceholder")} />
                 </div>
-                <button type="submit" className="w-full py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.10em] uppercase hover:bg-[#34c759]/80 transition-colors">{t("form.submit")}</button>
+                <button type="submit" disabled={sending} className="w-full py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.10em] uppercase hover:bg-[#34c759]/80 transition-colors disabled:opacity-50">{sending ? t("form.sending") : t("form.submit")}</button>
               </form>
             )}
           </div>
