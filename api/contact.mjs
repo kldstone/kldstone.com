@@ -78,7 +78,7 @@ async function sendViaResend(data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "KLD Stone Website <noreply@kldstone.com>",
+      from: "KLD Stone Website <onboarding@resend.dev>",
       to: RECIPIENT,
       subject: `KLD Stone Inquiry from ${sanitize(data.name || "Website")}`,
       html,
