@@ -96,27 +96,28 @@ const ENGLISH_ROUTES: Record<string, RouteMeta> = {
   },
 };
 
-const BASE_HTML = readFileSync(join(DIST_DIR, "index.html"), "utf-8");
-
 function renderHtml(meta: RouteMeta, path: string, prefix: string, langCfg: { titleSuffix: string; langAttr: string; dir: string }): string {
   const canonical = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
   const robots = meta.noindex
     ? '<meta name="robots" content="noindex, nofollow" />'
     : '<meta name="robots" content="index, follow, max-image-preview:large" />';
   const ogImage = `${SITE_URL}/optimized/gani-home/banner_01.webp`;
-  const fullTitle = `${meta.title}`;
 
-  let html = BASE_HTML
+  // Preserve existing script/link tags — only replace SEO meta
+  // Read the Vite-built index.html each time so we keep the original assets
+  const baseForRoute = readFileSync(join(DIST_DIR, "index.html"), "utf-8");
+
+  let html = baseForRoute
     // Lang and dir
     .replace(/<html lang="en"/, `<html lang="${langCfg.langAttr}" dir="${langCfg.dir}"`)
     // Title
-    .replace(/<title>.*?<\/title>/, `<title>${escHtml(fullTitle)}</title>`)
+    .replace(/<title>.*?<\/title>/, `<title>${escHtml(meta.title)}</title>`)
     // Canonical
     .replace(
       /<link rel="canonical"[^>]*\/>/,
       `<link rel="canonical" href="${escAttr(canonical)}" />`
     )
-    // Robots (only first occurrence, remove any additional ones)
+    // Robots: remove all then add right before </head>
     .replace(/<meta name="robots"[^>]*\/>/g, "")
     .replace("</head>", `  ${robots}\n  </head>`);
 
