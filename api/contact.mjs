@@ -93,7 +93,7 @@ async function sendViaResend(data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "KLD Stone Website <onboarding@resend.dev>",
+      from: "KLD Stone Website <noreply@kldstone.com>",
       to: RECIPIENT,
       subject: "KLD Stone Website - New Inquiry",
       html,
