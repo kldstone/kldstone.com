@@ -28,21 +28,6 @@ function isRateLimited(ip) {
   return entry.count > RATE_LIMIT_MAX;
 }
 
-function mimeEncode(str) {
-  // Properly encode non-ASCII characters for email headers
-  if (/^[\x00-\x7F]*$/.test(str)) return str;
-  let encoded = "";
-  const bytes = new TextEncoder().encode(str);
-  for (const b of bytes) {
-    if ((b >= 0x20 && b <= 0x3d) || (b >= 0x3f && b <= 0x7e)) {
-      encoded += String.fromCharCode(b);
-    } else {
-      encoded += "=" + b.toString(16).toUpperCase().padStart(2, "0");
-    }
-  }
-  return "=?UTF-8?Q?" + encoded + "?=";
-}
-
 function sanitize(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -57,6 +42,7 @@ function validateEmail(email) {
 
 function buildEmailHtml(data) {
   const lines = [
+    "<!doctype html><html><head><meta charset='UTF-8'></head><body style='font-family:Arial,sans-serif;color:#111'>",
     "<h2>New Inquiry from KLD Stone Website</h2>",
     "<table style='border-collapse:collapse;width:100%;max-width:600px'>",
   ];
@@ -77,12 +63,22 @@ function buildEmailHtml(data) {
     lines.push(`<p style="font-size:12px;color:#888">Source: ${sanitize(tracking.join("&"))}</p>`);
   }
 
+  lines.push("</body></html>");
+  return lines.join("\n");
+}
+
+function buildEmailText(data) {
+  const lines = ["New Inquiry from KLD Stone Website", ""];
+  for (const field of ALLOWED_FIELDS) {
+    const val = data[field];
+    if (val) lines.push(`${field}: ${val}`);
+  }
   return lines.join("\n");
 }
 
 async function sendViaResend(data) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return false;
+  if (!apiKey) return null;
 
   const html = buildEmailHtml(data);
 
@@ -97,17 +93,22 @@ async function sendViaResend(data) {
       to: RECIPIENT,
       subject: "KLD Stone Website - New Inquiry",
       html,
+      text: buildEmailText(data),
       reply_to: data.email || RECIPIENT,
     }),
   });
 
-  return res.ok;
+  const result = await res.json().catch(() => ({}));
+  if (!res.ok || !result.id) {
+    throw new Error(`Resend rejected email (${res.status}): ${result.message || result.name || "unknown error"}`);
+  }
+  return { provider: "resend", id: result.id };
 }
 
 async function sendViaMailgun(data) {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
-  if (!apiKey || !domain) return false;
+  if (!apiKey || !domain) return null;
 
   const form = new URLSearchParams();
   form.set("from", `KLD Stone Website <noreply@${domain}>`);
@@ -126,13 +127,17 @@ async function sendViaMailgun(data) {
     body: form,
   });
 
-  return res.ok;
+  const result = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(`Mailgun rejected email (${res.status}): ${result.message || "unknown error"}`);
+  }
+  return { provider: "mailgun", id: result.id || "accepted" };
 }
 
 async function sendViaSMTP(_data) {
   // SMTP implementation requires nodemailer or similar
   // For now return false to fall through
-  return false;
+  return null;
 }
 
 export default async function handler(req, res) {
@@ -182,26 +187,24 @@ export default async function handler(req, res) {
   }
 
   // Sanitize message text (strip any HTML-like tags)
-  data.message = sanitize(data.message);
-
   // Try email providers in order
-  let sent = false;
+  let delivery = null;
   try {
-    sent = await sendViaResend(data) || await sendViaMailgun(data) || await sendViaSMTP(data);
+    delivery = await sendViaResend(data) || await sendViaMailgun(data) || await sendViaSMTP(data);
   } catch (err) {
     console.error("Email send error:", err);
   }
 
-  if (sent) {
-    console.log(`Inquiry sent from ${data.email} (${data.name})`);
+  if (delivery) {
+    console.log(`Inquiry accepted by ${delivery.provider}; message id: ${delivery.id}`);
     return res.status(200).json({ ok: true });
   } else {
     // No email service configured — return success anyway (frontend should show thank-you)
     // In production, set RESEND_API_KEY or MAILGUN_API_KEY
-    console.warn("No email service configured. Inquiry data captured but not sent.");
-    return res.status(200).json({
-      ok: true,
-      warning: "Email service not configured. Your message has been received but we recommend contacting us directly at kldstone.china@gmail.com",
+    console.error("Inquiry email was not accepted by any configured provider.");
+    return res.status(503).json({
+      ok: false,
+      error: "We could not send your inquiry. Please email kldstone.china@gmail.com directly.",
     });
   }
 }
