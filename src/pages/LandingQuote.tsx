@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
@@ -15,10 +15,6 @@ export default function LandingQuote() {
     description: "Send your marble, waterjet, countertop or custom stone requirements and receive material guidance and a factory quotation from KLD Stone.",
     noIndex: true,
   });
-
-  useEffect(() => {
-    if (submitted) trackConversion("generate_lead", { source: "landing_quote" });
-  }, [submitted]);
 
   const resetForm = () => {
     window.history.replaceState({}, "", "/landing/quote");
