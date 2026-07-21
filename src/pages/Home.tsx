@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import LazyCatalogSection from "./CatalogSection";
 import { useSEO } from "@/components/SEO";
@@ -137,7 +137,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
                 <Link
                   to="/contact"
-                  onClick={() => trackConversion("quote_cta", { source: "home_hero" })}
+                  onClick={() => trackEvent("quote_cta", { source: "home_hero" })}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -145,7 +145,7 @@ export default function Home() {
                 </Link>
                 <Link
                   to="/collections"
-                  onClick={() => trackConversion("cta_click", { source: "home_hero_products" })}
+                  onClick={() => trackEvent("cta_click", { source: "home_hero_products" })}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-white/30 text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-white/10 transition-colors"
                 >
                   VIEW PRODUCTS
@@ -261,7 +261,7 @@ export default function Home() {
           <div className="text-center">
             <Link
               to="/collections/mosaic"
-              onClick={() => trackConversion("cta_click", { source: "home_mosaic_all" })}
+              onClick={() => trackEvent("cta_click", { source: "home_mosaic_all" })}
               className="inline-flex items-center gap-2 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
             >
               {t("waterjet.viewAll")}
@@ -310,7 +310,7 @@ export default function Home() {
         <div className="text-center">
           <Link
             to="/collections"
-            onClick={() => trackConversion("cta_click", { source: "home_marble_all" })}
+            onClick={() => trackEvent("cta_click", { source: "home_marble_all" })}
             className="inline-flex items-center gap-2 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
           >
             {t("collections.viewAll")}
@@ -386,7 +386,7 @@ export default function Home() {
           <div className="text-center">
             <Link
               to="/spaces"
-              onClick={() => trackConversion("cta_click", { source: "home_spaces_all" })}
+              onClick={() => trackEvent("cta_click", { source: "home_spaces_all" })}
               className="inline-flex items-center gap-2 text-white text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
             >
               {t("spaces.viewAll")}
@@ -422,7 +422,7 @@ export default function Home() {
               </div>
               <Link
                 to="/quality"
-                onClick={() => trackConversion("cta_click", { source: "home_quality" })}
+                onClick={() => trackEvent("cta_click", { source: "home_quality" })}
                 className="inline-flex items-center gap-2 mt-8 text-[#111111] text-[12px] font-bold tracking-[0.10em] uppercase border-b-2 border-[#34c759] pb-1 hover:text-[#34c759] transition-colors"
               >
                 {t("quality.cta")}
@@ -454,7 +454,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/contact"
-              onClick={() => trackConversion("quote_cta", { source: "home_bottom" })}
+              onClick={() => trackEvent("quote_cta", { source: "home_bottom" })}
               className="inline-flex items-center gap-2 px-10 py-3.5 bg-white text-[#34c759] text-[13px] font-bold tracking-[0.08em] uppercase hover:bg-white/90 transition-colors"
             >
               {t("common:common.sendInquiry")}
@@ -462,7 +462,7 @@ export default function Home() {
             </Link>
             <a
               href="tel:+8615659069988"
-              onClick={() => trackConversion("phone_click", { source: "home_bottom" })}
+              onClick={() => trackEvent("phone_click", { source: "home_bottom" })}
               className="inline-flex items-center gap-2 px-10 py-3.5 bg-transparent border-2 border-white/30 text-white text-[13px] font-bold tracking-[0.08em] uppercase hover:bg-white/10 transition-colors"
             >
               {t("common:common.callUs")}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion } from "@/lib/analytics";
+import { trackConversion, trackEvent } from "@/lib/analytics";
 
 export default function LandingQuote() {
   const params = new URLSearchParams(window.location.search);
@@ -63,7 +63,7 @@ export default function LandingQuote() {
           <Link to="/" aria-label="KLD Stone home">
             <img src="/kld-logo-web.png" alt="KLD Stone" className="h-14 w-[100px] object-contain" />
           </Link>
-          <a href="https://wa.me/8615659069988" onClick={() => trackConversion("whatsapp_click", { source: "landing_header" })} className="text-sm font-bold text-[#25D366]">
+          <a href="https://wa.me/8615659069988" onClick={() => trackEvent("whatsapp_click", { source: "landing_header" })} className="text-sm font-bold text-[#25D366]">
             WhatsApp +86 156 5906 9988
           </a>
         </div>

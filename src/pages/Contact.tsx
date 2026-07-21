@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion } from "@/lib/analytics";
+import { trackConversion, trackEvent } from "@/lib/analytics";
 import { useSEO } from "@/components/SEO";
 
 export default function Contact() {
@@ -84,7 +84,7 @@ export default function Contact() {
               </div>
               <div>
                 <span className="text-[#111111] text-[10px] font-bold tracking-[0.16em] uppercase block mb-2">{t("info.phone")}</span>
-                <a href="tel:+8615659069988" onClick={() => trackConversion("phone_click", { source: "contact_page" })} className="text-[#111111] text-[18px] font-black tracking-[0.02em] hover:opacity-60 transition-colors">
+                <a href="tel:+8615659069988" onClick={() => trackEvent("phone_click", { source: "contact_page" })} className="text-[#111111] text-[18px] font-black tracking-[0.02em] hover:opacity-60 transition-colors">
                   +86 156 5906 9988
                 </a>
               </div>

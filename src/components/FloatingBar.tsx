@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { trackConversion } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 /** Fixed-bottom floating bar for mobile: WhatsApp + GET QUOTE */
 export default function FloatingBar() {
@@ -10,7 +10,7 @@ export default function FloatingBar() {
           href="https://wa.me/8615659069988"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackConversion("whatsapp_click", { source: "floating_bar" })}
+          onClick={() => trackEvent("whatsapp_click", { source: "floating_bar" })}
           className="flex flex-1 items-center justify-center gap-2 py-3.5 text-[12px] font-bold tracking-[0.06em] text-[#111111] bg-white hover:bg-[#f5f5f5] transition-colors border-r border-black/5"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
@@ -20,7 +20,7 @@ export default function FloatingBar() {
         </a>
         <Link
           to="/contact"
-          onClick={() => trackConversion("quote_cta", { source: "floating_bar" })}
+          onClick={() => trackEvent("quote_cta", { source: "floating_bar" })}
           className="flex flex-1 items-center justify-center gap-2 py-3.5 text-[12px] font-bold tracking-[0.06em] text-white bg-[#34c759] hover:bg-[#2db84d] transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
