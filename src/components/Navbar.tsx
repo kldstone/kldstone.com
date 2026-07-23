@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Search } from "lucide-react";
+import categories from "@/data/catalog";
+import { optimizedImage } from "@/lib/images";
 import LangSwitcher from "./LangSwitcher";
 
 interface NavbarProps {
@@ -19,6 +21,32 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
   const navigate = useNavigate();
 
   const p = (path: string) => `${langPrefix}${path}`;
+  const searchSuggestions = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (query.length < 2) return [];
+
+    return categories
+      .flatMap((category) =>
+        category.products.map((product) => ({
+          ...product,
+          categoryKey: category.key,
+          categoryName: category.name,
+        })),
+      )
+      .filter((product) =>
+        [
+          product.name,
+          product.tagline,
+          product.description,
+          product.categoryName,
+          ...(product.styles || []),
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(query),
+      )
+      .slice(0, 6);
+  }, [searchQuery]);
 
   const navLinks = [
     { label: t("nav.home"), href: p("/") },
@@ -244,25 +272,71 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
         <div
           id="site-search"
           className={`overflow-hidden bg-white transition-[max-height,border-color] duration-300 ${
-            searchOpen ? "max-h-24 border-t border-black/5" : "max-h-0"
+            searchOpen ? "max-h-[560px] border-t border-black/5" : "max-h-0"
           }`}
         >
-          <form onSubmit={submitSearch} className="relative mx-auto max-w-[1280px] px-6 py-3">
-            <Search className="pointer-events-none absolute left-10 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111]/35" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Search products"
-              autoFocus={searchOpen}
-              className="min-h-[46px] w-full border border-black/15 bg-[#fafafa] pl-11 pr-16 text-[14px] outline-none focus:border-[#34c759]"
-            />
-            <button
-              type="submit"
-              className="absolute right-9 top-1/2 -translate-y-1/2 text-[11px] font-bold tracking-[0.06em] text-[#34c759]"
-            >
-              GO
-            </button>
+          <form onSubmit={submitSearch} className="mx-auto max-w-[1280px] px-6 py-3">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111]/35" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search products"
+                autoFocus={searchOpen}
+                autoComplete="off"
+                className="min-h-[46px] w-full border border-black/15 bg-[#fafafa] pl-11 pr-16 text-[14px] outline-none focus:border-[#34c759]"
+              />
+              <button
+                type="submit"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold tracking-[0.06em] text-[#34c759]"
+              >
+                GO
+              </button>
+            </div>
+
+            {searchQuery.trim().length >= 2 && (
+              <div className="mt-2 border border-black/10 bg-white shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
+                {searchSuggestions.length > 0 ? (
+                  <>
+                    <div className="grid max-h-[320px] overflow-y-auto sm:grid-cols-2">
+                      {searchSuggestions.map((product) => (
+                        <Link
+                          key={`${product.categoryKey}-${product.id}`}
+                          to={p(`/catalog/${product.categoryKey}/${product.id}`)}
+                          className="flex min-w-0 items-center gap-3 border-b border-black/5 p-3 transition-colors hover:bg-[#34c759]/5 sm:[&:nth-last-child(-n+2)]:border-b-0"
+                        >
+                          <img
+                            src={optimizedImage(product.cover)}
+                            alt=""
+                            className="h-14 w-14 shrink-0 object-cover"
+                            loading="lazy"
+                          />
+                          <span className="min-w-0">
+                            <strong className="block truncate text-[13px] font-semibold text-[#111]">
+                              {product.name}
+                            </strong>
+                            <small className="mt-1 block truncate text-[10px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">
+                              {product.categoryName}
+                            </small>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                    <button
+                      type="submit"
+                      className="block w-full border-t border-black/5 px-4 py-3 text-center text-[11px] font-bold tracking-[0.08em] text-[#111]/60 transition-colors hover:text-[#34c759]"
+                    >
+                      VIEW ALL RESULTS
+                    </button>
+                  </>
+                ) : (
+                  <div className="px-4 py-5 text-center text-[12px] text-[#111]/45">
+                    No matching products. Press Enter to view the full search.
+                  </div>
+                )}
+              </div>
+            )}
           </form>
         </div>
 

@@ -1,8 +1,59 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Check, Plus } from "lucide-react";
+import categories from "@/data/catalog";
+import { useInquiryList } from "@/context/InquiryListContext";
 import { trackEvent } from "@/lib/analytics";
 
 /** Fixed-bottom floating bar for mobile: WhatsApp + GET QUOTE */
 export default function FloatingBar() {
+  const location = useLocation();
+  const { hasItem, toggleItem } = useInquiryList();
+  const segments = location.pathname.split("/").filter(Boolean);
+  const catalogIndex = segments.indexOf("catalog");
+  const categoryKey = catalogIndex >= 0 ? segments[catalogIndex + 1] : undefined;
+  const productId = catalogIndex >= 0 ? segments[catalogIndex + 2] : undefined;
+  const category = categories.find((item) => item.key === categoryKey);
+  const product = category?.products.find((item) => item.id === productId);
+  const langPrefix = catalogIndex > 0 ? `/${segments.slice(0, catalogIndex).join("/")}` : "";
+
+  if (category && product) {
+    const inquiryUrl = `${langPrefix}/contact?${new URLSearchParams({
+      products: `${category.name}: ${product.name}`,
+    }).toString()}`;
+
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-[60] block md:hidden">
+        <div className="flex items-stretch border-t border-black/8 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+          <button
+            type="button"
+            onClick={() =>
+              toggleItem({
+                id: product.id,
+                name: product.name,
+                categoryKey: category.key,
+                categoryName: category.name,
+                image: product.cover,
+              })
+            }
+            className={`flex flex-1 items-center justify-center gap-2 px-3 py-3.5 text-[11px] font-bold tracking-[0.04em] transition-colors ${
+              hasItem(product.id) ? "bg-[#111] text-white" : "bg-white text-[#111]"
+            }`}
+          >
+            {hasItem(product.id) ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+            {hasItem(product.id) ? "ADDED" : "ADD TO INQUIRY"}
+          </button>
+          <Link
+            to={inquiryUrl}
+            onClick={() => trackEvent("quote_cta", { source: "product_floating_bar", product: product.name })}
+            className="flex flex-1 items-center justify-center bg-[#34c759] px-3 py-3.5 text-[11px] font-bold tracking-[0.06em] text-white transition-colors hover:bg-[#2db84d]"
+          >
+            INQUIRE NOW
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[60] block md:hidden">
       <div className="flex items-stretch border-t border-black/8 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
