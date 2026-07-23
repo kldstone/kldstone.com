@@ -148,7 +148,7 @@ export default function Contact() {
 
   return (
     <div>
-      <section className="relative h-[45vh] min-h-[340px] bg-[#0f0f0f] overflow-hidden">
+      <section className="relative h-[360px] sm:h-[45vh] sm:min-h-[340px] bg-[#0f0f0f] overflow-hidden">
         <img src={optimizedImage("/brand-gallery/contact-hero-2026-07-06-v4.jpg")} alt="Contact KLD Stone" className="w-full h-full object-cover opacity-80" fetchPriority="high" decoding="async" />
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
