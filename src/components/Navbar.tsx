@@ -203,7 +203,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           <div className="flex items-center gap-2 md:hidden">
             <button
               type="button"
-              className="inline-flex min-h-[38px] min-w-[38px] items-center justify-center border border-black/15 bg-transparent text-[#111111]/75 transition-colors hover:border-[#34c759] hover:text-[#34c759]"
+              className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/75 transition-colors hover:text-[#34c759]"
               onClick={() => {
                 setSearchOpen(!searchOpen);
                 setMenuOpen(false);
@@ -216,7 +216,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             </button>
             <button
               type="button"
-              className="border border-black/15 bg-transparent text-[#111111]/80 px-3 py-2 text-[12px] font-bold tracking-[0.08em]"
+              className="relative inline-flex min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/80"
               onClick={() => {
                 setMenuOpen(!menuOpen);
                 setSearchOpen(false);
@@ -224,7 +224,18 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
               aria-expanded={menuOpen}
               aria-label={menuOpen ? t("nav.close") : t("nav.menu")}
             >
-              {menuOpen ? t("nav.close") : t("nav.menu")}
+              <span className="relative block h-4 w-6" aria-hidden="true">
+                <span
+                  className={`absolute left-0 top-[4px] block h-[1.5px] w-6 bg-current transition-transform duration-300 ${
+                    menuOpen ? "translate-y-[3.5px] rotate-45" : ""
+                  }`}
+                />
+                <span
+                  className={`absolute bottom-[4px] left-0 block h-[1.5px] w-6 bg-current transition-transform duration-300 ${
+                    menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </div>
