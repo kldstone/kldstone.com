@@ -2,10 +2,13 @@ import { useParams, Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
+import { Check, Plus } from "lucide-react";
+import { useInquiryList } from "@/context/InquiryListContext";
 
 export default function CatalogCategory() {
   const { category } = useParams<{ category: string }>();
   const cat = categories.find((c) => c.key === category);
+  const { hasItem, toggleItem } = useInquiryList();
   useSEO({ title: cat ? `${cat.name} Stone Products` : "Catalog Category Not Found", description: cat ? `Explore KLD Stone's ${cat.name} collection for hospitality, residential and commercial projects.` : "The requested catalog category could not be found.", noIndex: !cat });
 
   if (!cat) {
@@ -69,32 +72,51 @@ export default function CatalogCategory() {
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {cat.products.map((p) => (
-              <Link
-                key={p.id}
-                to={`/catalog/${cat.key}/${p.id}`}
-                className="group relative block overflow-hidden bg-[#f5f5f5] aspect-[3/4]"
-              >
-                <img
-                  src={optimizedImage(p.cover)}
-                  alt={p.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute left-0 right-0 bottom-0 px-4 py-3">
-                  <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">
-                    {p.name}
-                  </p>
-                  {p.styles && p.styles.length > 0 && (
-                    <p className="text-white/60 text-[10px] font-medium mt-1">
-                      {p.styles.join(" / ")}
-                    </p>
-                  )}
+            {cat.products.map((p) => {
+              const selected = hasItem(p.id);
+              return (
+                <div key={p.id} className="group relative overflow-hidden bg-[#f5f5f5] aspect-[3/4]">
+                  <Link to={`/catalog/${cat.key}/${p.id}`} className="absolute inset-0">
+                    <img
+                      src={optimizedImage(p.cover)}
+                      alt={p.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    <div className="absolute left-0 right-0 bottom-0 px-4 py-3">
+                      <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">
+                        {p.name}
+                      </p>
+                      {p.styles && p.styles.length > 0 && (
+                        <p className="text-white/60 text-[10px] font-medium mt-1">
+                          {p.styles.join(" / ")}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      toggleItem({
+                        id: p.id,
+                        name: p.name,
+                        categoryKey: cat.key,
+                        categoryName: cat.name,
+                        image: p.cover,
+                      })
+                    }
+                    aria-label={selected ? `Remove ${p.name} from inquiry list` : `Add ${p.name} to inquiry list`}
+                    className={`absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-lg transition ${
+                      selected ? "bg-[#84c225] text-white" : "bg-white/95 text-[#111] hover:bg-[#84c225] hover:text-white"
+                    }`}
+                  >
+                    {selected ? <Check className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                  </button>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>

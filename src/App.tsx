@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
 import TawkChat from "./components/TawkChat";
+import { InquiryListProvider } from "./context/InquiryListContext";
 import { Suspense, lazy } from "react";
 import { SUPPORTED_LANGS } from "./i18n";
 
@@ -52,8 +53,9 @@ function langRoutes(prefix: string): RouteRecord[] {
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingScreen />}>
-        <Routes>
+      <InquiryListProvider>
+        <Suspense fallback={<LoadingScreen />}>
+          <Routes>
           {/* Language-prefixed routes wrap in Layout */}
           {SUPPORTED_LANGS.map((lang) => {
             const prefix = lang === "en" ? "" : `/${lang}`;
@@ -79,9 +81,10 @@ export default function App() {
               <Route key={`${lang}-ty`} path={`${prefix}/thank-you`} element={<ThankYou />} />
             );
           })}
-        </Routes>
-      </Suspense>
-      <TawkChat />
+          </Routes>
+        </Suspense>
+        <TawkChat />
+      </InquiryListProvider>
     </BrowserRouter>
   );
 }

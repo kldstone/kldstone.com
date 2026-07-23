@@ -2,11 +2,14 @@ import { useParams, Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
+import { Check, Plus } from "lucide-react";
+import { useInquiryList } from "@/context/InquiryListContext";
 
 export default function CatalogDetail() {
   const { category, id } = useParams<{ category: string; id: string }>();
   const cat = categories.find((c) => c.key === category);
   const product = cat?.products.find((p) => p.id === id);
+  const { hasItem, toggleItem } = useInquiryList();
   useSEO({ title: product ? `${product.name} | Custom Stone Product` : "Product Not Found", description: product ? `View ${product.name} by KLD Stone. Request dimensions, material options, samples, export packing and a factory quotation.` : "The requested stone product could not be found.", noIndex: !product });
 
   if (!cat || !product) {
@@ -104,12 +107,34 @@ export default function CatalogDetail() {
 
             {/* CTA */}
             <div className="border-t border-black/5 pt-8 mt-8">
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center min-h-[48px] px-8 bg-[#34c759] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors"
-              >
-                Inquire About This Product
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() =>
+                    toggleItem({
+                      id: product.id,
+                      name: product.name,
+                      categoryKey: cat.key,
+                      categoryName: cat.name,
+                      image: product.cover,
+                    })
+                  }
+                  className={`inline-flex min-h-[48px] items-center justify-center gap-2 px-7 text-[13px] font-bold tracking-[0.04em] transition-colors ${
+                    hasItem(product.id)
+                      ? "bg-[#111] text-white"
+                      : "border border-[#111]/20 text-[#111] hover:border-[#84c225] hover:text-[#75ad20]"
+                  }`}
+                >
+                  {hasItem(product.id) ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                  {hasItem(product.id) ? "Added to Inquiry List" : "Add to Inquiry List"}
+                </button>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center min-h-[48px] px-8 bg-[#34c759] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors"
+                >
+                  Inquire Now
+                </Link>
+              </div>
             </div>
           </div>
         </div>

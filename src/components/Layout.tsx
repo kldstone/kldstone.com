@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingBar from "./FloatingBar";
+import InquiryListDrawer from "./InquiryListDrawer";
 import { trackPageview } from "@/lib/analytics";
 
 interface LayoutProps {
@@ -40,6 +41,7 @@ export default function Layout({ langPrefix = "" }: LayoutProps) {
       </main>
       <Footer />
       <FloatingBar />
+      <InquiryListDrawer />
     </div>
   );
 }
