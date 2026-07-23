@@ -62,10 +62,9 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
   return (
     <>
       {/* Top info bar */}
-      <div className="w-full bg-white border-b border-black/5 text-[#111111]/50 text-[12px] tracking-[0.04em]">
-        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between min-h-[34px]">
-          <span className="truncate">{t("nav.topbar")}</span>
-          <span className="hidden sm:flex items-center gap-4 ml-4 shrink-0">
+      <div className="hidden w-full bg-white border-b border-black/5 text-[#111111]/50 text-[12px] tracking-[0.04em] sm:block">
+        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-end min-h-[34px]">
+          <span className="flex items-center gap-4 shrink-0">
             <LangSwitcher langPrefix={langPrefix} />
             <span className="text-black/20">|</span>
             <a href="tel:+8615659069988" className="hover:text-[#34c759] transition-colors">+86 156 5906 9988</a>
