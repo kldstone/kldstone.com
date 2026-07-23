@@ -20,7 +20,8 @@ declare global {
 /** One-time GA4 initialisation -- call once from main.tsx or Layout */
 export function initGA(): void {
   if (typeof window === "undefined") return;
-  if ((window as any).__gaInitialized) return;
+  const analyticsWindow = window as Window & { __gaInitialized?: boolean };
+  if (analyticsWindow.__gaInitialized) return;
 
   // gtag.js is already loaded from index.html (AW-18289600684)
   // Fallback in case HTML snippet hasn't loaded yet
@@ -38,7 +39,7 @@ export function initGA(): void {
     window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: false });
   }
 
-  (window as any).__gaInitialized = true;
+  analyticsWindow.__gaInitialized = true;
 }
 
 export function trackPageview(path: string): void {
@@ -57,7 +58,9 @@ export function trackEvent(
   if (typeof window === "undefined" || !window.gtag) return;
   try {
     window.gtag("event", name, data || {});
-  } catch {}
+  } catch {
+    // Analytics must never interrupt the customer journey.
+  }
 }
 
 export function trackConversion(
@@ -70,5 +73,7 @@ export function trackConversion(
       send_to: GOOGLE_ADS_CONTACT_CONVERSION,
       ...(data || {}),
     });
-  } catch {}
+  } catch {
+    // Conversion tracking is best-effort.
+  }
 }

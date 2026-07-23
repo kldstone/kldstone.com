@@ -107,7 +107,7 @@ export default function CatalogDetail() {
 
             {/* CTA */}
             <div className="border-t border-black/5 pt-8 mt-8">
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="grid gap-3 sm:grid-cols-2">
                 <button
                   type="button"
                   onClick={() =>
@@ -129,10 +129,21 @@ export default function CatalogDetail() {
                   {hasItem(product.id) ? "Added to Inquiry List" : "Add to Inquiry List"}
                 </button>
                 <Link
-                  to="/contact"
+                  to={`/contact?${new URLSearchParams({
+                    products: `${cat.name}: ${product.name}`,
+                  }).toString()}`}
                   className="inline-flex items-center justify-center min-h-[48px] px-8 bg-[#34c759] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors"
                 >
                   Inquire Now
+                </Link>
+                <Link
+                  to={`/contact?${new URLSearchParams({
+                    products: `${cat.name}: ${product.name}`,
+                    sample: "1",
+                  }).toString()}`}
+                  className="inline-flex min-h-[48px] items-center justify-center border border-[#84c225]/45 px-8 text-[13px] font-bold tracking-[0.06em] text-[#659619] transition-colors hover:bg-[#84c225] hover:text-white sm:col-span-2"
+                >
+                  Request Material Sample
                 </Link>
               </div>
             </div>

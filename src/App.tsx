@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import LoadingScreen from "./components/LoadingScreen";
 import TawkChat from "./components/TawkChat";
+import CookieConsent from "./components/CookieConsent";
 import { InquiryListProvider } from "./context/InquiryListContext";
 import { Suspense, lazy } from "react";
 import { SUPPORTED_LANGS } from "./i18n";
@@ -84,6 +85,7 @@ export default function App() {
           </Routes>
         </Suspense>
         <TawkChat />
+        <CookieConsent />
       </InquiryListProvider>
     </BrowserRouter>
   );

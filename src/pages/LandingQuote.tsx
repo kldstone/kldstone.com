@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion, trackEvent } from "@/lib/analytics";
+import { captureAttribution, getAttribution } from "@/lib/attribution";
 
 export default function LandingQuote() {
   const params = new URLSearchParams(window.location.search);
   const [submitted, setSubmitted] = useState(() => params.get("submitted") === "1");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   useSEO({
     title: "Request a Factory Stone Quote",
@@ -33,6 +38,7 @@ export default function LandingQuote() {
     for (const [key, val] of fd.entries()) {
       if (typeof val === "string") data[key] = val;
     }
+    Object.assign(data, getAttribution());
 
     try {
       const res = await fetch("/api/contact", {

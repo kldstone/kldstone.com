@@ -27,18 +27,27 @@ const ALLOWED_FIELDS = [
   "quantity",
   "timeline",
   "destination",
+  "sample_request",
+  "attachment_name",
   "source",
   "utm_source",
   "utm_medium",
   "utm_campaign",
+  "utm_term",
+  "utm_content",
   "gclid",
   "gbraid",
   "wbraid",
+  "landing_page",
+  "referrer",
 ];
 const MAX_MESSAGE_LENGTH = 5000;
 const MAX_FIELD_LENGTH = 500;
 const RATE_LIMIT_WINDOW = 10000;
 const RATE_LIMIT_MAX = 3;
+const MAX_BODY_SIZE = 4_000_000;
+const MAX_ATTACHMENT_BYTES = 2.5 * 1024 * 1024;
+const ALLOWED_ATTACHMENT_EXTENSIONS = new Set(["pdf", "png", "jpg", "jpeg", "webp", "dwg", "dxf"]);
 
 function isRateLimited(ip) {
   const now = Date.now();
@@ -72,14 +81,14 @@ function buildEmailHtml(data) {
   for (const field of ALLOWED_FIELDS) {
     const val = data[field];
     if (!val) continue;
-    if (["utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"].includes(field)) continue;
+    if (["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid"].includes(field)) continue;
     lines.push(`<tr style="border-bottom:1px solid #eee"><td style="padding:8px 12px;font-weight:bold;text-transform:capitalize">${sanitize(field)}</td><td style="padding:8px 12px">${sanitize(val)}</td></tr>`);
   }
   lines.push("</table>");
 
   // Append tracking info
   const tracking = [];
-  for (const t of ["utm_source", "utm_medium", "utm_campaign"]) {
+  for (const t of ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid"]) {
     if (data[t]) tracking.push(`${t}=${data[t]}`);
   }
   if (tracking.length > 0) {
@@ -105,20 +114,30 @@ async function sendViaResend(data) {
 
   const html = buildEmailHtml(data);
 
+  const message = {
+    from: "KLD Stone Website <noreply@kldstone.com>",
+    to: RECIPIENT,
+    subject: data.sample_request
+      ? "KLD Stone Website - Sample Request"
+      : "KLD Stone Website - New Inquiry",
+    html,
+    text: buildEmailText(data),
+    reply_to: data.email || RECIPIENT,
+  };
+  if (data.attachment) {
+    message.attachments = [{
+      filename: data.attachment.filename,
+      content: data.attachment.content,
+    }];
+  }
+
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      from: "KLD Stone Website <noreply@kldstone.com>",
-      to: RECIPIENT,
-      subject: "KLD Stone Website - New Inquiry",
-      html,
-      text: buildEmailText(data),
-      reply_to: data.email || RECIPIENT,
-    }),
+    body: JSON.stringify(message),
   });
 
   const result = await res.json().catch(() => ({}));
@@ -164,6 +183,8 @@ async function sendViaSMTP(_data) {
 }
 
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store");
+
   // Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "Method not allowed" });
@@ -178,7 +199,7 @@ export default async function handler(req, res) {
 
   // Body size check
   const bodySize = JSON.stringify(req.body).length;
-  if (bodySize > 65536) {
+  if (bodySize > MAX_BODY_SIZE) {
     return res.status(413).json({ ok: false, error: "Request too large" });
   }
 
@@ -199,6 +220,42 @@ export default async function handler(req, res) {
       if (typeof val !== "string" || val.length > fieldLimit) continue;
       data[field] = val.trim();
     }
+  }
+
+  const origin = req.headers.origin;
+  if (origin) {
+    let allowedOrigin = false;
+    try {
+      const hostname = new URL(origin).hostname;
+      allowedOrigin = hostname === "kldstone.com"
+        || hostname === "www.kldstone.com"
+        || hostname === "127.0.0.1"
+        || hostname === "localhost"
+        || hostname.endsWith(".vercel.app");
+    } catch {
+      allowedOrigin = false;
+    }
+    if (!allowedOrigin) {
+      return res.status(403).json({ ok: false, error: "Origin not allowed." });
+    }
+  }
+
+  const attachment = req.body.attachment;
+  if (attachment !== undefined) {
+    const filename = typeof attachment?.filename === "string"
+      ? attachment.filename.replace(/[^\p{L}\p{N}._ -]/gu, "_").slice(0, 160)
+      : "";
+    const extension = filename.split(".").pop()?.toLowerCase();
+    const content = typeof attachment?.content === "string" ? attachment.content : "";
+    const decodedSize = Math.floor((content.length * 3) / 4);
+    if (!filename || !extension || !ALLOWED_ATTACHMENT_EXTENSIONS.has(extension) || !/^[A-Za-z0-9+/]*={0,2}$/.test(content)) {
+      return res.status(400).json({ ok: false, error: "Invalid attachment." });
+    }
+    if (decodedSize > MAX_ATTACHMENT_BYTES) {
+      return res.status(413).json({ ok: false, error: "Attachment is too large." });
+    }
+    data.attachment = { filename, content };
+    data.attachment_name = filename;
   }
 
   // Required fields

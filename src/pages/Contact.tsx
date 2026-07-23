@@ -4,8 +4,26 @@ import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion, trackEvent } from "@/lib/analytics";
 import { useSEO } from "@/components/SEO";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, FileUp, X } from "lucide-react";
 import { useInquiryList } from "@/context/InquiryListContext";
+import { getAttribution } from "@/lib/attribution";
+
+const MAX_ATTACHMENT_SIZE = 2.5 * 1024 * 1024;
+const ACCEPTED_FILE_TYPES = ".pdf,.png,.jpg,.jpeg,.webp,.dwg,.dxf";
+
+async function fileToAttachment(file: File) {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Could not read attachment"));
+    reader.readAsDataURL(file);
+  });
+  return {
+    filename: file.name,
+    content_type: file.type || "application/octet-stream",
+    content: dataUrl.split(",")[1] || "",
+  };
+}
 
 const SMART_FORM_COPY = {
   en: {
@@ -90,6 +108,45 @@ const SMART_FORM_COPY = {
   },
 };
 
+const ADVANCED_FORM_COPY = {
+  en: {
+    sampleRequest: "REQUEST A MATERIAL SAMPLE",
+    sampleNote: "We will confirm availability, sample cost, and courier options.",
+    attachment: "DRAWING / REFERENCE FILE",
+    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG or DXF · maximum 2.5 MB",
+    attachmentTooLarge: "The selected file is larger than 2.5 MB.",
+    attachmentInvalid: "Please choose a PDF, image, DWG, or DXF file.",
+    removeFile: "Remove file",
+  },
+  ru: {
+    sampleRequest: "ЗАПРОСИТЬ ОБРАЗЕЦ МАТЕРИАЛА",
+    sampleNote: "Мы подтвердим наличие, стоимость образца и варианты доставки.",
+    attachment: "ЧЕРТЕЖ / РЕФЕРЕНС",
+    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG или DXF · до 2,5 МБ",
+    attachmentTooLarge: "Размер файла превышает 2,5 МБ.",
+    attachmentInvalid: "Выберите PDF, изображение, DWG или DXF.",
+    removeFile: "Удалить файл",
+  },
+  es: {
+    sampleRequest: "SOLICITAR UNA MUESTRA",
+    sampleNote: "Confirmaremos disponibilidad, coste y opciones de mensajería.",
+    attachment: "PLANO / ARCHIVO DE REFERENCIA",
+    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG o DXF · máximo 2,5 MB",
+    attachmentTooLarge: "El archivo supera los 2,5 MB.",
+    attachmentInvalid: "Selecciona un archivo PDF, imagen, DWG o DXF.",
+    removeFile: "Eliminar archivo",
+  },
+  ar: {
+    sampleRequest: "طلب عينة من المادة",
+    sampleNote: "سنؤكد التوفر والتكلفة وخيارات الشحن.",
+    attachment: "مخطط / ملف مرجعي",
+    attachmentHelp: "PDF أو JPG أو PNG أو WEBP أو DWG أو DXF · حتى 2.5 MB",
+    attachmentTooLarge: "حجم الملف أكبر من 2.5 MB.",
+    attachmentInvalid: "اختر ملف PDF أو صورة أو DWG أو DXF.",
+    removeFile: "حذف الملف",
+  },
+};
+
 export default function Contact() {
   const { t, i18n } = useTranslation("contact");
   useSEO({ title: "Contact KLD Stone", description: t("hero.description") });
@@ -98,9 +155,12 @@ export default function Contact() {
   const { clearItems } = useInquiryList();
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [attachment, setAttachment] = useState<File | null>(null);
   const language = (i18n.language.split("-")[0] || "en") as keyof typeof SMART_FORM_COPY;
   const smartCopy = SMART_FORM_COPY[language] ?? SMART_FORM_COPY.en;
+  const advancedCopy = ADVANCED_FORM_COPY[language] ?? ADVANCED_FORM_COPY.en;
   const selectedProducts = searchParams.get("products") || "";
+  const sampleRequested = searchParams.get("sample") === "1";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -115,18 +175,15 @@ export default function Contact() {
       if (typeof val === "string") data[key] = val;
     }
 
-    // Collect UTM/gclid params from URL
-    const sp = new URLSearchParams(window.location.search);
-    for (const p of ["utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"]) {
-      const v = sp.get(p);
-      if (v) data[p] = v;
-    }
+    Object.assign(data, getAttribution());
 
     try {
+      const payload: Record<string, unknown> = { ...data };
+      if (attachment) payload.attachment = await fileToAttachment(attachment);
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       const json = await res.json();
 
@@ -281,6 +338,66 @@ export default function Contact() {
                   <label htmlFor="destination" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.destination}</label>
                   <input id="destination" type="text" name="destination" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.destinationPlaceholder} />
                 </div>
+              </div>
+
+              <label className="flex cursor-pointer items-start gap-3 border border-black/10 bg-[#fafafa] p-4">
+                <input
+                  type="checkbox"
+                  name="sample_request"
+                  value="Yes"
+                  defaultChecked={sampleRequested}
+                  className="mt-0.5 h-4 w-4 accent-[#34c759]"
+                />
+                <span>
+                  <span className="block text-[12px] font-black tracking-[0.06em] text-[#111]">{advancedCopy.sampleRequest}</span>
+                  <span className="mt-1 block text-[12px] leading-5 text-[#111]/55">{advancedCopy.sampleNote}</span>
+                </span>
+              </label>
+
+              <div>
+                <span className="mb-2 block text-[12px] font-bold tracking-[0.06em] text-[#111]">{advancedCopy.attachment}</span>
+                {attachment ? (
+                  <div className="flex min-h-[52px] items-center justify-between gap-3 border border-[#84c225]/35 bg-[#84c225]/5 px-4">
+                    <div className="min-w-0">
+                      <p className="truncate text-[13px] font-semibold text-[#111]">{attachment.name}</p>
+                      <p className="text-[11px] text-[#111]/50">{(attachment.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setAttachment(null)}
+                      aria-label={advancedCopy.removeFile}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center text-[#111]/55 hover:text-[#111]"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex min-h-[76px] cursor-pointer items-center gap-3 border border-dashed border-black/20 px-4 transition-colors hover:border-[#84c225]">
+                    <FileUp className="h-5 w-5 shrink-0 text-[#75ad20]" />
+                    <span className="text-[12px] leading-5 text-[#111]/55">{advancedCopy.attachmentHelp}</span>
+                    <input
+                      type="file"
+                      accept={ACCEPTED_FILE_TYPES}
+                      className="sr-only"
+                      onChange={(event) => {
+                        const file = event.target.files?.[0];
+                        event.target.value = "";
+                        if (!file) return;
+                        const extension = file.name.split(".").pop()?.toLowerCase();
+                        if (!extension || !["pdf", "png", "jpg", "jpeg", "webp", "dwg", "dxf"].includes(extension)) {
+                          setError(advancedCopy.attachmentInvalid);
+                          return;
+                        }
+                        if (file.size > MAX_ATTACHMENT_SIZE) {
+                          setError(advancedCopy.attachmentTooLarge);
+                          return;
+                        }
+                        setError("");
+                        setAttachment(file);
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div className="border-b border-black/10 pb-3 pt-3">

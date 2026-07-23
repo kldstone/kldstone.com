@@ -1,9 +1,31 @@
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
+import { Search } from "lucide-react";
 
 export default function Catalog() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const products = useMemo(
+    () => categories.flatMap((cat) => cat.products.map((product) => ({ ...product, categoryKey: cat.key, categoryName: cat.name }))),
+    [],
+  );
+  const filteredProducts = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized && category === "all") return [];
+    return products.filter((product) => {
+      const matchesCategory = category === "all" || product.categoryKey === category;
+      const matchesQuery = !normalized || [
+        product.name,
+        product.tagline,
+        product.description,
+        ...(product.styles || []),
+      ].join(" ").toLowerCase().includes(normalized);
+      return matchesCategory && matchesQuery;
+    });
+  }, [category, products, query]);
   useSEO({ title: "Architectural Stone Product Catalog", description: "Browse KLD Stone's architectural stone catalog, including carved stone, wall panels, furniture, mosaics and custom marble products for global projects." });
   return (
     <div className="bg-white">
@@ -32,6 +54,69 @@ export default function Catalog() {
 
       {/* Category Grid */}
       <section className="max-w-[1280px] mx-auto px-6 py-20">
+        <div className="mb-12 border border-black/10 bg-[#fafafa] p-5 sm:p-7">
+          <div className="grid gap-3 sm:grid-cols-[1fr_230px]">
+            <label className="relative block">
+              <span className="sr-only">Search the complete catalog</span>
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#111]/35" />
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search the complete catalog"
+                className="min-h-[52px] w-full border border-black/15 bg-white pl-12 pr-4 text-[14px] outline-none focus:border-[#84c225]"
+              />
+            </label>
+            <label>
+              <span className="sr-only">Product category</span>
+              <select
+                value={category}
+                onChange={(event) => setCategory(event.target.value)}
+                className="min-h-[52px] w-full border border-black/15 bg-white px-4 text-[13px] outline-none focus:border-[#84c225]"
+              >
+                <option value="all">All categories</option>
+                {categories.map((cat) => <option key={cat.key} value={cat.key}>{cat.name}</option>)}
+              </select>
+            </label>
+          </div>
+          {(query.trim() || category !== "all") && (
+            <p className="mt-3 text-[12px] font-semibold text-[#111]/55" aria-live="polite">
+              {filteredProducts.length} matching products
+            </p>
+          )}
+        </div>
+
+        {(query.trim() || category !== "all") && (
+          <div className="mb-16">
+            {filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                {filteredProducts.map((product) => (
+                  <Link
+                    key={`${product.categoryKey}-${product.id}`}
+                    to={`/catalog/${product.categoryKey}/${product.id}`}
+                    className="group bg-[#f5f5f5]"
+                  >
+                    <div className="aspect-[3/4] overflow-hidden">
+                      <img
+                        src={optimizedImage(product.cover)}
+                        alt={product.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">{product.categoryName}</p>
+                      <p className="mt-1 text-[13px] font-semibold leading-5 text-[#111]">{product.name}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="py-12 text-center text-[14px] text-[#111]/55">No products match your search.</div>
+            )}
+          </div>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => (
             <Link

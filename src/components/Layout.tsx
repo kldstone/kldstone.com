@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import FloatingBar from "./FloatingBar";
 import InquiryListDrawer from "./InquiryListDrawer";
 import { trackPageview } from "@/lib/analytics";
+import { captureAttribution } from "@/lib/attribution";
 
 interface LayoutProps {
   /** Language prefix, e.g. "" for English, "/ru" for Russian */
@@ -30,8 +31,9 @@ export default function Layout({ langPrefix = "" }: LayoutProps) {
   }, [location.key]);
 
   useEffect(() => {
+    captureAttribution();
     trackPageview(location.pathname);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   return (
     <div className="min-h-screen flex flex-col">
