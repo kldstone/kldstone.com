@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 
-const PROPERTY_ID = import.meta.env.VITE_TAWK_PROPERTY_ID as string | undefined;
-const WIDGET_ID = import.meta.env.VITE_TAWK_WIDGET_ID as string | undefined;
+const PROPERTY_ID =
+  (import.meta.env.VITE_TAWK_PROPERTY_ID as string | undefined) ||
+  "6a617637940f101d5323cf11";
+const WIDGET_ID =
+  (import.meta.env.VITE_TAWK_WIDGET_ID as string | undefined) ||
+  "1ju6bbjf0";
 
 declare global {
   interface Window {
