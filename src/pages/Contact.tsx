@@ -1,16 +1,106 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackConversion, trackEvent } from "@/lib/analytics";
 import { useSEO } from "@/components/SEO";
+import { CheckCircle2 } from "lucide-react";
+import { useInquiryList } from "@/context/InquiryListContext";
+
+const SMART_FORM_COPY = {
+  en: {
+    projectHeading: "1. Project Scope",
+    contactHeading: "2. Contact Details",
+    selectedProducts: "Selected products",
+    projectType: "PROJECT TYPE",
+    application: "APPLICATION",
+    material: "MATERIAL / PRODUCT PREFERENCE",
+    dimensions: "DIMENSIONS",
+    quantity: "QUANTITY",
+    timeline: "REQUIRED TIMELINE",
+    destination: "DESTINATION COUNTRY / PORT",
+    choose: "Please select",
+    materialPlaceholder: "Marble name, color, finish, or product reference",
+    dimensionsPlaceholder: "For example: 1200 × 600 × 20 mm",
+    quantityPlaceholder: "For example: 500 m², 20 sets, or 2 containers",
+    destinationPlaceholder: "Country, city, or destination port",
+    projectTypes: ["Residential", "Hospitality", "Commercial", "Retail", "Public Project", "Distribution / Wholesale", "Other"],
+    applications: ["Flooring", "Wall Cladding", "Bathroom", "Kitchen", "Furniture", "Waterjet / Mosaic", "Carved Components", "Other"],
+    timelines: ["As soon as possible", "Within 1 month", "1–3 months", "3–6 months", "More than 6 months", "Not confirmed"],
+  },
+  ru: {
+    projectHeading: "1. Параметры проекта",
+    contactHeading: "2. Контактные данные",
+    selectedProducts: "Выбранные продукты",
+    projectType: "ТИП ПРОЕКТА",
+    application: "ПРИМЕНЕНИЕ",
+    material: "МАТЕРИАЛ / ПРОДУКТ",
+    dimensions: "РАЗМЕРЫ",
+    quantity: "КОЛИЧЕСТВО",
+    timeline: "СРОК",
+    destination: "СТРАНА / ПОРТ НАЗНАЧЕНИЯ",
+    choose: "Выберите",
+    materialPlaceholder: "Название мрамора, цвет, отделка или артикул",
+    dimensionsPlaceholder: "Например: 1200 × 600 × 20 мм",
+    quantityPlaceholder: "Например: 500 м², 20 комплектов или 2 контейнера",
+    destinationPlaceholder: "Страна, город или порт назначения",
+    projectTypes: ["Жилой", "Отель", "Коммерческий", "Розничный", "Общественный", "Оптовая торговля", "Другое"],
+    applications: ["Пол", "Стены", "Ванная", "Кухня", "Мебель", "Мозаика", "Резные элементы", "Другое"],
+    timelines: ["Как можно скорее", "До 1 месяца", "1–3 месяца", "3–6 месяцев", "Более 6 месяцев", "Не определено"],
+  },
+  es: {
+    projectHeading: "1. Alcance del proyecto",
+    contactHeading: "2. Datos de contacto",
+    selectedProducts: "Productos seleccionados",
+    projectType: "TIPO DE PROYECTO",
+    application: "APLICACIÓN",
+    material: "MATERIAL / PRODUCTO",
+    dimensions: "DIMENSIONES",
+    quantity: "CANTIDAD",
+    timeline: "PLAZO REQUERIDO",
+    destination: "PAÍS / PUERTO DE DESTINO",
+    choose: "Seleccionar",
+    materialPlaceholder: "Nombre del mármol, color, acabado o referencia",
+    dimensionsPlaceholder: "Ejemplo: 1200 × 600 × 20 mm",
+    quantityPlaceholder: "Ejemplo: 500 m², 20 unidades o 2 contenedores",
+    destinationPlaceholder: "País, ciudad o puerto de destino",
+    projectTypes: ["Residencial", "Hotel", "Comercial", "Retail", "Proyecto público", "Distribución / Mayorista", "Otro"],
+    applications: ["Pavimento", "Revestimiento", "Baño", "Cocina", "Muebles", "Mosaico", "Elementos tallados", "Otro"],
+    timelines: ["Lo antes posible", "Dentro de 1 mes", "1–3 meses", "3–6 meses", "Más de 6 meses", "Sin confirmar"],
+  },
+  ar: {
+    projectHeading: "1. نطاق المشروع",
+    contactHeading: "2. بيانات الاتصال",
+    selectedProducts: "المنتجات المختارة",
+    projectType: "نوع المشروع",
+    application: "الاستخدام",
+    material: "المادة / المنتج",
+    dimensions: "الأبعاد",
+    quantity: "الكمية",
+    timeline: "الجدول الزمني",
+    destination: "الدولة / ميناء الوجهة",
+    choose: "يرجى الاختيار",
+    materialPlaceholder: "اسم الرخام أو اللون أو التشطيب أو مرجع المنتج",
+    dimensionsPlaceholder: "مثال: 1200 × 600 × 20 مم",
+    quantityPlaceholder: "مثال: 500 م² أو 20 مجموعة أو حاويتان",
+    destinationPlaceholder: "الدولة أو المدينة أو ميناء الوجهة",
+    projectTypes: ["سكني", "ضيافة", "تجاري", "تجزئة", "مشروع عام", "توزيع / جملة", "أخرى"],
+    applications: ["أرضيات", "كسوة جدران", "حمام", "مطبخ", "أثاث", "فسيفساء", "عناصر منحوتة", "أخرى"],
+    timelines: ["في أقرب وقت", "خلال شهر", "1–3 أشهر", "3–6 أشهر", "أكثر من 6 أشهر", "غير مؤكد"],
+  },
+};
 
 export default function Contact() {
-  const { t } = useTranslation("contact");
+  const { t, i18n } = useTranslation("contact");
   useSEO({ title: "Contact KLD Stone", description: t("hero.description") });
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { clearItems } = useInquiryList();
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const language = (i18n.language.split("-")[0] || "en") as keyof typeof SMART_FORM_COPY;
+  const smartCopy = SMART_FORM_COPY[language] ?? SMART_FORM_COPY.en;
+  const selectedProducts = searchParams.get("products") || "";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,6 +133,7 @@ export default function Contact() {
       if (res.ok && json.ok) {
         // Only fire conversion on confirmed server success
         trackConversion("form_submit", { source: "contact_page" });
+        clearItems();
         // Navigate to thank-you page
         navigate("/thank-you" + window.location.search);
       } else {
@@ -120,6 +211,82 @@ export default function Contact() {
               <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
                 <label htmlFor="website">Website</label>
                 <input type="text" name="website" id="website" tabIndex={-1} autoComplete="off" />
+              </div>
+
+              <div className="border-b border-black/10 pb-3">
+                <h3 className="text-[13px] font-black tracking-[0.08em] uppercase text-[#111]">
+                  {smartCopy.projectHeading}
+                </h3>
+              </div>
+
+              {selectedProducts && (
+                <div className="rounded-sm border border-[#84c225]/30 bg-[#84c225]/5 px-4 py-4">
+                  <div className="flex items-center gap-2 text-[#5f9216]">
+                    <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    <span className="text-[11px] font-black uppercase tracking-[0.08em]">
+                      {smartCopy.selectedProducts}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[13px] leading-6 text-[#111]/70">{selectedProducts}</p>
+                  <input type="hidden" name="selected_products" value={selectedProducts} />
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="project_type" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">
+                    {smartCopy.projectType}
+                  </label>
+                  <select id="project_type" name="project_type" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
+                    <option value="">{smartCopy.choose}</option>
+                    {smartCopy.projectTypes.map((option) => <option key={option} value={option}>{option}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="application" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">
+                    {smartCopy.application}
+                  </label>
+                  <select id="application" name="application" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
+                    <option value="">{smartCopy.choose}</option>
+                    {smartCopy.applications.map((option) => <option key={option} value={option}>{option}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="material" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.material}</label>
+                <input id="material" type="text" name="material" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.materialPlaceholder} />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="dimensions" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.dimensions}</label>
+                  <input id="dimensions" type="text" name="dimensions" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.dimensionsPlaceholder} />
+                </div>
+                <div>
+                  <label htmlFor="quantity" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.quantity}</label>
+                  <input id="quantity" type="text" name="quantity" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.quantityPlaceholder} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="timeline" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.timeline}</label>
+                  <select id="timeline" name="timeline" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
+                    <option value="">{smartCopy.choose}</option>
+                    {smartCopy.timelines.map((option) => <option key={option} value={option}>{option}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="destination" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.destination}</label>
+                  <input id="destination" type="text" name="destination" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.destinationPlaceholder} />
+                </div>
+              </div>
+
+              <div className="border-b border-black/10 pb-3 pt-3">
+                <h3 className="text-[13px] font-black tracking-[0.08em] uppercase text-[#111]">
+                  {smartCopy.contactHeading}
+                </h3>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

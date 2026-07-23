@@ -11,7 +11,30 @@
 
 const RECIPIENT = "kldstone.china@gmail.com";
 const ipHits = new Map();
-const ALLOWED_FIELDS = ["name", "email", "phone", "company", "country", "message", "product", "source", "utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"];
+const ALLOWED_FIELDS = [
+  "name",
+  "email",
+  "phone",
+  "company",
+  "country",
+  "message",
+  "product",
+  "selected_products",
+  "project_type",
+  "application",
+  "material",
+  "dimensions",
+  "quantity",
+  "timeline",
+  "destination",
+  "source",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "gclid",
+  "gbraid",
+  "wbraid",
+];
 const MAX_MESSAGE_LENGTH = 5000;
 const MAX_FIELD_LENGTH = 500;
 const RATE_LIMIT_WINDOW = 10000;
@@ -170,7 +193,10 @@ export default async function handler(req, res) {
   for (const field of ALLOWED_FIELDS) {
     const val = req.body[field];
     if (val !== undefined && val !== null) {
-      if (typeof val !== "string" || val.length > MAX_FIELD_LENGTH) continue;
+      const fieldLimit = field === "message" || field === "selected_products"
+        ? MAX_MESSAGE_LENGTH
+        : MAX_FIELD_LENGTH;
+      if (typeof val !== "string" || val.length > fieldLimit) continue;
       data[field] = val.trim();
     }
   }
