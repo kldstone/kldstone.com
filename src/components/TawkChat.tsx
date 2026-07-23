@@ -19,6 +19,13 @@ export default function TawkChat() {
     if (!PROPERTY_ID || !WIDGET_ID || document.getElementById("tawk-chat-script")) return;
 
     window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_API.customStyle = {
+      zIndex: "70 !important",
+      visibility: {
+        desktop: { position: "br", xOffset: 20, yOffset: 20 },
+        mobile: { position: "br", xOffset: 14, yOffset: 72 },
+      },
+    };
     window.Tawk_LoadStart = new Date();
 
     const script = document.createElement("script");
