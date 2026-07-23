@@ -179,7 +179,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           {/* Desktop search */}
           <button
             type="button"
-            className="hidden min-h-[40px] min-w-[40px] items-center justify-center border border-black/15 bg-transparent text-[#111111]/65 transition-colors hover:border-[#34c759] hover:text-[#34c759] md:inline-flex"
+            className="hidden min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/65 transition-colors hover:text-[#34c759] md:inline-flex"
             onClick={() => {
               setSearchOpen(!searchOpen);
               setMenuOpen(false);
