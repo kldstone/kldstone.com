@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FaFacebookF, FaInstagram, FaPinterestP, FaTiktok, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { trackEvent } from "@/lib/analytics";
 import { useLangPrefix } from "@/hooks/useLangPrefix";
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://www.instagram.com/kld_stone/", platform: "instagram" },
-  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61591185544381", platform: "facebook" },
-  { label: "YouTube", href: "https://www.youtube.com/@KLDSTONE-China", platform: "youtube" },
-  { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest" },
-  { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok" },
-  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x" },
+  { label: "Instagram", href: "https://www.instagram.com/kld_stone/", platform: "instagram", Icon: FaInstagram },
+  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61591185544381", platform: "facebook", Icon: FaFacebookF },
+  { label: "YouTube", href: "https://www.youtube.com/@KLDSTONE-China", platform: "youtube", Icon: FaYoutube },
+  { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest", Icon: FaPinterestP },
+  { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok", Icon: FaTiktok },
+  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", Icon: FaXTwitter },
 ] as const;
 
 export default function Footer() {
@@ -89,7 +90,10 @@ export default function Footer() {
                         onClick={() => trackEvent("social_click", { source: "footer", platform: social.platform })}
                         className="group inline-flex min-h-[38px] items-center justify-between gap-2 border border-black/10 bg-white px-3 py-2 text-[11px] font-semibold text-[#111111]/60 transition-colors hover:border-[#34c759]/40 hover:text-[#34c759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34c759]/50"
                       >
-                        <span>{social.label}</span>
+                        <span className="flex min-w-0 items-center gap-2.5">
+                          <social.Icon className="h-4 w-4 shrink-0 text-[#111111]/75 transition-colors group-hover:text-[#34c759]" aria-hidden="true" />
+                          <span className="truncate">{social.label}</span>
+                        </span>
                         <svg className="h-3 w-3 shrink-0 opacity-45 transition-opacity group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <path d="M15 3h6v6" />
                           <path d="M10 14 21 3" />
