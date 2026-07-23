@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Search } from "lucide-react";
 import LangSwitcher from "./LangSwitcher";
 
 interface NavbarProps {
@@ -11,8 +12,11 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
   const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const p = (path: string) => `${langPrefix}${path}`;
 
@@ -51,8 +55,17 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
 
   useEffect(() => {
     setMenuOpen(false);
+    setSearchOpen(false);
     setDropdownOpen(null);
   }, [location.pathname]);
+
+  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    navigate(`${p("/catalog")}?q=${encodeURIComponent(query)}`);
+    setSearchOpen(false);
+  };
 
   const isActive = (href: string) => {
     if (href === p("/")) return location.pathname === p("/");
@@ -98,14 +111,14 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
               alt="KLD Stone"
               className="w-[100px] h-[56px] object-contain"
             />
-            <span className="hidden lg:block">
+            <span className="hidden 2xl:block">
               <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">{t("nav.brandName")}</strong>
               <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">{t("nav.brandSub")}</small>
             </span>
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-0">
+          <div className="hidden xl:flex items-center gap-0">
             {navLinks.map((link) => (
               <div key={link.href} className="relative">
                 <Link
@@ -148,12 +161,12 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           </div>
 
           {/* Mobile visible links */}
-          <div className="hidden md:flex lg:hidden items-center gap-0">
-            {navLinks.slice(0, 5).map((link) => (
+          <div className="hidden md:flex xl:hidden items-center gap-0">
+            {navLinks.slice(0, 5).map((link, index) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`inline-flex items-center justify-center min-h-[44px] px-[9px] text-[11px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
+                className={`${index >= 3 ? "hidden lg:inline-flex" : "inline-flex"} items-center justify-center min-h-[44px] px-[9px] text-[11px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
                   isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                 }`}
               >
@@ -163,6 +176,21 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             <span className="text-black/20 text-[11px] px-1">···</span>
           </div>
 
+          {/* Desktop search */}
+          <button
+            type="button"
+            className="hidden min-h-[40px] min-w-[40px] items-center justify-center border border-black/15 bg-transparent text-[#111111]/65 transition-colors hover:border-[#34c759] hover:text-[#34c759] md:inline-flex"
+            onClick={() => {
+              setSearchOpen(!searchOpen);
+              setMenuOpen(false);
+            }}
+            aria-expanded={searchOpen}
+            aria-controls="site-search"
+            aria-label="Search products"
+          >
+            <Search className="h-[18px] w-[18px]" strokeWidth={1.8} />
+          </button>
+
           {/* CTA */}
           <Link
             to={p("/contact")}
@@ -171,15 +199,60 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             {t("nav.getQuote")}
           </Link>
 
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden border border-black/15 bg-transparent text-[#111111]/80 px-3 py-2 text-[12px] font-bold tracking-[0.08em]"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? t("nav.close") : t("nav.menu")}
-          >
-            {menuOpen ? t("nav.close") : t("nav.menu")}
-          </button>
+          {/* Mobile actions */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              type="button"
+              className="inline-flex min-h-[38px] min-w-[38px] items-center justify-center border border-black/15 bg-transparent text-[#111111]/75 transition-colors hover:border-[#34c759] hover:text-[#34c759]"
+              onClick={() => {
+                setSearchOpen(!searchOpen);
+                setMenuOpen(false);
+              }}
+              aria-expanded={searchOpen}
+              aria-controls="site-search"
+              aria-label="Search products"
+            >
+              <Search className="h-[18px] w-[18px]" strokeWidth={1.8} />
+            </button>
+            <button
+              type="button"
+              className="border border-black/15 bg-transparent text-[#111111]/80 px-3 py-2 text-[12px] font-bold tracking-[0.08em]"
+              onClick={() => {
+                setMenuOpen(!menuOpen);
+                setSearchOpen(false);
+              }}
+              aria-expanded={menuOpen}
+              aria-label={menuOpen ? t("nav.close") : t("nav.menu")}
+            >
+              {menuOpen ? t("nav.close") : t("nav.menu")}
+            </button>
+          </div>
+        </div>
+
+        {/* Site search */}
+        <div
+          id="site-search"
+          className={`overflow-hidden bg-white transition-[max-height,border-color] duration-300 ${
+            searchOpen ? "max-h-24 border-t border-black/5" : "max-h-0"
+          }`}
+        >
+          <form onSubmit={submitSearch} className="relative mx-auto max-w-[1280px] px-6 py-3">
+            <Search className="pointer-events-none absolute left-10 top-1/2 h-4 w-4 -translate-y-1/2 text-[#111]/35" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search products"
+              autoFocus={searchOpen}
+              className="min-h-[46px] w-full border border-black/15 bg-[#fafafa] pl-11 pr-16 text-[14px] outline-none focus:border-[#34c759]"
+            />
+            <button
+              type="submit"
+              className="absolute right-9 top-1/2 -translate-y-1/2 text-[11px] font-bold tracking-[0.06em] text-[#34c759]"
+            >
+              GO
+            </button>
+          </form>
         </div>
 
         {/* Mobile menu */}

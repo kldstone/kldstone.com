@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
@@ -6,7 +6,8 @@ import { useSEO } from "@/components/SEO";
 import { Search } from "lucide-react";
 
 export default function Catalog() {
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("q") || "";
   const [category, setCategory] = useState("all");
   const products = useMemo(
     () => categories.flatMap((cat) => cat.products.map((product) => ({ ...product, categoryKey: cat.key, categoryName: cat.name }))),
@@ -62,7 +63,13 @@ export default function Catalog() {
               <input
                 type="search"
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  const nextParams = new URLSearchParams(searchParams);
+                  const nextQuery = event.target.value;
+                  if (nextQuery) nextParams.set("q", nextQuery);
+                  else nextParams.delete("q");
+                  setSearchParams(nextParams, { replace: true });
+                }}
                 placeholder="Search the complete catalog"
                 className="min-h-[52px] w-full border border-black/15 bg-white pl-12 pr-4 text-[14px] outline-none focus:border-[#84c225]"
               />
