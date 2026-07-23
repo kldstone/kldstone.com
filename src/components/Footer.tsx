@@ -9,9 +9,40 @@ const SOCIAL_LINKS = [
   { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61591185544381", platform: "facebook", color: "#1877F2", Icon: FaFacebookF },
   { label: "YouTube", href: "https://www.youtube.com/@KLDSTONE-China", platform: "youtube", color: "#FF0000", Icon: FaYoutube },
   { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest", color: "#E60023", Icon: FaPinterestP },
-  { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok", color: "#FF0050", Icon: FaTiktok },
-  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", color: "#1D9BF0", Icon: FaXTwitter },
+  { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok", color: "#000000", Icon: FaTiktok },
+  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", color: "#000000", Icon: FaXTwitter },
 ] as const;
+
+function SocialBrandIcon({ social }: { social: (typeof SOCIAL_LINKS)[number] }) {
+  if (social.platform === "instagram") {
+    return (
+      <span
+        className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-[radial-gradient(circle_at_30%_107%,#fdf497_0%,#fdf497_5%,#fd5949_45%,#d6249f_60%,#285AEB_90%)]"
+        aria-hidden="true"
+      >
+        <FaInstagram className="h-[15px] w-[15px] text-white" />
+      </span>
+    );
+  }
+
+  if (social.platform === "tiktok") {
+    return (
+      <span className="relative block h-[18px] w-[18px] shrink-0" aria-hidden="true">
+        <FaTiktok className="absolute left-[-1px] top-0 h-[17px] w-[17px] text-[#25F4EE]" />
+        <FaTiktok className="absolute left-[1px] top-[1px] h-[17px] w-[17px] text-[#FE2C55]" />
+        <FaTiktok className="absolute left-0 top-0 h-[17px] w-[17px] text-black" />
+      </span>
+    );
+  }
+
+  return (
+    <social.Icon
+      className="h-4 w-4 shrink-0"
+      style={{ color: social.color }}
+      aria-hidden="true"
+    />
+  );
+}
 
 export default function Footer() {
   const { t } = useTranslation("common");
@@ -91,11 +122,9 @@ export default function Footer() {
                         className="group inline-flex min-h-[38px] items-center justify-between gap-2 border border-black/10 bg-white px-3 py-2 text-[11px] font-semibold text-[#111111]/60 transition-colors hover:border-[#34c759]/40 hover:text-[#34c759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34c759]/50"
                       >
                         <span className="flex min-w-0 items-center gap-2.5">
-                          <social.Icon
-                            className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110"
-                            style={{ color: social.color }}
-                            aria-hidden="true"
-                          />
+                          <span className="transition-transform group-hover:scale-110">
+                            <SocialBrandIcon social={social} />
+                          </span>
                           <span className="truncate">{social.label}</span>
                         </span>
                         <svg className="h-3 w-3 shrink-0 opacity-45 transition-opacity group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
