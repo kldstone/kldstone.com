@@ -20,31 +20,25 @@ declare global {
 /** One-time GA4 initialisation -- call once from main.tsx or Layout */
 export function initGA(): void {
   if (typeof window === "undefined") return;
-  if ((window as unknown as Record<string, unknown>).__gaInitialized) return;
+  if ((window as any).__gaInitialized) return;
 
+  // gtag.js is already loaded from index.html (AW-18289600684)
+  // Fallback in case HTML snippet hasn't loaded yet
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function (...args: unknown[]) {
+  window.gtag = window.gtag || function (...args: unknown[]) {
     window.dataLayer!.push(args);
   };
-  window.gtag("js", new Date());
 
-  const loaderId = GA_MEASUREMENT_ID || GOOGLE_ADS_ID;
-  if (loaderId) {
+  // If GA4 measurement ID is set AND different from Ads ID, load GA4 too
+  if (GA_MEASUREMENT_ID && !GA_MEASUREMENT_ID.includes(GOOGLE_ADS_ID)) {
     const el = document.createElement("script");
     el.async = true;
-    el.src = `https://www.googletagmanager.com/gtag/js?id=${loaderId}`;
+    el.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
     document.head.appendChild(el);
-  }
-
-  if (GA_MEASUREMENT_ID) {
     window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: false });
   }
 
-  if (GOOGLE_ADS_ID) {
-    window.gtag("config", GOOGLE_ADS_ID);
-  }
-
-  (window as unknown as Record<string, unknown>).__gaInitialized = true;
+  (window as any).__gaInitialized = true;
 }
 
 export function trackPageview(path: string): void {
@@ -63,9 +57,7 @@ export function trackEvent(
   if (typeof window === "undefined" || !window.gtag) return;
   try {
     window.gtag("event", name, data || {});
-  } catch {
-    // best-effort analytics
-  }
+  } catch {}
 }
 
 export function trackConversion(
@@ -78,7 +70,5 @@ export function trackConversion(
       send_to: GOOGLE_ADS_CONTACT_CONVERSION,
       ...(data || {}),
     });
-  } catch {
-    // best-effort conversion tracking
-  }
+  } catch {}
 }
