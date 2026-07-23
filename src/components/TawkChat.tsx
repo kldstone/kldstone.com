@@ -7,6 +7,7 @@ const PROPERTY_ID =
 const WIDGET_ID =
   (import.meta.env.VITE_TAWK_WIDGET_ID as string | undefined) ||
   "1ju6bbjf0";
+const DIRECT_CHAT_URL = `https://tawk.to/chat/${encodeURIComponent(PROPERTY_ID)}/${encodeURIComponent(WIDGET_ID)}`;
 
 declare global {
   interface Window {
@@ -52,11 +53,15 @@ export default function TawkChat() {
   }, []);
 
   const openChat = () => {
-    const showWidget = window.Tawk_API?.showWidget;
-    const maximize = window.Tawk_API?.maximize;
+    const chatWindow = window.open(
+      DIRECT_CHAT_URL,
+      "kldstone-live-chat",
+      "popup=yes,width=420,height=680,resizable=yes,scrollbars=yes",
+    );
 
-    if (typeof showWidget === "function") showWidget();
-    if (typeof maximize === "function") maximize();
+    if (!chatWindow) {
+      window.location.assign(DIRECT_CHAT_URL);
+    }
   };
 
   return (
