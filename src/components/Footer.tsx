@@ -112,7 +112,7 @@ export default function Footer() {
                   <p className="mb-3 text-[11px] font-bold tracking-[0.10em] uppercase text-[#111111]/70">
                     {t("footer.followUs")}
                   </p>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-wrap items-center gap-4">
                     {SOCIAL_LINKS.map((social) => (
                       <a
                         key={social.platform}
@@ -121,19 +121,11 @@ export default function Footer() {
                         rel="noopener noreferrer"
                         aria-label={`${social.label} — KLD Stone (opens in a new tab)`}
                         onClick={() => trackEvent("social_click", { source: "footer", platform: social.platform })}
-                        className="group inline-flex min-h-[38px] items-center justify-between gap-2 border border-black/10 bg-white px-3 py-2 text-[11px] font-semibold text-[#111111]/60 transition-colors hover:border-[#34c759]/40 hover:text-[#34c759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34c759]/50"
+                        className="group inline-flex min-h-[36px] min-w-[28px] items-center justify-center transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34c759]/50"
                       >
-                        <span className="flex min-w-0 items-center gap-2.5">
-                          <span className="transition-transform group-hover:scale-110">
-                            <SocialBrandIcon social={social} />
-                          </span>
-                          <span className="truncate">{social.label}</span>
+                        <span className="transition-transform group-hover:scale-110">
+                          <SocialBrandIcon social={social} />
                         </span>
-                        <svg className="h-3 w-3 shrink-0 opacity-45 transition-opacity group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="M15 3h6v6" />
-                          <path d="M10 14 21 3" />
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        </svg>
                       </a>
                     ))}
                   </div>
