@@ -5,14 +5,14 @@ import { trackEvent } from "@/lib/analytics";
 import { useLangPrefix } from "@/hooks/useLangPrefix";
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://www.instagram.com/kld_stone/", platform: "instagram", color: "#E4405F", Icon: FaInstagram },
   { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61591185544381", platform: "facebook", color: "#1877F2", Icon: FaFacebookF },
+  { label: "Instagram", href: "https://www.instagram.com/kld_stone/", platform: "instagram", color: "#E4405F", Icon: FaInstagram },
   { label: "YouTube", href: "https://www.youtube.com/@KLDSTONE-China", platform: "youtube", color: "#FF0000", Icon: FaYoutube },
-  { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest", color: "#E60023", Icon: FaPinterestP },
   { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok", color: "#000000", Icon: FaTiktok },
-  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", color: "#000000", Icon: FaXTwitter },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/te-zhang-612437419/", platform: "linkedin", color: "#0A66C2", Icon: FaLinkedinIn },
   { label: "Reddit", href: "https://www.reddit.com/user/PreferenceThink8370/", platform: "reddit", color: "#FF4500", Icon: FaRedditAlien },
+  { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest", color: "#E60023", Icon: FaPinterestP },
+  { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", color: "#000000", Icon: FaXTwitter },
 ] as const;
 
 function SocialBrandIcon({ social }: { social: (typeof SOCIAL_LINKS)[number] }) {
