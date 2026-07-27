@@ -11,7 +11,7 @@ const SOCIAL_LINKS = [
   { label: "Pinterest", href: "https://www.pinterest.com/KLDSTONE/", platform: "pinterest", color: "#E60023", Icon: FaPinterestP },
   { label: "TikTok", href: "https://www.tiktok.com/@zhangte91", platform: "tiktok", color: "#000000", Icon: FaTiktok },
   { label: "X", href: "https://x.com/KLDSTONECHINA", platform: "x", color: "#000000", Icon: FaXTwitter },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/%E7%89%B9-%E5%BC%A0-612437419/?skipRedirect=true", platform: "linkedin", color: "#0A66C2", Icon: FaLinkedinIn },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/te-zhang-612437419/", platform: "linkedin", color: "#0A66C2", Icon: FaLinkedinIn },
   { label: "Reddit", href: "https://www.reddit.com/user/PreferenceThink8370/", platform: "reddit", color: "#FF4500", Icon: FaRedditAlien },
 ] as const;
 
