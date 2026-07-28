@@ -93,6 +93,15 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
     setDropdownOpen(null);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
   const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const query = searchQuery.trim();
@@ -348,8 +357,10 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden overflow-hidden transition-[max-height,border-color] duration-300 ${
-            menuOpen ? "max-h-[700px] border-t border-black/5" : "max-h-0"
+          className={`md:hidden overscroll-contain transition-[max-height,border-color] duration-300 ${
+            menuOpen
+              ? "max-h-[calc(100dvh-78px)] overflow-y-auto touch-pan-y border-t border-black/5"
+              : "max-h-0 overflow-hidden"
           }`}
         >
           <div className="flex items-center justify-between px-6 py-3 border-b border-black/5 bg-white">

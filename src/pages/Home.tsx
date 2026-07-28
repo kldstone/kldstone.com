@@ -446,39 +446,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#f5f1e8] px-6 py-20">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="max-w-[700px]">
-            <p className="text-[12px] font-semibold text-[#176c35]">From factory detail to finished space</p>
-            <h2 className="mt-3 text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-[-0.025em] text-[#1c1b19]">
-              Stone belongs in spaces, not warehouses
-            </h2>
-            <p className="mt-4 text-[15px] leading-7 text-[#4f4c45]">
-              KLD connects material selection with waterjet cutting, dry-lay numbering, six-side inspection, custom export crates, and container loading.
-            </p>
-          </div>
-          <ol className="mt-10 grid gap-px overflow-hidden border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["01", "Submit your requirements", "A contact method and one sentence are enough to begin."],
-              ["02", "Material and technical confirmation", "We review the application, stone, dimensions, drawings, and destination."],
-              ["03", "Sample or drawing approval", "Availability, sample cost, courier options, and drawings are confirmed per project."],
-              ["04", "Quotation", "Price, lead time, freight scope, and payment terms are stated for the project."],
-              ["05", "Production and inspection", "Fabrication can include ±0.1 mm waterjet capability, dry lay, numbering, and six-side checks."],
-              ["06", "Packing and shipment", "Custom wooden crates, container loading, and export documents complete delivery."],
-            ].map(([number, title, description]) => (
-              <li key={number} className="bg-white p-6">
-                <span className="text-[12px] font-semibold text-[#8a7248]">{number}</span>
-                <h3 className="mt-4 text-[16px] font-semibold text-[#1c1b19]">{title}</h3>
-                <p className="mt-2 text-[14px] leading-6 text-[#5b574f]">{description}</p>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-6 text-[13px] leading-6 text-[#5b574f]">
-            Reference files: PDF, JPG, PNG, WEBP, DWG, and DXF up to 2.5 MB. MOQ, sample charges, lead time, freight, and payment terms are confirmed for each material and project. A KLD specialist gives a business response within 24 hours; the formal quotation follows technical confirmation.
-          </p>
-        </div>
-      </section>
-
       {/* BOTTOM CTA */}
       <section className="bg-[#1d3325] py-16 px-6 text-center">
         <div className="max-w-[680px] mx-auto">
