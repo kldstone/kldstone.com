@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+﻿import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
@@ -236,7 +236,7 @@ export default function Collections({ filter }: CollectionsProps) {
         <div className="absolute inset-0 bg-black/35" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-white/80 text-[11px] font-bold tracking-[0.20em] uppercase">PRODUCTS</span>
+            <span className="text-white/80 text-[12px] font-bold tracking-[0.20em] uppercase">PRODUCTS</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.03em] mt-3 mb-4">
               {pageTitle}
             </h1>
@@ -297,7 +297,7 @@ export default function Collections({ filter }: CollectionsProps) {
                 <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">
                   {displayName}
                 </p>
-                <p className="text-white/65 text-[10px] font-medium tracking-[0.08em] mt-0.5">
+                <p className="text-white/65 text-[12px] font-medium tracking-[0.08em] mt-0.5">
                   {colorLabels[p.color] || "NATURAL STONE"}
                 </p>
               </div>

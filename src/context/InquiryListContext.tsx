@@ -16,6 +16,9 @@ export type InquiryItem = {
   categoryKey: string;
   categoryName: string;
   image: string;
+  productCode?: string;
+  materialType?: string;
+  pageUrl?: string;
 };
 
 type InquiryListContextValue = {

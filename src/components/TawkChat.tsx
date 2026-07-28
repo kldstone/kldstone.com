@@ -18,30 +18,39 @@ export default function TawkChat() {
   useEffect(() => {
     if (!PROPERTY_ID || !WIDGET_ID || document.getElementById("tawk-chat-script")) return;
 
-    window.Tawk_API = window.Tawk_API || {};
-    window.Tawk_API.autoStart = true;
-    window.Tawk_API.onLoad = () => {
-      const showWidget = window.Tawk_API?.showWidget;
-      if (typeof showWidget === "function") {
-        showWidget();
-      }
+    let loaded = false;
+    const loadChat = () => {
+      if (loaded || document.getElementById("tawk-chat-script")) return;
+      loaded = true;
+      window.Tawk_API = window.Tawk_API || {};
+      window.Tawk_API.autoStart = true;
+      window.Tawk_API.onLoad = () => {
+        const showWidget = window.Tawk_API?.showWidget;
+        if (typeof showWidget === "function") showWidget();
+      };
+      window.Tawk_API.customStyle = {
+        zIndex: "1000 !important",
+        visibility: {
+          desktop: { position: "br", xOffset: 20, yOffset: 20 },
+          mobile: { position: "br", xOffset: 14, yOffset: 72 },
+        },
+      };
+      window.Tawk_LoadStart = new Date();
+      const script = document.createElement("script");
+      script.id = "tawk-chat-script";
+      script.async = true;
+      script.src = `https://embed.tawk.to/${encodeURIComponent(PROPERTY_ID)}/${encodeURIComponent(WIDGET_ID)}`;
+      script.charset = "UTF-8";
+      script.setAttribute("crossorigin", "*");
+      document.head.appendChild(script);
     };
-    window.Tawk_API.customStyle = {
-      zIndex: "1000 !important",
-      visibility: {
-        desktop: { position: "br", xOffset: 20, yOffset: 20 },
-        mobile: { position: "br", xOffset: 14, yOffset: 72 },
-      },
+    const events: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart"];
+    events.forEach((name) => window.addEventListener(name, loadChat, { once: true, passive: true }));
+    const timer = window.setTimeout(loadChat, 5000);
+    return () => {
+      window.clearTimeout(timer);
+      events.forEach((name) => window.removeEventListener(name, loadChat));
     };
-    window.Tawk_LoadStart = new Date();
-
-    const script = document.createElement("script");
-    script.id = "tawk-chat-script";
-    script.async = true;
-    script.src = `https://embed.tawk.to/${encodeURIComponent(PROPERTY_ID)}/${encodeURIComponent(WIDGET_ID)}`;
-    script.charset = "UTF-8";
-    script.setAttribute("crossorigin", "*");
-    document.head.appendChild(script);
   }, []);
 
   return null;

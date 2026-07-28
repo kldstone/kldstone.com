@@ -1,13 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+﻿import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Check, Plus } from "lucide-react";
-import categories from "@/data/catalog";
+import type { CatalogCategory } from "@/data/catalog";
 import { useInquiryList } from "@/context/InquiryListContext";
 import { trackEvent } from "@/lib/analytics";
 
-/** Fixed-bottom floating bar for mobile: WhatsApp + GET QUOTE */
+/** Fixed-bottom floating bar for mobile: WhatsApp + REQUEST A QUOTE */
 export default function FloatingBar() {
   const location = useLocation();
-  const { hasItem, toggleItem } = useInquiryList();
+  const { hasItem, toggleItem, addItem } = useInquiryList();
+  const [categories, setCategories] = useState<CatalogCategory[]>([]);
   const segments = location.pathname.split("/").filter(Boolean);
   const catalogIndex = segments.indexOf("catalog");
   const categoryKey = catalogIndex >= 0 ? segments[catalogIndex + 1] : undefined;
@@ -15,6 +17,11 @@ export default function FloatingBar() {
   const category = categories.find((item) => item.key === categoryKey);
   const product = category?.products.find((item) => item.id === productId);
   const langPrefix = catalogIndex > 0 ? `/${segments.slice(0, catalogIndex).join("/")}` : "";
+
+  useEffect(() => {
+    if (catalogIndex < 0 || categories.length) return;
+    void import("@/data/catalog").then((module) => setCategories(module.default));
+  }, [catalogIndex, categories.length]);
 
   if (category && product) {
     const inquiryUrl = `${langPrefix}/contact?${new URLSearchParams({
@@ -33,9 +40,12 @@ export default function FloatingBar() {
                 categoryKey: category.key,
                 categoryName: category.name,
                 image: product.cover,
+                productCode: product.id,
+                materialType: category.name,
+                pageUrl: window.location.href,
               })
             }
-            className={`flex flex-1 items-center justify-center gap-2 px-3 py-3.5 text-[11px] font-bold tracking-[0.04em] transition-colors ${
+            className={`flex flex-1 items-center justify-center gap-2 px-3 py-3.5 text-[12px] font-bold tracking-[0.04em] transition-colors ${
               hasItem(product.id) ? "bg-[#111] text-white" : "bg-white text-[#111]"
             }`}
           >
@@ -44,10 +54,13 @@ export default function FloatingBar() {
           </button>
           <Link
             to={inquiryUrl}
-            onClick={() => trackEvent("quote_cta", { source: "product_floating_bar", product: product.name })}
-            className="flex flex-1 items-center justify-center bg-[#34c759] px-3 py-3.5 text-[11px] font-bold tracking-[0.06em] text-white transition-colors hover:bg-[#2db84d]"
+            onClick={() => {
+              addItem({ id: product.id, name: product.name, categoryKey: category.key, categoryName: category.name, image: product.cover, productCode: product.id, materialType: category.name, pageUrl: window.location.href });
+              trackEvent("quote_cta", { source: "product_floating_bar", product: product.name });
+            }}
+            className="flex min-h-[48px] flex-1 items-center justify-center bg-[#176c35] px-3 py-3.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#12582b]"
           >
-            INQUIRE NOW
+            REQUEST A QUOTE
           </Link>
         </div>
       </div>
@@ -75,7 +88,7 @@ export default function FloatingBar() {
           className="flex flex-1 items-center justify-center gap-2 py-3.5 text-[12px] font-bold tracking-[0.06em] text-white bg-[#34c759] hover:bg-[#2db84d] transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          GET QUOTE
+          REQUEST A QUOTE
         </Link>
       </div>
     </div>

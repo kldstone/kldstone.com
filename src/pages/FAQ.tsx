@@ -1,4 +1,4 @@
-// rebuild
+﻿// rebuild
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -147,7 +147,7 @@ export default function FAQ() {
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-white/50 text-[11px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
+            <span className="text-white/50 text-[12px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.02em] mt-3 mb-3">{t("hero.heading")}</h1>
             <p className="text-white/55 text-[15px] max-w-[560px] mx-auto leading-relaxed">{t("hero.description")}</p>
           </div>
@@ -175,7 +175,7 @@ export default function FAQ() {
       <section className="bg-[#f8f8f8] py-16 px-6 text-center border-t border-black/8">
         <h2 className="text-[#111111] text-[1.4rem] font-black tracking-[0.02em] mb-3">{t("cta.heading")}</h2>
         <p className="text-[#111111]/45 text-[14px] mb-8 max-w-[460px] mx-auto leading-relaxed">{t("cta.description")}</p>
-        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors">{t("common:common.contactUs")}</Link>
+        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#176c35] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#12582b] transition-colors">{t("common:common.contactUs")}</Link>
       </section>
     </div>
   );

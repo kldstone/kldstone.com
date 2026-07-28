@@ -38,24 +38,24 @@ export default function CookieConsent() {
   return (
     <aside
       aria-label="Cookie preferences"
-      className="fixed bottom-[64px] left-4 right-4 z-[10020] mx-auto max-w-[760px] border border-black/10 bg-white p-5 shadow-2xl md:bottom-6"
+      className="fixed bottom-[58px] left-0 right-0 z-[10020] border-t border-black/10 bg-[#f5f1e8] px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.10)] md:bottom-0"
     >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[12px] leading-5 text-[#111]/70">
+      <div className="mx-auto flex max-w-[1180px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-[760px] text-[12px] leading-[1.45] text-[#292824]">
           We use essential storage for site functions. With your permission, Google analytics and advertising cookies help us understand visits and improve inquiries.
         </p>
         <div className="flex shrink-0 gap-2">
           <button
             type="button"
             onClick={() => decide(false)}
-            className="min-h-[42px] border border-black/15 px-4 text-[11px] font-bold uppercase tracking-[0.06em]"
+            className="min-h-[44px] border border-[#292824] px-4 text-[12px] font-semibold text-[#292824]"
           >
             Essential only
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
-            className="min-h-[42px] bg-[#34c759] px-5 text-[11px] font-bold uppercase tracking-[0.06em] text-white"
+            className="min-h-[44px] border border-[#176c35] bg-[#176c35] px-5 text-[12px] font-semibold text-white"
           >
             Accept
           </button>

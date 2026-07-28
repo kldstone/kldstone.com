@@ -1,4 +1,4 @@
-import { Check, ClipboardList, Trash2, X } from "lucide-react";
+﻿import { Check, ClipboardList, Trash2, X } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { optimizedImage } from "@/lib/images";
@@ -73,7 +73,7 @@ export default function InquiryListDrawer() {
         >
           <ClipboardList className="h-5 w-5" aria-hidden="true" />
           <span className="text-[12px] font-bold tracking-[0.04em]">{copy.title}</span>
-          <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#84c225] px-1.5 text-[11px] font-black">
+          <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#84c225] px-1.5 text-[12px] font-black">
             {items.length}
           </span>
         </button>
@@ -121,14 +121,14 @@ export default function InquiryListDrawer() {
                         className="h-20 w-20 shrink-0 bg-[#f3f3f3] object-cover"
                       />
                       <div className="min-w-0 flex-1 py-1">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#84c225]">
+                        <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#84c225]">
                           {item.categoryName}
                         </p>
                         <h3 className="mt-1 line-clamp-2 text-sm font-bold text-[#111]">{item.name}</h3>
                         <button
                           type="button"
                           onClick={() => removeItem(item.id)}
-                          className="mt-2 inline-flex items-center gap-1 text-[11px] text-[#111]/45 hover:text-red-600"
+                          className="mt-2 inline-flex items-center gap-1 text-[12px] text-[#111]/45 hover:text-red-600"
                         >
                           <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                           {copy.remove}
@@ -153,7 +153,7 @@ export default function InquiryListDrawer() {
                   <Link
                     to={`${prefix}/contact?${inquiryParams.toString()}`}
                     onClick={() => setIsOpen(false)}
-                    className="flex min-h-12 w-full items-center justify-center bg-[#84c225] px-5 text-sm font-black text-white transition hover:bg-[#75ad20]"
+                    className="flex min-h-12 w-full items-center justify-center bg-[#176c35] px-5 text-sm font-semibold text-white transition hover:bg-[#12582b]"
                   >
                     {copy.continue}
                   </Link>

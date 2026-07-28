@@ -20,7 +20,7 @@ export default function About() {
       </section>
 
       <section className="max-w-[900px] mx-auto px-6 py-20">
-        <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block text-center mb-5">
+        <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block text-center mb-5">
           {t("hero.title")}
         </span>
         <h2 className="text-[var(--ink)] text-[1.4rem] font-black tracking-[0.03em] text-center mb-10">
@@ -34,7 +34,7 @@ export default function About() {
       <section className="bg-[var(--panel)] py-20 px-6">
         <div className="max-w-[1100px] mx-auto">
           <div className="text-center mb-14">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("discover.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase">{t("discover.title")}</span>
             <h2 className="text-[var(--ink)] text-[1.4rem] font-black tracking-[0.03em] mt-2">{t("discover.heading")}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -44,7 +44,7 @@ export default function About() {
               </div>
               <h3 className="text-[var(--ink)] text-[16px] font-bold tracking-[0.04em] mb-2">{t("discover.factoryTour.title")}</h3>
               <p className="text-[var(--muted)] text-[13px] leading-[1.7] mb-4">{t("discover.factoryTour.desc")}</p>
-              <span className="text-[#111111] text-[11px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
+              <span className="text-[#111111] text-[12px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
             </Link>
             <Link to="/quality" className="group bg-[var(--bg)] border border-[var(--line)] p-8 hover:border-[#34c759]/20/40 transition-colors">
               <div className="mb-5 overflow-hidden">
@@ -52,7 +52,7 @@ export default function About() {
               </div>
               <h3 className="text-[var(--ink)] text-[16px] font-bold tracking-[0.04em] mb-2">{t("discover.qualityAssurance.title")}</h3>
               <p className="text-[var(--muted)] text-[13px] leading-[1.7] mb-4">{t("discover.qualityAssurance.desc")}</p>
-              <span className="text-[#111111] text-[11px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
+              <span className="text-[#111111] text-[12px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
             </Link>
             <Link to="/custom" className="group bg-[var(--bg)] border border-[var(--line)] p-8 hover:border-[#34c759]/20/40 transition-colors">
               <div className="mb-5 overflow-hidden">
@@ -60,7 +60,7 @@ export default function About() {
               </div>
               <h3 className="text-[var(--ink)] text-[16px] font-bold tracking-[0.04em] mb-2">{t("discover.customService.title")}</h3>
               <p className="text-[var(--muted)] text-[13px] leading-[1.7] mb-4">{t("discover.customService.desc")}</p>
-              <span className="text-[#111111] text-[11px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
+              <span className="text-[#111111] text-[12px] font-bold tracking-[0.08em] uppercase group-hover:tracking-[0.12em] transition-all">{t("common:common.learnMore")}</span>
             </Link>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function About() {
             </div>
           </div>
           <div>
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("exhibition.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase">{t("exhibition.title")}</span>
             <h2 className="text-[var(--ink)] text-[1.5rem] font-black tracking-[0.02em] mt-2 mb-5">{t("exhibition.heading")}</h2>
             <div className="space-y-4 text-[var(--muted)] text-[14px] leading-[1.8]">
               {t("exhibition.paragraphs", { returnObjects: true }).map((p, i) => <p key={i}>{p}</p>)}
@@ -89,7 +89,7 @@ export default function About() {
       <section className="bg-[var(--panel)] py-16 px-6 text-center">
         <h2 className="text-[var(--ink)] text-[1.5rem] font-black tracking-[0.02em] mb-3">{t("cta.heading")}</h2>
         <p className="text-[var(--muted)] text-[14px] mb-8 max-w-[460px] mx-auto leading-relaxed">{t("cta.description")}</p>
-        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors">
+        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#176c35] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#12582b] transition-colors">
           {t("common:common.contactUs")}
         </Link>
       </section>

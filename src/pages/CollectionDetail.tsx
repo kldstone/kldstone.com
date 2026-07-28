@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+﻿import { useParams, Link } from "react-router-dom";
 import { optimizedImage } from "@/lib/images";
 
 // ============================================================
@@ -1258,7 +1258,7 @@ export default function CollectionDetail() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-white/70 text-[11px] font-bold tracking-[0.18em] uppercase">KLD STONE COLLECTION</span>
+            <span className="text-white/70 text-[12px] font-bold tracking-[0.18em] uppercase">KLD STONE COLLECTION</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.02em] mt-3 mb-3">
               {displayTitle.toUpperCase()}
             </h1>
@@ -1288,7 +1288,7 @@ export default function CollectionDetail() {
       {/* Product gallery */}
       <section className="max-w-[1280px] mx-auto px-6 pb-20">
         <div className="text-center mb-14">
-          <span className="text-[#111] text-[11px] font-bold tracking-[0.18em] uppercase">Gallery</span>
+          <span className="text-[#111] text-[12px] font-bold tracking-[0.18em] uppercase">Gallery</span>
           <h2 className="text-[#111] text-[1.5rem] font-black tracking-[0.03em] mt-2">PRODUCT GALLERY</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">

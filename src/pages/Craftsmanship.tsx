@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
@@ -48,7 +48,7 @@ export default function Craftsmanship() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.02em] mt-3 mb-4">{t("hero.heading")}</h1>
             <p className="text-white/55 text-[15px] max-w-[560px] mx-auto leading-relaxed">{t("hero.description")}</p>
           </div>
@@ -62,7 +62,7 @@ export default function Craftsmanship() {
               <div key={i} className="text-center">
                 <div className="text-[#34c759] text-[clamp(1.8rem,3vw,2.5rem)] font-black tracking-[0.02em] leading-none mb-1">{s.num}</div>
                 <div className="text-[#111111] text-[13px] font-bold tracking-[0.04em]">{s.label}</div>
-                <div className="text-[#111111]/45 text-[11px] mt-1">{s.sub}</div>
+                <div className="text-[#111111]/45 text-[12px] mt-1">{s.sub}</div>
               </div>
             ))}
           </div>

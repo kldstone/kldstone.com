@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+﻿import { Link, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
@@ -42,7 +42,7 @@ export default function Catalog() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-white/80 text-[11px] font-bold tracking-[0.20em] uppercase">Catalog</span>
+            <span className="text-white/80 text-[12px] font-bold tracking-[0.20em] uppercase">Catalog</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.03em] mt-3 mb-4">
               Product Catalog
             </h1>
@@ -112,7 +112,7 @@ export default function Catalog() {
                       />
                     </div>
                     <div className="p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">{product.categoryName}</p>
+                      <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">{product.categoryName}</p>
                       <p className="mt-1 text-[13px] font-semibold leading-5 text-[#111]">{product.name}</p>
                     </div>
                   </Link>
@@ -154,7 +154,7 @@ export default function Catalog() {
                     : cat.description}
                 </p>
                 {cat.products.length > 0 && (
-                  <span className="mt-5 inline-block text-[11px] font-bold tracking-[0.12em] text-white border border-white/30 px-5 py-2 group-hover:bg-white group-hover:text-[#111] transition-colors">
+                  <span className="mt-5 inline-block text-[12px] font-bold tracking-[0.12em] text-white border border-white/30 px-5 py-2 group-hover:bg-white group-hover:text-[#111] transition-colors">
                     {cat.products.length} products
                   </span>
                 )}

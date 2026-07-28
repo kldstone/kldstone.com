@@ -1,447 +1,192 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { CheckCircle2, ChevronDown, FileUp, X } from "lucide-react";
 import { optimizedImage } from "@/lib/images";
-import { trackConversion, trackEvent } from "@/lib/analytics";
+import { trackConversion } from "@/lib/analytics";
 import { useSEO } from "@/components/SEO";
-import { CheckCircle2, FileUp, X } from "lucide-react";
 import { useInquiryList } from "@/context/InquiryListContext";
 import { getAttribution } from "@/lib/attribution";
 
-const MAX_ATTACHMENT_SIZE = 2.5 * 1024 * 1024;
-const ACCEPTED_FILE_TYPES = ".pdf,.png,.jpg,.jpeg,.webp,.dwg,.dxf";
+const MAX_FILE_SIZE = 2.5 * 1024 * 1024;
+const ACCEPTED = ["pdf", "png", "jpg", "jpeg", "webp", "dwg", "dxf"];
+const INPUT = "min-h-[48px] w-full border border-black/20 bg-white px-4 py-3 text-[15px] text-[#1c1b19] placeholder:text-[#1c1b19]/45 hover:border-black/40 focus:border-[#176c35]";
+const LABEL = "mb-2 block text-[12px] font-semibold text-[#292824]";
 
-async function fileToAttachment(file: File) {
-  const dataUrl = await new Promise<string>((resolve, reject) => {
+async function encodeFile(file: File) {
+  const result = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(String(reader.result || ""));
-    reader.onerror = () => reject(new Error("Could not read attachment"));
+    reader.onerror = reject;
     reader.readAsDataURL(file);
   });
-  return {
-    filename: file.name,
-    content_type: file.type || "application/octet-stream",
-    content: dataUrl.split(",")[1] || "",
-  };
+  return { filename: file.name, content_type: file.type || "application/octet-stream", content: result.split(",")[1] || "" };
 }
 
-const SMART_FORM_COPY = {
-  en: {
-    projectHeading: "1. Project Scope",
-    contactHeading: "2. Contact Details",
-    selectedProducts: "Selected products",
-    projectType: "PROJECT TYPE",
-    application: "APPLICATION",
-    material: "MATERIAL / PRODUCT PREFERENCE",
-    dimensions: "DIMENSIONS",
-    quantity: "QUANTITY",
-    timeline: "REQUIRED TIMELINE",
-    destination: "DESTINATION COUNTRY / PORT",
-    choose: "Please select",
-    materialPlaceholder: "Marble name, color, finish, or product reference",
-    dimensionsPlaceholder: "For example: 1200 × 600 × 20 mm",
-    quantityPlaceholder: "For example: 500 m², 20 sets, or 2 containers",
-    destinationPlaceholder: "Country, city, or destination port",
-    projectTypes: ["Residential", "Hospitality", "Commercial", "Retail", "Public Project", "Distribution / Wholesale", "Other"],
-    applications: ["Flooring", "Wall Cladding", "Bathroom", "Kitchen", "Furniture", "Waterjet / Mosaic", "Carved Components", "Other"],
-    timelines: ["As soon as possible", "Within 1 month", "1–3 months", "3–6 months", "More than 6 months", "Not confirmed"],
-  },
-  ru: {
-    projectHeading: "1. Параметры проекта",
-    contactHeading: "2. Контактные данные",
-    selectedProducts: "Выбранные продукты",
-    projectType: "ТИП ПРОЕКТА",
-    application: "ПРИМЕНЕНИЕ",
-    material: "МАТЕРИАЛ / ПРОДУКТ",
-    dimensions: "РАЗМЕРЫ",
-    quantity: "КОЛИЧЕСТВО",
-    timeline: "СРОК",
-    destination: "СТРАНА / ПОРТ НАЗНАЧЕНИЯ",
-    choose: "Выберите",
-    materialPlaceholder: "Название мрамора, цвет, отделка или артикул",
-    dimensionsPlaceholder: "Например: 1200 × 600 × 20 мм",
-    quantityPlaceholder: "Например: 500 м², 20 комплектов или 2 контейнера",
-    destinationPlaceholder: "Страна, город или порт назначения",
-    projectTypes: ["Жилой", "Отель", "Коммерческий", "Розничный", "Общественный", "Оптовая торговля", "Другое"],
-    applications: ["Пол", "Стены", "Ванная", "Кухня", "Мебель", "Мозаика", "Резные элементы", "Другое"],
-    timelines: ["Как можно скорее", "До 1 месяца", "1–3 месяца", "3–6 месяцев", "Более 6 месяцев", "Не определено"],
-  },
-  es: {
-    projectHeading: "1. Alcance del proyecto",
-    contactHeading: "2. Datos de contacto",
-    selectedProducts: "Productos seleccionados",
-    projectType: "TIPO DE PROYECTO",
-    application: "APLICACIÓN",
-    material: "MATERIAL / PRODUCTO",
-    dimensions: "DIMENSIONES",
-    quantity: "CANTIDAD",
-    timeline: "PLAZO REQUERIDO",
-    destination: "PAÍS / PUERTO DE DESTINO",
-    choose: "Seleccionar",
-    materialPlaceholder: "Nombre del mármol, color, acabado o referencia",
-    dimensionsPlaceholder: "Ejemplo: 1200 × 600 × 20 mm",
-    quantityPlaceholder: "Ejemplo: 500 m², 20 unidades o 2 contenedores",
-    destinationPlaceholder: "País, ciudad o puerto de destino",
-    projectTypes: ["Residencial", "Hotel", "Comercial", "Retail", "Proyecto público", "Distribución / Mayorista", "Otro"],
-    applications: ["Pavimento", "Revestimiento", "Baño", "Cocina", "Muebles", "Mosaico", "Elementos tallados", "Otro"],
-    timelines: ["Lo antes posible", "Dentro de 1 mes", "1–3 meses", "3–6 meses", "Más de 6 meses", "Sin confirmar"],
-  },
-  ar: {
-    projectHeading: "1. نطاق المشروع",
-    contactHeading: "2. بيانات الاتصال",
-    selectedProducts: "المنتجات المختارة",
-    projectType: "نوع المشروع",
-    application: "الاستخدام",
-    material: "المادة / المنتج",
-    dimensions: "الأبعاد",
-    quantity: "الكمية",
-    timeline: "الجدول الزمني",
-    destination: "الدولة / ميناء الوجهة",
-    choose: "يرجى الاختيار",
-    materialPlaceholder: "اسم الرخام أو اللون أو التشطيب أو مرجع المنتج",
-    dimensionsPlaceholder: "مثال: 1200 × 600 × 20 مم",
-    quantityPlaceholder: "مثال: 500 م² أو 20 مجموعة أو حاويتان",
-    destinationPlaceholder: "الدولة أو المدينة أو ميناء الوجهة",
-    projectTypes: ["سكني", "ضيافة", "تجاري", "تجزئة", "مشروع عام", "توزيع / جملة", "أخرى"],
-    applications: ["أرضيات", "كسوة جدران", "حمام", "مطبخ", "أثاث", "فسيفساء", "عناصر منحوتة", "أخرى"],
-    timelines: ["في أقرب وقت", "خلال شهر", "1–3 أشهر", "3–6 أشهر", "أكثر من 6 أشهر", "غير مؤكد"],
-  },
-};
-
-const ADVANCED_FORM_COPY = {
-  en: {
-    sampleRequest: "REQUEST A MATERIAL SAMPLE",
-    sampleNote: "We will confirm availability, sample cost, and courier options.",
-    attachment: "DRAWING / REFERENCE FILE",
-    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG or DXF · maximum 2.5 MB",
-    attachmentTooLarge: "The selected file is larger than 2.5 MB.",
-    attachmentInvalid: "Please choose a PDF, image, DWG, or DXF file.",
-    removeFile: "Remove file",
-  },
-  ru: {
-    sampleRequest: "ЗАПРОСИТЬ ОБРАЗЕЦ МАТЕРИАЛА",
-    sampleNote: "Мы подтвердим наличие, стоимость образца и варианты доставки.",
-    attachment: "ЧЕРТЕЖ / РЕФЕРЕНС",
-    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG или DXF · до 2,5 МБ",
-    attachmentTooLarge: "Размер файла превышает 2,5 МБ.",
-    attachmentInvalid: "Выберите PDF, изображение, DWG или DXF.",
-    removeFile: "Удалить файл",
-  },
-  es: {
-    sampleRequest: "SOLICITAR UNA MUESTRA",
-    sampleNote: "Confirmaremos disponibilidad, coste y opciones de mensajería.",
-    attachment: "PLANO / ARCHIVO DE REFERENCIA",
-    attachmentHelp: "PDF, JPG, PNG, WEBP, DWG o DXF · máximo 2,5 MB",
-    attachmentTooLarge: "El archivo supera los 2,5 MB.",
-    attachmentInvalid: "Selecciona un archivo PDF, imagen, DWG o DXF.",
-    removeFile: "Eliminar archivo",
-  },
-  ar: {
-    sampleRequest: "طلب عينة من المادة",
-    sampleNote: "سنؤكد التوفر والتكلفة وخيارات الشحن.",
-    attachment: "مخطط / ملف مرجعي",
-    attachmentHelp: "PDF أو JPG أو PNG أو WEBP أو DWG أو DXF · حتى 2.5 MB",
-    attachmentTooLarge: "حجم الملف أكبر من 2.5 MB.",
-    attachmentInvalid: "اختر ملف PDF أو صورة أو DWG أو DXF.",
-    removeFile: "حذف الملف",
-  },
-};
-
 export default function Contact() {
-  const { t, i18n } = useTranslation("contact");
-  useSEO({ title: "Contact KLD Stone", description: t("hero.description") });
+  useSEO({ title: "Request a Quote", description: "Send KLD Stone your project requirements, reference image, or drawing." });
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { clearItems } = useInquiryList();
+  const [params] = useSearchParams();
+  const { items, removeItem, clearItems } = useInquiryList();
+  const [file, setFile] = useState<File | null>(null);
+  const [fileError, setFileError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
-  const [attachment, setAttachment] = useState<File | null>(null);
-  const language = (i18n.language.split("-")[0] || "en") as keyof typeof SMART_FORM_COPY;
-  const smartCopy = SMART_FORM_COPY[language] ?? SMART_FORM_COPY.en;
-  const advancedCopy = ADVANCED_FORM_COPY[language] ?? ADVANCED_FORM_COPY.en;
-  const selectedProducts = searchParams.get("products") || "";
-  const sampleRequested = searchParams.get("sample") === "1";
+  const urlProduct = params.get("products") || "";
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (sending) return;
-    setSending(true);
-    setError("");
-
-    const form = e.currentTarget;
-    const data: Record<string, string> = {};
-    const fd = new FormData(form);
-    for (const [key, val] of fd.entries()) {
-      if (typeof val === "string") data[key] = val;
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    if (!email && !phone) {
+      setSubmitError("Please provide either an email address or WhatsApp number.");
+      form.querySelector<HTMLInputElement>("#email")?.focus();
+      return;
     }
-
+    if (!form.reportValidity()) return;
+    setSending(true);
+    setSubmitError("");
+    const data: Record<string, string> = {};
+    for (const [key, value] of formData.entries()) if (typeof value === "string") data[key] = value;
+    data.selected_products = items.length
+      ? JSON.stringify(items.map((item) => ({
+          name: item.name,
+          code: item.productCode || item.id,
+          stone_type: item.materialType || item.categoryName,
+          thumbnail: item.image,
+          page_url: item.pageUrl || "",
+        })))
+      : urlProduct;
     Object.assign(data, getAttribution());
-
     try {
       const payload: Record<string, unknown> = { ...data };
-      if (attachment) payload.attachment = await fileToAttachment(attachment);
-      const res = await fetch("/api/contact", {
+      if (file) payload.attachment = await encodeFile(file);
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
-
-      if (res.ok && json.ok) {
-        // Only fire conversion on confirmed server success
-        trackConversion("form_submit", { source: "contact_page" });
-        clearItems();
-        // Navigate to thank-you page
-        navigate("/thank-you" + window.location.search);
-      } else {
-        setError(json.error || t("form.errorGeneric"));
-      }
-    } catch {
-      setError(t("form.errorNetwork"));
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error(result.error || "Your inquiry could not be sent.");
+      trackConversion("form_submit", { source: "contact_page" });
+      clearItems();
+      navigate("/thank-you" + window.location.search);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Network error. Your information has been kept; please try again.");
     } finally {
       setSending(false);
     }
   }
 
   return (
-    <div>
-      <section className="relative h-[360px] sm:h-[45vh] sm:min-h-[340px] bg-[#0f0f0f] overflow-hidden">
-        <img src={optimizedImage("/brand-gallery/contact-hero-2026-07-06-v4.jpg")} alt="Contact KLD Stone" className="w-full h-full object-cover opacity-80" fetchPriority="high" decoding="async" />
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 flex items-center justify-center text-center px-6">
-          <div>
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
-            <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.02em] mt-3 mb-3">
-              {t("hero.heading")}
-            </h1>
-            <p className="text-white/55 text-[15px] max-w-[460px] mx-auto leading-relaxed">
-              {t("hero.description")}
+    <main className="bg-[#fbfaf7]">
+      <section className="relative h-[300px] overflow-hidden bg-[#171716] sm:h-[380px]">
+        <img src={optimizedImage("/brand-gallery/contact-hero-2026-07-06-v4.jpg")} alt="" className="h-full w-full object-cover opacity-70" fetchPriority="high" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/20" />
+        <div className="absolute inset-0 mx-auto flex max-w-[1280px] items-center px-6">
+          <div className="max-w-[650px]">
+            <p className="text-[12px] font-semibold text-white/85">Start a conversation</p>
+            <h1 className="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-semibold tracking-[-0.025em] text-white">Request a quote</h1>
+            <p className="mt-4 text-[16px] leading-7 text-white/90">
+              Not sure about the material or dimensions yet? Send us a reference image and we’ll help you choose.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="max-w-[1280px] mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
-          <div>
-            <h2 className="text-[#111111] text-[1.6rem] font-black tracking-[0.02em] mb-8">{t("info.heading")}</h2>
-            <div className="space-y-8">
-              <div>
-                <span className="text-[#111111] text-[10px] font-bold tracking-[0.16em] uppercase block mb-2">{t("info.address")}</span>
-                <p className="text-[#111111] text-[15px] font-semibold leading-relaxed">{t("info.addressValue")}</p>
-              </div>
-              <div>
-                <span className="text-[#111111] text-[10px] font-bold tracking-[0.16em] uppercase block mb-2">{t("info.phone")}</span>
-                <a href="tel:+8615659069988" onClick={() => trackEvent("phone_click", { source: "contact_page" })} className="text-[#111111] text-[18px] font-black tracking-[0.02em] hover:opacity-60 transition-colors">
-                  +86 156 5906 9988
-                </a>
-              </div>
-              <div>
-                <span className="text-[#111111] text-[10px] font-bold tracking-[0.16em] uppercase block mb-2">{t("info.email")}</span>
-                <a href="mailto:kldstone.china@gmail.com" className="text-[#111111] text-[15px] font-semibold hover:opacity-60 transition-colors">
-                  kldstone.china@gmail.com
-                </a>
-              </div>
-              <div>
-                <span className="text-[#111111] text-[10px] font-bold tracking-[0.16em] uppercase block mb-2">{t("info.whatsapp")}</span>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#34c759] rounded-full flex items-center justify-center">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18z"/></svg>
-                  </div>
-                  <div>
-                    <p className="text-[#111111] text-[14px] font-semibold">{t("info.whatsappTitle")}</p>
-                    <p className="text-[#111111] text-[12px]">{t("info.whatsappDesc")}</p>
-                    <p className="text-[#111111] text-[13px] font-medium mt-0.5">WhatsApp: +86 156 5906 9988</p>
-                  </div>
-                </div>
-              </div>
-              <div className="overflow-hidden img-hover">
-                <img src={optimizedImage("/brand-gallery/contact-factory-2026-07-07.jpg")} alt="KLD Stone Factory" className="w-full aspect-[16/9] object-cover" />
-              </div>
+      <section className="mx-auto max-w-[1160px] px-6 py-14 sm:py-20">
+        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+          <aside>
+            <h2 className="text-[1.65rem] font-semibold tracking-[-0.02em] text-[#1c1b19]">A quick first step</h2>
+            <p className="mt-4 text-[15px] leading-7 text-[#4f4c45]">
+              Incomplete information is welcome. A KLD Stone specialist will send a business response within 24 hours. A formal quotation follows material and technical confirmation.
+            </p>
+            <div className="mt-8 space-y-3 text-[14px] text-[#292824]">
+              <a className="block" href="mailto:kldstone.china@gmail.com">kldstone.china@gmail.com</a>
+              <a className="block" href="https://wa.me/8615659069988">WhatsApp: +86 156 5906 9988</a>
             </div>
-          </div>
+          </aside>
 
           <div>
-            <h2 className="text-[#111111] text-[1.6rem] font-black tracking-[0.02em] mb-8">{t("form.heading")}</h2>
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              {/* Honeypot — hidden from users, visible to bots */}
-              <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
-                <label htmlFor="website">Website</label>
-                <input type="text" name="website" id="website" tabIndex={-1} autoComplete="off" />
-              </div>
+            <h2 className="text-[1.65rem] font-semibold tracking-[-0.02em] text-[#1c1b19]">Tell us what you need</h2>
+            <p className="mt-2 text-[14px] leading-6 text-[#5b574f]">Required fields are marked. Everything else is optional.</p>
 
-              <div className="border-b border-black/10 pb-3">
-                <h3 className="text-[13px] font-black tracking-[0.08em] uppercase text-[#111]">
-                  {smartCopy.projectHeading}
-                </h3>
-              </div>
+            {(items.length > 0 || urlProduct) && (
+              <section aria-labelledby="asking-about" className="mt-6 border border-[#176c35]/25 bg-[#f1f5ef] p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 id="asking-about" className="flex items-center gap-2 text-[14px] font-semibold text-[#174c2a]"><CheckCircle2 className="h-5 w-5" /> You’re asking about</h3>
+                  <Link to="/catalog" className="inline-flex min-h-[44px] items-center text-[12px] font-semibold text-[#176c35]">Add products</Link>
+                </div>
+                {items.length ? (
+                  <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+                    {items.map((item) => (
+                      <li key={item.id} className="flex items-center gap-3 bg-white p-2">
+                        <img src={optimizedImage(item.image)} alt="" className="h-16 w-16 shrink-0 object-cover" />
+                        <span className="min-w-0 flex-1"><strong className="block truncate text-[13px]">{item.name}</strong><small className="text-[12px] text-[#5b574f]">{item.productCode || item.id} · {item.materialType || item.categoryName}</small></span>
+                        <button type="button" onClick={() => removeItem(item.id)} aria-label={`Remove ${item.name}`} className="inline-flex h-11 w-11 items-center justify-center"><X className="h-4 w-4" /></button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : <p className="mt-3 text-[14px]">{urlProduct}</p>}
+              </section>
+            )}
 
-              {selectedProducts && (
-                <div className="rounded-sm border border-[#84c225]/30 bg-[#84c225]/5 px-4 py-4">
-                  <div className="flex items-center gap-2 text-[#5f9216]">
-                    <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    <span className="text-[11px] font-black uppercase tracking-[0.08em]">
-                      {smartCopy.selectedProducts}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-[13px] leading-6 text-[#111]/70">{selectedProducts}</p>
-                  <input type="hidden" name="selected_products" value={selectedProducts} />
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="project_type" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">
-                    {smartCopy.projectType}
-                  </label>
-                  <select id="project_type" name="project_type" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
-                    <option value="">{smartCopy.choose}</option>
-                    {smartCopy.projectTypes.map((option) => <option key={option} value={option}>{option}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="application" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">
-                    {smartCopy.application}
-                  </label>
-                  <select id="application" name="application" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
-                    <option value="">{smartCopy.choose}</option>
-                    {smartCopy.applications.map((option) => <option key={option} value={option}>{option}</option>)}
-                  </select>
-                </div>
+            <form onSubmit={submit} className="mt-7 space-y-5" noValidate>
+              <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} /></div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div><label className={LABEL} htmlFor="name">Name <span className="text-[#176c35]">Required</span></label><input className={INPUT} id="name" name="name" required autoComplete="name" /></div>
+                <div><label className={LABEL} htmlFor="country">Country / region <span className="text-[#176c35]">Required</span></label><input className={INPUT} id="country" name="country" required autoComplete="country-name" /></div>
               </div>
+              <fieldset>
+                <legend className={LABEL}>Email or WhatsApp <span className="text-[#176c35]">One required</span></legend>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <input aria-label="Email address" className={INPUT} id="email" name="email" type="email" autoComplete="email" placeholder="Email address" />
+                  <input aria-label="WhatsApp number" className={INPUT} id="phone" name="phone" type="tel" autoComplete="tel" placeholder="WhatsApp number" />
+                </div>
+              </fieldset>
+              <div><label className={LABEL} htmlFor="message">Brief requirement <span className="text-[#176c35]">Required</span></label><textarea className={`${INPUT} resize-y`} id="message" name="message" required rows={4} maxLength={5000} placeholder="A sentence is enough to start." /></div>
 
               <div>
-                <label htmlFor="material" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.material}</label>
-                <input id="material" type="text" name="material" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.materialPlaceholder} />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="dimensions" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.dimensions}</label>
-                  <input id="dimensions" type="text" name="dimensions" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.dimensionsPlaceholder} />
-                </div>
-                <div>
-                  <label htmlFor="quantity" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.quantity}</label>
-                  <input id="quantity" type="text" name="quantity" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.quantityPlaceholder} />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="timeline" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.timeline}</label>
-                  <select id="timeline" name="timeline" className="w-full min-h-[48px] bg-white border border-[#34c759]/20 px-4 text-[14px] text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
-                    <option value="">{smartCopy.choose}</option>
-                    {smartCopy.timelines.map((option) => <option key={option} value={option}>{option}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="destination" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{smartCopy.destination}</label>
-                  <input id="destination" type="text" name="destination" maxLength={500} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111]/35 focus:outline-none focus:border-[#111111] transition-colors" placeholder={smartCopy.destinationPlaceholder} />
-                </div>
-              </div>
-
-              <label className="flex cursor-pointer items-start gap-3 border border-black/10 bg-[#fafafa] p-4">
-                <input
-                  type="checkbox"
-                  name="sample_request"
-                  value="Yes"
-                  defaultChecked={sampleRequested}
-                  className="mt-0.5 h-4 w-4 accent-[#34c759]"
-                />
-                <span>
-                  <span className="block text-[12px] font-black tracking-[0.06em] text-[#111]">{advancedCopy.sampleRequest}</span>
-                  <span className="mt-1 block text-[12px] leading-5 text-[#111]/55">{advancedCopy.sampleNote}</span>
-                </span>
-              </label>
-
-              <div>
-                <span className="mb-2 block text-[12px] font-bold tracking-[0.06em] text-[#111]">{advancedCopy.attachment}</span>
-                {attachment ? (
-                  <div className="flex min-h-[52px] items-center justify-between gap-3 border border-[#84c225]/35 bg-[#84c225]/5 px-4">
-                    <div className="min-w-0">
-                      <p className="truncate text-[13px] font-semibold text-[#111]">{attachment.name}</p>
-                      <p className="text-[11px] text-[#111]/50">{(attachment.size / 1024).toFixed(0)} KB</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setAttachment(null)}
-                      aria-label={advancedCopy.removeFile}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center text-[#111]/55 hover:text-[#111]"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
+                <span className={LABEL}>Reference image or file <span className="font-normal text-[#5b574f]">Optional</span></span>
+                {file ? (
+                  <div className="flex min-h-[56px] items-center justify-between border border-[#176c35]/30 bg-[#f1f5ef] px-4"><span className="min-w-0"><strong className="block truncate text-[13px]">{file.name}</strong><small className="text-[12px] text-[#5b574f]">{Math.round(file.size / 1024)} KB</small></span><button type="button" className="inline-flex h-11 w-11 items-center justify-center" aria-label="Remove file" onClick={() => setFile(null)}><X className="h-4 w-4" /></button></div>
                 ) : (
-                  <label className="flex min-h-[76px] cursor-pointer items-center gap-3 border border-dashed border-black/20 px-4 transition-colors hover:border-[#84c225]">
-                    <FileUp className="h-5 w-5 shrink-0 text-[#75ad20]" />
-                    <span className="text-[12px] leading-5 text-[#111]/55">{advancedCopy.attachmentHelp}</span>
-                    <input
-                      type="file"
-                      accept={ACCEPTED_FILE_TYPES}
-                      className="sr-only"
-                      onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        event.target.value = "";
-                        if (!file) return;
-                        const extension = file.name.split(".").pop()?.toLowerCase();
-                        if (!extension || !["pdf", "png", "jpg", "jpeg", "webp", "dwg", "dxf"].includes(extension)) {
-                          setError(advancedCopy.attachmentInvalid);
-                          return;
-                        }
-                        if (file.size > MAX_ATTACHMENT_SIZE) {
-                          setError(advancedCopy.attachmentTooLarge);
-                          return;
-                        }
-                        setError("");
-                        setAttachment(file);
-                      }}
-                    />
+                  <label className="flex min-h-[72px] cursor-pointer items-center gap-3 border border-dashed border-black/30 px-4 text-[13px] text-[#4f4c45] hover:border-[#176c35]"><FileUp className="h-5 w-5 text-[#176c35]" /> PDF, JPG, PNG, WEBP, DWG or DXF · max 2.5 MB
+                    <input className="sr-only" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.dwg,.dxf" onChange={(event) => {
+                      const selected = event.target.files?.[0]; event.target.value = ""; if (!selected) return;
+                      const ext = selected.name.split(".").pop()?.toLowerCase();
+                      if (!ext || !ACCEPTED.includes(ext)) { setFileError("Please choose a PDF, image, DWG, or DXF file."); return; }
+                      if (selected.size > MAX_FILE_SIZE) { setFileError("The selected file is larger than 2.5 MB."); return; }
+                      setFileError(""); setFile(selected);
+                    }} />
                   </label>
                 )}
+                {fileError && <p role="alert" className="mt-2 text-[13px] text-red-700">{fileError}</p>}
               </div>
 
-              <div className="border-b border-black/10 pb-3 pt-3">
-                <h3 className="text-[13px] font-black tracking-[0.08em] uppercase text-[#111]">
-                  {smartCopy.contactHeading}
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="name" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.name")}</label>
-                  <input id="name" type="text" name="name" required maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.namePlaceholder")} />
+              <details className="group border border-black/15 bg-[#f5f1e8]">
+                <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between px-4 text-[14px] font-semibold">Add project details <span className="ml-auto mr-3 font-normal text-[#5b574f]">Optional</span><ChevronDown className="h-4 w-4 group-open:rotate-180" /></summary>
+                <div className="grid gap-5 border-t border-black/10 p-4 sm:grid-cols-2">
+                  <div><label className={LABEL} htmlFor="project_type">Project type</label><input className={INPUT} id="project_type" name="project_type" /></div>
+                  <div><label className={LABEL} htmlFor="application">Application</label><input className={INPUT} id="application" name="application" /></div>
+                  <div><label className={LABEL} htmlFor="material">Stone / material</label><input className={INPUT} id="material" name="material" /></div>
+                  <div><label className={LABEL} htmlFor="dimensions">Dimensions</label><input className={INPUT} id="dimensions" name="dimensions" /></div>
+                  <div><label className={LABEL} htmlFor="quantity">Quantity</label><input className={INPUT} id="quantity" name="quantity" /></div>
+                  <div><label className={LABEL} htmlFor="timeline">Lead time</label><input className={INPUT} id="timeline" name="timeline" /></div>
+                  <div><label className={LABEL} htmlFor="destination">Destination port</label><input className={INPUT} id="destination" name="destination" /></div>
+                  <label className="flex min-h-[52px] items-center gap-3 border border-black/15 bg-white px-4 text-[13px]"><input className="h-5 w-5 accent-[#176c35]" name="sample_request" type="checkbox" value="Yes" defaultChecked={params.get("sample") === "1"} /> Request a material sample</label>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.email")}</label>
-                  <input id="email" type="email" name="email" required maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.emailPlaceholder")} />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.phone")}</label>
-                <input id="phone" type="tel" name="phone" maxLength={50} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.phonePlaceholder")} />
-              </div>
-              <div>
-                <label htmlFor="company" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.company")}</label>
-                <input id="company" type="text" name="company" maxLength={200} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder={t("form.companyPlaceholder")} />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-[#111111] text-[12px] font-bold tracking-[0.06em] mb-2">{t("form.message")}</label>
-                <textarea id="message" name="message" required rows={6} maxLength={5000} className="w-full bg-white border border-[#34c759]/20 px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#111111] focus:outline-none focus:border-[#111111] transition-colors resize-none" placeholder={t("form.messagePlaceholder")} />
-              </div>
+              </details>
 
-              {error && (
-                <div role="alert" className="bg-red-50 border border-red-200 text-red-700 text-[13px] px-4 py-3">
-                  {error}
-                </div>
-              )}
-
-              <button type="submit" disabled={sending} className="w-full py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.10em] uppercase hover:bg-[#34c759]/80 transition-colors disabled:opacity-50">
-                {sending ? t("form.sending") : t("form.submit")}
-              </button>
+              <p className="text-[13px] leading-5 text-[#5b574f]">You can submit even if the material, dimensions, quantity, or delivery schedule is not confirmed.</p>
+              {submitError && <div role="alert" aria-live="assertive" className="border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-800">{submitError}</div>}
+              <button disabled={sending} className="min-h-[52px] w-full bg-[#176c35] px-6 text-[14px] font-semibold text-white hover:bg-[#12582b] active:bg-[#0e4923] disabled:opacity-60" type="submit">{sending ? "Sending your request…" : "Request a Quote"}</button>
+              <p className="text-center text-[12px] leading-5 text-[#5b574f]">Business reply within 24 hours. Formal quotation after technical confirmation.</p>
             </form>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

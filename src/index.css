@@ -3,14 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --ink: #111111;
-  --ink-soft: #333333;
-  --muted: #737373;
-  --paper: #f8f8f8;
-  --panel: #ffffff;
-  --green: #34c759;
-  --green-light: #4ade80;
-  --green-bg: rgba(52, 199, 89, 0.08);
+  --ink: #1c1b19;
+  --ink-soft: #393731;
+  --muted: #666158;
+  --paper: #fbfaf7;
+  --panel: #f5f1e8;
+  --stone: #d7cfc1;
+  --sand: #b8a58a;
+  --brass: #8a7248;
+  --green: #176c35;
+  --green-light: #2d8550;
+  --green-bg: rgba(23, 108, 53, 0.08);
   --line: rgba(0, 0, 0, 0.08);
   --line-dark: rgba(0, 0, 0, 0.05);
 }
@@ -34,6 +37,26 @@ body {
   letter-spacing: 0.01em;
 }
 
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+}
+
+*:focus-visible {
+  outline: 3px solid #176c35 !important;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -46,7 +69,7 @@ a {
 }
 
 ::selection {
-  background: rgba(52, 199, 89, 0.25);
+  background: rgba(23, 108, 53, 0.22);
   color: var(--ink);
 }
 

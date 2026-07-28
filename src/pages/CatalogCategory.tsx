@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+﻿import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
@@ -57,7 +57,7 @@ export default function CatalogCategory() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-white/60 text-[11px] font-bold tracking-[0.20em] uppercase">
+            <span className="text-white/60 text-[12px] font-bold tracking-[0.20em] uppercase">
               {cat.subtitle}
             </span>
             <h1 className="text-white text-[clamp(1.8rem,3.5vw,2.8rem)] font-black tracking-[0.03em] mt-3 mb-4">
@@ -136,7 +136,7 @@ export default function CatalogCategory() {
                         {p.name}
                       </p>
                       {p.styles && p.styles.length > 0 && (
-                        <p className="text-white/60 text-[10px] font-medium mt-1">
+                        <p className="text-white/60 text-[12px] font-medium mt-1">
                           {p.styles.join(" / ")}
                         </p>
                       )}
@@ -151,11 +151,14 @@ export default function CatalogCategory() {
                         categoryKey: cat.key,
                         categoryName: cat.name,
                         image: p.cover,
+                        productCode: p.id,
+                        materialType: cat.name,
+                        pageUrl: `${window.location.origin}/catalog/${cat.key}/${p.id}`,
                       })
                     }
                     aria-label={selected ? `Remove ${p.name} from inquiry list` : `Add ${p.name} to inquiry list`}
-                    className={`absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-lg transition ${
-                      selected ? "bg-[#84c225] text-white" : "bg-white/95 text-[#111] hover:bg-[#84c225] hover:text-white"
+                    className={`absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition ${
+                      selected ? "bg-[#176c35] text-white" : "bg-white/95 text-[#111] hover:bg-[#176c35] hover:text-white"
                     }`}
                   >
                     {selected ? <Check className="h-5 w-5" /> : <Plus className="h-5 w-5" />}

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+﻿import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -75,7 +75,7 @@ export default function LangSwitcher({ langPrefix: _langPrefix }: LangSwitcherPr
       <button
         ref={btnRef}
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 text-[#111111]/50 hover:text-[#111111] transition-colors"
+        className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 text-[#111111]/65 hover:text-[#111111] transition-colors"
         aria-label="Switch language"
         aria-expanded={open}
         aria-haspopup="listbox"
@@ -85,7 +85,7 @@ export default function LangSwitcher({ langPrefix: _langPrefix }: LangSwitcherPr
           <line x1="2" y1="12" x2="22" y2="12"/>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
         </svg>
-        <span className="text-[11px] font-semibold tracking-[0.04em]">{current.label}</span>
+        <span className="text-[12px] font-semibold tracking-[0.04em]">{current.label}</span>
       </button>
 
       {open && (
@@ -100,7 +100,7 @@ export default function LangSwitcher({ langPrefix: _langPrefix }: LangSwitcherPr
               role="option"
               aria-selected={i18n.language === lang.code}
               onClick={() => switchLang(lang.code, lang.path)}
-              className={`block w-full text-left px-4 py-2 text-[12px] font-medium tracking-[0.04em] transition-colors ${
+              className={`block min-h-[44px] w-full text-left px-4 py-2 text-[12px] font-medium tracking-[0.04em] transition-colors ${
                 i18n.language === lang.code
                   ? "text-[#34c759] font-bold bg-[#34c759]/5"
                   : "text-[#111111]/60 hover:text-[#111111] hover:bg-black/5"

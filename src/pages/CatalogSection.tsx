@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { optimizedImage } from "@/lib/images";
 import type { CatalogCategory } from "@/data/catalog";
@@ -33,7 +33,7 @@ export default function LazyCatalogSection() {
     <section ref={sectionRef} className="bg-white py-20 px-6">
       <div className="max-w-[1280px] mx-auto">
         <div className="text-center mb-12">
-          <span className="text-[#34c759] text-[11px] font-bold tracking-[0.20em] uppercase">Catalog</span>
+          <span className="text-[#34c759] text-[12px] font-bold tracking-[0.20em] uppercase">Catalog</span>
           <h2 className="text-[#111] text-[clamp(1.5rem,3vw,2.4rem)] font-black tracking-[0.02em] mt-3">
             PRODUCT COLLECTIONS
           </h2>
@@ -71,7 +71,7 @@ export default function LazyCatalogSection() {
                     <p className="text-white/70 text-[14px] max-w-[320px] leading-relaxed">
                       {cat.description.length > 80 ? cat.description.slice(0, 80) + "..." : cat.description}
                     </p>
-                    <span className="mt-5 inline-block text-[11px] font-bold tracking-[0.12em] text-white border border-white/30 px-5 py-2 group-hover:bg-white group-hover:text-[#111] transition-colors">
+                    <span className="mt-5 inline-block text-[12px] font-bold tracking-[0.12em] text-white border border-white/30 px-5 py-2 group-hover:bg-white group-hover:text-[#111] transition-colors">
                       {cat.products.length} products
                     </span>
                   </div>

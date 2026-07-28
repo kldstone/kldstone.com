@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 import { optimizedImage } from "@/lib/images";
@@ -77,7 +77,7 @@ export default function LandingQuote() {
 
       <main className="mx-auto grid max-w-[1080px] grid-cols-1 gap-12 px-6 py-12 md:grid-cols-2 md:gap-16 md:py-20">
         <section>
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#34c759]">Direct from Shuitou, China</p>
+          <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#34c759]">Direct from Shuitou, China</p>
           <h1 className="mt-4 text-[clamp(2rem,4vw,3.2rem)] font-black leading-[1.08] tracking-[-0.02em]">
             Get a Factory Quote for Your Custom Stone Project
           </h1>
@@ -125,7 +125,7 @@ export default function LandingQuote() {
                 <label className="block text-xs font-bold">Project requirements *<textarea name="message" required rows={5} placeholder="Material, size, quantity, drawings and destination port..." className="mt-2 w-full resize-none border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[#34c759]" /></label>
                 {error && <div role="alert" className="bg-red-50 border border-red-200 text-red-700 text-[13px] px-4 py-3">{error}</div>}
                 <button type="submit" disabled={sending} className="w-full bg-[#34c759] px-5 py-4 text-sm font-black uppercase tracking-[0.08em] text-white hover:bg-[#2db84d] disabled:opacity-50">{sending ? "Sending..." : "Get factory quote"}</button>
-                <p className="text-center text-[11px] leading-5 text-black/40">Your project information is used only to prepare this quotation.</p>
+                <p className="text-center text-[12px] leading-5 text-black/40">Your project information is used only to prepare this quotation.</p>
               </form>
             </>
           )}

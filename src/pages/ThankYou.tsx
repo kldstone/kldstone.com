@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useSEO } from "@/components/SEO";
 
 export default function ThankYou() {
@@ -24,7 +24,7 @@ export default function ThankYou() {
           <p>Phone / WhatsApp: <a href="tel:+8615659069988" className="text-[#34c759] hover:underline">+86 156 5906 9988</a></p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link to="/" className="inline-flex items-center justify-center min-h-[44px] px-8 bg-[#34c759] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors">
+          <Link to="/" className="inline-flex items-center justify-center min-h-[44px] px-8 bg-[#176c35] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#12582b] transition-colors">
             Back to Home
           </Link>
           <Link to="/catalog" className="inline-flex items-center justify-center min-h-[44px] px-8 border border-[#111]/20 text-[#111] text-[13px] font-bold tracking-[0.06em] hover:bg-[#111] hover:text-white transition-colors">

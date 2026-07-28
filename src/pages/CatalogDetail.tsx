@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+﻿import { useParams, Link } from "react-router-dom";
 import categories from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
 import { useSEO } from "@/components/SEO";
@@ -9,7 +9,7 @@ export default function CatalogDetail() {
   const { category, id } = useParams<{ category: string; id: string }>();
   const cat = categories.find((c) => c.key === category);
   const product = cat?.products.find((p) => p.id === id);
-  const { hasItem, toggleItem } = useInquiryList();
+  const { hasItem, toggleItem, addItem } = useInquiryList();
   useSEO({ title: product ? `${product.name} | Custom Stone Product` : "Product Not Found", description: product ? `View ${product.name} by KLD Stone. Request dimensions, material options, samples, export packing and a factory quotation.` : "The requested stone product could not be found.", noIndex: !product });
 
   if (!cat || !product) {
@@ -70,7 +70,7 @@ export default function CatalogDetail() {
 
           {/* Product Info */}
           <div className="md:sticky md:top-[100px] self-start">
-            <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[#34c759]">
+            <span className="text-[12px] font-bold tracking-[0.20em] uppercase text-[#34c759]">
               {cat.name}
             </span>
             <h1 className="text-[#111] text-[clamp(1.5rem,2.5vw,2.2rem)] font-black tracking-[0.02em] mt-3 mb-3">
@@ -82,7 +82,7 @@ export default function CatalogDetail() {
                 {product.styles.map((s) => (
                   <span
                     key={s}
-                    className="inline-block text-[11px] font-medium tracking-[0.06em] bg-[#f0f0f0] text-[#111]/70 px-4 py-1.5"
+                    className="inline-block text-[12px] font-medium tracking-[0.06em] bg-[#f0f0f0] text-[#111]/70 px-4 py-1.5"
                   >
                     {s}
                   </span>
@@ -117,6 +117,9 @@ export default function CatalogDetail() {
                       categoryKey: cat.key,
                       categoryName: cat.name,
                       image: product.cover,
+                      productCode: product.id,
+                      materialType: cat.name,
+                      pageUrl: window.location.href,
                     })
                   }
                   className={`inline-flex min-h-[48px] items-center justify-center gap-2 px-7 text-[13px] font-bold tracking-[0.04em] transition-colors ${
@@ -132,15 +135,17 @@ export default function CatalogDetail() {
                   to={`/contact?${new URLSearchParams({
                     products: `${cat.name}: ${product.name}`,
                   }).toString()}`}
-                  className="inline-flex items-center justify-center min-h-[48px] px-8 bg-[#34c759] text-white text-[13px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors"
+                  onClick={() => addItem({ id: product.id, name: product.name, categoryKey: cat.key, categoryName: cat.name, image: product.cover, productCode: product.id, materialType: cat.name, pageUrl: window.location.href })}
+                  className="inline-flex items-center justify-center min-h-[48px] px-6 bg-[#176c35] text-white text-[13px] font-semibold hover:bg-[#12582b] transition-colors"
                 >
-                  Inquire Now
+                  Request a Quote for {product.name}
                 </Link>
                 <Link
                   to={`/contact?${new URLSearchParams({
                     products: `${cat.name}: ${product.name}`,
                     sample: "1",
                   }).toString()}`}
+                  onClick={() => addItem({ id: product.id, name: product.name, categoryKey: cat.key, categoryName: cat.name, image: product.cover, productCode: product.id, materialType: cat.name, pageUrl: window.location.href })}
                   className="inline-flex min-h-[48px] items-center justify-center border border-[#84c225]/45 px-8 text-[13px] font-bold tracking-[0.06em] text-[#659619] transition-colors hover:bg-[#84c225] hover:text-white sm:col-span-2"
                 >
                   Request Material Sample

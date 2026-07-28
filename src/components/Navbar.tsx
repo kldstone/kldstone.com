@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Search } from "lucide-react";
-import categories from "@/data/catalog";
+import type { CatalogCategory } from "@/data/catalog";
 import { optimizedImage } from "@/lib/images";
 import LangSwitcher from "./LangSwitcher";
 
@@ -17,6 +17,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const [categories, setCategories] = useState<CatalogCategory[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -46,7 +47,12 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           .includes(query),
       )
       .slice(0, 6);
-  }, [searchQuery]);
+  }, [categories, searchQuery]);
+
+  useEffect(() => {
+    if (!searchOpen || categories.length) return;
+    void import("@/data/catalog").then((module) => setCategories(module.default));
+  }, [categories.length, searchOpen]);
 
   const navLinks = [
     { label: t("nav.home"), href: p("/") },
@@ -103,7 +109,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
   return (
     <>
       {/* Top info bar */}
-      <div className="hidden w-full bg-white border-b border-black/5 text-[#111111]/50 text-[12px] tracking-[0.04em] sm:block">
+      <div className="hidden w-full bg-white border-b border-black/5 text-[#111111]/60 text-[12px] tracking-[0.04em] lg:block">
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-end min-h-[34px]">
           <span className="flex items-center gap-4 shrink-0">
             <LangSwitcher langPrefix={langPrefix} />
@@ -141,7 +147,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             />
             <span className="hidden 2xl:block">
               <strong className="block text-[#111111] text-[13px] tracking-[0.10em] leading-tight">{t("nav.brandName")}</strong>
-              <small className="block text-[#111111]/45 text-[10px] tracking-[0.06em] mt-[2px]">{t("nav.brandSub")}</small>
+              <small className="block text-[#111111]/45 text-[12px] tracking-[0.06em] mt-[2px]">{t("nav.brandSub")}</small>
             </span>
           </Link>
 
@@ -194,20 +200,20 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`${index >= 3 ? "hidden lg:inline-flex" : "inline-flex"} items-center justify-center min-h-[44px] px-[9px] text-[11px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
+                className={`${index >= 3 ? "hidden lg:inline-flex" : "inline-flex"} items-center justify-center min-h-[44px] px-[9px] text-[12px] font-semibold tracking-[0.03em] transition-colors whitespace-nowrap ${
                   isActive(link.href) ? "text-[#34c759] font-bold" : "text-[#111111]/60 hover:text-[#111111]"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <span className="text-black/20 text-[11px] px-1">···</span>
+            <span className="text-black/20 text-[12px] px-1">···</span>
           </div>
 
           {/* Desktop search */}
           <button
             type="button"
-            className="hidden min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/65 transition-colors hover:text-[#34c759] md:inline-flex"
+            className="hidden min-h-[44px] min-w-[44px] items-center justify-center bg-transparent text-[#111111]/65 transition-colors hover:text-[#176c35] md:inline-flex"
             onClick={() => {
               setSearchOpen(!searchOpen);
               setMenuOpen(false);
@@ -222,16 +228,16 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           {/* CTA */}
           <Link
             to={p("/contact")}
-            className="hidden md:inline-flex items-center justify-center min-h-[40px] px-5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.06em] hover:bg-[#34c759]/80 transition-colors whitespace-nowrap shrink-0"
+            className="hidden md:inline-flex items-center justify-center min-h-[44px] px-5 bg-[#176c35] text-white text-[12px] font-semibold hover:bg-[#12582b] transition-colors whitespace-nowrap shrink-0"
           >
-            {t("nav.getQuote")}
+            Request a Quote
           </Link>
 
           {/* Mobile actions */}
           <div className="flex items-center gap-2 md:hidden">
             <button
               type="button"
-              className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/75 transition-colors hover:text-[#34c759]"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center bg-transparent text-[#111111]/75 transition-colors hover:text-[#176c35]"
               onClick={() => {
                 setSearchOpen(!searchOpen);
                 setMenuOpen(false);
@@ -244,7 +250,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             </button>
             <button
               type="button"
-              className="relative inline-flex min-h-[40px] min-w-[40px] items-center justify-center bg-transparent text-[#111111]/80"
+              className="relative inline-flex min-h-[44px] min-w-[44px] items-center justify-center bg-transparent text-[#111111]/80"
               onClick={() => {
                 setMenuOpen(!menuOpen);
                 setSearchOpen(false);
@@ -285,11 +291,11 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
                 placeholder="Search products"
                 autoFocus={searchOpen}
                 autoComplete="off"
-                className="min-h-[46px] w-full border border-black/15 bg-[#fafafa] pl-11 pr-16 text-[14px] outline-none focus:border-[#34c759]"
+                className="min-h-[48px] w-full border border-black/15 bg-[#fafafa] pl-11 pr-16 text-[14px] focus:border-[#176c35]"
               />
               <button
                 type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold tracking-[0.06em] text-[#34c759]"
+                className="absolute right-1 top-1/2 inline-flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-[12px] font-semibold text-[#176c35]"
               >
                 GO
               </button>
@@ -316,7 +322,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
                             <strong className="block truncate text-[13px] font-semibold text-[#111]">
                               {product.name}
                             </strong>
-                            <small className="mt-1 block truncate text-[10px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">
+                            <small className="mt-1 block truncate text-[12px] font-bold uppercase tracking-[0.08em] text-[#75ad20]">
                               {product.categoryName}
                             </small>
                           </span>
@@ -325,7 +331,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
                     </div>
                     <button
                       type="submit"
-                      className="block w-full border-t border-black/5 px-4 py-3 text-center text-[11px] font-bold tracking-[0.08em] text-[#111]/60 transition-colors hover:text-[#34c759]"
+                      className="block w-full border-t border-black/5 px-4 py-3 text-center text-[12px] font-bold tracking-[0.08em] text-[#111]/60 transition-colors hover:text-[#34c759]"
                     >
                       VIEW ALL RESULTS
                     </button>
@@ -347,7 +353,7 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
           }`}
         >
           <div className="flex items-center justify-between px-6 py-3 border-b border-black/5 bg-white">
-            <span className="text-[#111111]/40 text-[11px] font-medium tracking-[0.04em]">LANGUAGE</span>
+            <span className="text-[#111111]/40 text-[12px] font-medium tracking-[0.04em]">LANGUAGE</span>
             <LangSwitcher langPrefix={langPrefix} />
           </div>
           <div className="bg-white px-6 py-3 border-b border-black/5">
@@ -378,9 +384,9 @@ export default function Navbar({ langPrefix = "" }: NavbarProps) {
             ))}
             <Link
               to={p("/contact")}
-              className="mt-3 block text-center bg-[#34c759] text-white py-3 text-[12px] font-bold tracking-[0.06em]"
+              className="mt-3 block text-center bg-[#176c35] text-white py-3 text-[12px] font-bold tracking-[0.06em]"
             >
-              {t("nav.getQuote")}
+              Request a Quote
             </Link>
           </div>
         </div>

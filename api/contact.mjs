@@ -259,10 +259,10 @@ export default async function handler(req, res) {
   }
 
   // Required fields
-  if (!data.name || !data.email || !data.message) {
-    return res.status(400).json({ ok: false, error: "Name, email and message are required." });
+  if (!data.name || (!data.email && !data.phone) || !data.country || !data.message) {
+    return res.status(400).json({ ok: false, error: "Name, email or WhatsApp, country/region, and a short requirement are required." });
   }
-  if (!validateEmail(data.email)) {
+  if (data.email && !validateEmail(data.email)) {
     return res.status(400).json({ ok: false, error: "Please provide a valid email address." });
   }
   if (data.message.length > MAX_MESSAGE_LENGTH) {

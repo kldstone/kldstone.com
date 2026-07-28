@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaPinterestP, FaRedditAlien, FaTiktok, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { trackEvent } from "@/lib/analytics";
@@ -97,7 +97,7 @@ export default function Footer() {
                 </p>
                 <p className="flex items-center gap-2">
                   <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  <a href="mailto:kldstone.china@gmail.com" onClick={() => trackEvent("email_click", {source:"footer"})} className="hover:text-[#34c759] transition-colors">
+                  <a href="mailto:kldstone.china@gmail.com" onClick={() => trackEvent("email_click", {source:"footer"})} className="break-all hover:text-[#176c35] transition-colors">
                     kldstone.china@gmail.com
                   </a>
                 </p>
@@ -109,7 +109,7 @@ export default function Footer() {
                 </p>
                 <p>{t("footer.address")}</p>
                 <div className="pt-5 mt-2 border-t border-black/8">
-                  <p className="mb-3 text-[11px] font-bold tracking-[0.10em] uppercase text-[#111111]/70">
+                  <p className="mb-3 text-[12px] font-bold tracking-[0.10em] uppercase text-[#111111]/70">
                     {t("footer.followUs")}
                   </p>
                   <div className="flex flex-wrap items-center gap-4">
@@ -121,7 +121,7 @@ export default function Footer() {
                         rel="noopener noreferrer"
                         aria-label={`${social.label} — KLD Stone (opens in a new tab)`}
                         onClick={() => trackEvent("social_click", { source: "footer", platform: social.platform })}
-                        className="group inline-flex min-h-[36px] min-w-[28px] items-center justify-center transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#34c759]/50"
+                        className="group inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-opacity hover:opacity-70"
                       >
                         <span className="transition-transform group-hover:scale-110">
                           <SocialBrandIcon social={social} />
@@ -135,7 +135,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="py-6 flex items-center justify-center text-[11px] text-[#111111]/30 tracking-[0.04em]">
+        <div className="py-6 flex items-center justify-center text-[12px] text-[#111111]/30 tracking-[0.04em]">
           <span>&copy; {new Date().getFullYear()} {t("footer.copyright")}</span>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { optimizedImage } from "@/lib/images";
 import { trackEvent } from "@/lib/analytics";
@@ -86,7 +86,7 @@ export default function Home() {
     <div>
       {/* HERO CAROUSEL */}
       <div
-        className="relative w-full h-screen overflow-hidden bg-black"
+        className="relative h-[78svh] min-h-[560px] w-full overflow-hidden bg-black md:h-[calc(100vh-112px)]"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -138,10 +138,10 @@ export default function Home() {
                 <Link
                   to="/contact"
                   onClick={() => trackEvent("quote_cta", { source: "home_hero" })}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#176c35] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#12582b] transition-colors"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  GET QUOTE
+                  REQUEST A QUOTE
                 </Link>
                 <Link
                   to="/collections"
@@ -164,21 +164,25 @@ export default function Home() {
                     key={i}
                     onClick={() => setActive(i)}
                     aria-label={`Go to slide ${i + 1}`}
-                    className="group relative h-[3px] transition-all duration-500"
+                    className="group relative flex h-11 items-center justify-center transition-all duration-500"
                     style={{
-                      width: i === active ? "48px" : "24px",
-                      backgroundColor: i === active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
+                      width: i === active ? "52px" : "44px",
                     }}
-                  />
+                  >
+                    <span
+                      className="block h-1 w-full"
+                      style={{ backgroundColor: i === active ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.45)" }}
+                    />
+                  </button>
                 ))}
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={prev} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-white/20 hover:border-white/50 hover:bg-white/10 transition-all duration-300 group" aria-label={t("common:common.previous")}>
+                <button onClick={prev} className="flex h-11 w-11 items-center justify-center border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-300 md:h-12 md:w-12" aria-label={t("common:common.previous")}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-white/60 group-hover:text-white transition-colors">
                     <path d="M10 2L4 8L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
-                <button onClick={next} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-white/20 hover:border-white/50 hover:bg-white/10 transition-all duration-300 group" aria-label={t("common:common.next")}>
+                <button onClick={next} className="flex h-11 w-11 items-center justify-center border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-300 md:h-12 md:w-12" aria-label={t("common:common.next")}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-white/60 group-hover:text-white transition-colors">
                     <path d="M6 2L12 8L6 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -188,7 +192,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/40 text-[10px] tracking-[0.15em] uppercase">
+        <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/40 text-[12px] tracking-[0.15em] uppercase">
           <span className="hidden md:inline">{t("common:common.scroll")}</span>
           <svg width="12" height="18" viewBox="0 0 12 18" fill="none" stroke="currentColor" strokeWidth="1" className="animate-bounce">
             <rect x="0.5" y="0.5" width="11" height="17" rx="5.5"/>
@@ -227,7 +231,7 @@ export default function Home() {
       <section className="bg-[#f8f8f8] py-20 px-6">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-12">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">
               {t("waterjet.title")}
             </span>
             <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
@@ -274,7 +278,7 @@ export default function Home() {
       {/* WATERJET MEDALLIONS */}
       <section className="max-w-[1400px] mx-auto px-6 pt-20 pb-10">
         <div className="text-center mb-12">
-          <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+          <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">
             {t("collections.title")}
           </span>
           <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
@@ -301,7 +305,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute left-0 right-0 bottom-0 px-4 py-3">
                 <p className="text-white text-[13px] font-semibold tracking-[0.04em] leading-tight">{p.name}</p>
-                <p className="text-white/65 text-[10px] font-medium tracking-[0.08em] mt-0.5">{p.en}</p>
+                <p className="text-white/65 text-[12px] font-medium tracking-[0.08em] mt-0.5">{p.en}</p>
               </div>
             </Link>
           ))}
@@ -326,7 +330,7 @@ export default function Home() {
       <section className="bg-white py-20 px-6">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-12">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">
               {t("video.title")}
             </span>
             <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
@@ -351,7 +355,7 @@ export default function Home() {
       <section className="bg-[#0f0f0f] py-20 px-6 text-white">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-14">
-            <span className="text-white/50 text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+            <span className="text-white/50 text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">
               {t("spaces.title")}
             </span>
             <h2 className="text-white text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
@@ -401,7 +405,7 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">
+              <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">
                 {t("quality.title")}
               </span>
               <h2 className="text-[#111111] text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-6">
@@ -442,8 +446,41 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-[#f5f1e8] px-6 py-20">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="max-w-[700px]">
+            <p className="text-[12px] font-semibold text-[#176c35]">From factory detail to finished space</p>
+            <h2 className="mt-3 text-[clamp(1.8rem,3vw,2.6rem)] font-semibold tracking-[-0.025em] text-[#1c1b19]">
+              Stone belongs in spaces, not warehouses
+            </h2>
+            <p className="mt-4 text-[15px] leading-7 text-[#4f4c45]">
+              KLD connects material selection with waterjet cutting, dry-lay numbering, six-side inspection, custom export crates, and container loading.
+            </p>
+          </div>
+          <ol className="mt-10 grid gap-px overflow-hidden border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              ["01", "Submit your requirements", "A contact method and one sentence are enough to begin."],
+              ["02", "Material and technical confirmation", "We review the application, stone, dimensions, drawings, and destination."],
+              ["03", "Sample or drawing approval", "Availability, sample cost, courier options, and drawings are confirmed per project."],
+              ["04", "Quotation", "Price, lead time, freight scope, and payment terms are stated for the project."],
+              ["05", "Production and inspection", "Fabrication can include ±0.1 mm waterjet capability, dry lay, numbering, and six-side checks."],
+              ["06", "Packing and shipment", "Custom wooden crates, container loading, and export documents complete delivery."],
+            ].map(([number, title, description]) => (
+              <li key={number} className="bg-white p-6">
+                <span className="text-[12px] font-semibold text-[#8a7248]">{number}</span>
+                <h3 className="mt-4 text-[16px] font-semibold text-[#1c1b19]">{title}</h3>
+                <p className="mt-2 text-[14px] leading-6 text-[#5b574f]">{description}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 text-[13px] leading-6 text-[#5b574f]">
+            Reference files: PDF, JPG, PNG, WEBP, DWG, and DXF up to 2.5 MB. MOQ, sample charges, lead time, freight, and payment terms are confirmed for each material and project. A KLD specialist gives a business response within 24 hours; the formal quotation follows technical confirmation.
+          </p>
+        </div>
+      </section>
+
       {/* BOTTOM CTA */}
-      <section className="bg-[#34c759] py-16 px-6 text-center">
+      <section className="bg-[#1d3325] py-16 px-6 text-center">
         <div className="max-w-[680px] mx-auto">
           <h2 className="text-white text-[clamp(1.4rem,2.5vw,1.8rem)] font-black tracking-[0.03em] mb-3">
             {t("cta.heading")}

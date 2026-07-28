@@ -19,7 +19,7 @@ export default function Quality() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center px-6">
           <div>
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.20em] uppercase">{t("hero.title")}</span>
             <h1 className="text-white text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[0.02em] mt-3 mb-4">{t("hero.heading")}</h1>
             <p className="text-white/55 text-[15px] max-w-[560px] mx-auto leading-relaxed">{t("hero.description")}</p>
           </div>
@@ -27,7 +27,7 @@ export default function Quality() {
       </section>
 
       <section className="max-w-[900px] mx-auto px-6 py-20 text-center">
-        <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase block mb-4">{t("standard.title")}</span>
+        <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase block mb-4">{t("standard.title")}</span>
         <h2 className="text-[var(--ink)] text-[1.4rem] font-black tracking-[0.03em] mb-5">{t("standard.heading")}</h2>
         <p className="text-[var(--muted)] text-[15px] leading-[1.9] max-w-[680px] mx-auto">{t("standard.text")}</p>
       </section>
@@ -35,7 +35,7 @@ export default function Quality() {
       <section className="bg-[var(--panel)] py-20 px-6">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-14">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("control.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase">{t("control.title")}</span>
             <h2 className="text-[var(--ink)] text-[1.5rem] font-black tracking-[0.03em] mt-2">{t("control.heading")}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -51,7 +51,7 @@ export default function Quality() {
 
       <section className="py-20 px-6 max-w-[1280px] mx-auto">
         <div className="text-center mb-14">
-          <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("packaging.title")}</span>
+          <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase">{t("packaging.title")}</span>
           <h2 className="text-[var(--ink)] text-[1.5rem] font-black tracking-[0.03em] mt-2">{t("packaging.heading")}</h2>
           <p className="text-[var(--muted)] text-[14px] mt-3 max-w-[500px] mx-auto leading-relaxed">{t("packaging.description")}</p>
         </div>
@@ -61,7 +61,7 @@ export default function Quality() {
               <img src={optimizedImage(deliveryImgs[i * 5] || deliveryImgs[0])} alt={step.title} className="w-full aspect-[4/3] object-cover img-hover" loading="lazy" decoding="async" />
             </div>
             <div className={i % 2 === 1 ? "lg:[direction:ltr]" : ""}>
-              <span className="text-[#111111] text-[11px] font-bold tracking-[0.12em] opacity-60">{String(i + 1).padStart(2, "0")}</span>
+              <span className="text-[#111111] text-[12px] font-bold tracking-[0.12em] opacity-60">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="text-[var(--ink)] text-[1.25rem] font-black tracking-[0.03em] mt-2 mb-4">{step.title}</h3>
               <p className="text-[var(--muted)] text-[14px] leading-[1.9]">{step.desc}</p>
             </div>
@@ -72,7 +72,7 @@ export default function Quality() {
       <section className="bg-[var(--panel)] py-20 px-6">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-12">
-            <span className="text-[#111111] text-[11px] font-bold tracking-[0.18em] uppercase">{t("packingSite.title")}</span>
+            <span className="text-[#111111] text-[12px] font-bold tracking-[0.18em] uppercase">{t("packingSite.title")}</span>
             <h2 className="text-[var(--ink)] text-[1.4rem] font-black tracking-[0.03em] mt-2">{t("packingSite.heading")}</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2">
@@ -88,7 +88,7 @@ export default function Quality() {
       <section className="bg-[#f8f8f8] py-16 px-6 text-center border-t border-black/8">
         <h2 className="text-[#111111] text-[1.4rem] font-black tracking-[0.02em] mb-3">{t("cta.heading")}</h2>
         <p className="text-[#111111]/45 text-[14px] mb-8 max-w-[460px] mx-auto leading-relaxed">{t("cta.description")}</p>
-        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#34c759] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#34c759]/80 transition-colors">{t("cta.button")}</Link>
+        <Link to="/contact" className="inline-block px-10 py-3.5 bg-[#176c35] text-white text-[12px] font-bold tracking-[0.08em] uppercase hover:bg-[#12582b] transition-colors">{t("cta.button")}</Link>
       </section>
     </div>
   );
