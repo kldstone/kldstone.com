@@ -103,7 +103,7 @@ export default function Contact() {
               Incomplete information is welcome. A KLD Stone specialist will send a business response within 24 hours. A formal quotation follows material and technical confirmation.
             </p>
             <div className="mt-8 space-y-3 text-[14px] text-[#292824]">
-              <a className="block" href="mailto:kldstone.china@gmail.com">kldstone.china@gmail.com</a>
+              <a className="block" href="mailto:kldora@163.com">kldora@163.com</a>
               <a className="block" href="https://wa.me/8615659069988">WhatsApp: +86 156 5906 9988</a>
             </div>
           </aside>

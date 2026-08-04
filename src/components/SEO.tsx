@@ -119,7 +119,7 @@ export function useSEO({
       legalName: "Fujian Nanan KLD Stone Co., Ltd.",
       url: SITE_URL,
       logo: `${SITE_URL}/kld-logo-web.png`,
-      email: "kldstone.china@gmail.com",
+      email: "kldora@163.com",
       telephone: "+86 156 5906 9988",
       address: {
         "@type": "PostalAddress",

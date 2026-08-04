@@ -20,7 +20,7 @@ export default function ThankYou() {
         </p>
         <div className="bg-[#f5f5f5] p-5 mb-8 text-left text-[13px] text-[#111111]/70 leading-relaxed">
           <p className="font-semibold text-[#111111] mb-1">Prefer to contact us directly?</p>
-          <p>Email: <a href="mailto:kldstone.china@gmail.com" className="text-[#34c759] hover:underline">kldstone.china@gmail.com</a></p>
+          <p>Email: <a href="mailto:kldora@163.com" className="text-[#34c759] hover:underline">kldora@163.com</a></p>
           <p>Phone / WhatsApp: <a href="tel:+8615659069988" className="text-[#34c759] hover:underline">+86 156 5906 9988</a></p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

@@ -2,7 +2,7 @@
  * 测试 Resend API Key 是否有效
  * 用法: node scripts/test-resend.js <你的API密钥>
  *
- * 测试邮件会发送到 kldstone.china@gmail.com（也就是你自己）
+ * 测试邮件会发送到 kldora@163.com（也就是你自己）
  */
 
 const API_KEY = process.argv[2];
@@ -37,7 +37,7 @@ async function main() {
       },
       body: JSON.stringify({
         from: "KLD Stone <onboarding@resend.dev>",  // 先用 Resend 默认域名
-        to: "kldstone.china@gmail.com",
+        to: "kldora@163.com",
         subject: "KLD Stone — API Key 验证测试",
         html: testHtml,
       }),
@@ -46,7 +46,7 @@ async function main() {
     const data = await res.json();
 
     if (res.ok) {
-      console.log("\n✅ API Key 有效！邮件已发送到 kldstone.china@gmail.com");
+      console.log("\n✅ API Key 有效！邮件已发送到 kldora@163.com");
       console.log("   请检查收件箱（可能需要查看垃圾邮件）");
       console.log(`   邮件 ID: ${data.id}`);
 

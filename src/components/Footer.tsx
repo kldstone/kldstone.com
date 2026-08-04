@@ -97,8 +97,8 @@ export default function Footer() {
                 </p>
                 <p className="flex items-center gap-2">
                   <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  <a href="mailto:kldstone.china@gmail.com" onClick={() => trackEvent("email_click", {source:"footer"})} className="break-all hover:text-[#176c35] transition-colors">
-                    kldstone.china@gmail.com
+                  <a href="mailto:kldora@163.com" onClick={() => trackEvent("email_click", {source:"footer"})} className="break-all hover:text-[#176c35] transition-colors">
+                    kldora@163.com
                   </a>
                 </p>
                 <p className="flex items-center gap-2">
