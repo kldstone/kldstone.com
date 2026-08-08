@@ -1,6 +1,6 @@
 /**
  * Vercel Serverless API — POST /api/contact
- * Sends inquiry emails to kldora@163.com
+ * Sends inquiry emails to ztnove@gmail.com
  * Environment variables (set in Vercel):
  *   MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS — SMTP credentials
  *   or MAILGUN_API_KEY, MAILGUN_DOMAIN — Mailgun API
@@ -9,7 +9,7 @@
 
 // @ts-nocheck - Vercel Serverless Runtime uses its own types
 
-const RECIPIENT = "kldora@163.com";
+const RECIPIENT = "ztnove@gmail.com";
 const ipHits = new Map();
 const ALLOWED_FIELDS = [
   "name",
@@ -287,7 +287,7 @@ export default async function handler(req, res) {
     console.error("Inquiry email was not accepted by any configured provider.");
     return res.status(503).json({
       ok: false,
-      error: "We could not send your inquiry. Please email kldora@163.com directly.",
+      error: "We could not send your inquiry. Please email ztnove@gmail.com directly.",
     });
   }
 }
